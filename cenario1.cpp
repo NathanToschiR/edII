@@ -7,8 +7,8 @@
 using namespace std;
 
 struct userRatingId {
-    char user;
-    int rating;
+    string user;
+    float rating;
     int id;
 } ;
 
@@ -65,7 +65,6 @@ void quickSort(int *vet, int n) {
 
 int random(int min, int max)
 {
-    // gerando um número aleatório entre um intervalo de 1 a 17066 (número total de ID)
     int num;
     srand(time(NULL));
     num = (rand()%(max-min));
@@ -73,7 +72,7 @@ int random(int min, int max)
     return num;
 }
 
-bool TaFodaAq(string str) {
+bool checagem(string str) {
     if (str.length() == 0)
         return 0;
     else {
@@ -89,72 +88,114 @@ bool TaFodaAq(string str) {
     }
 }
 
-void cenario1()
+int testeLeitura(fstream* leitura) {
+    string str;
+    getline(*leitura, str, ',');
+    getline(*leitura, str, ',');
+    if (checagem(str))
+    {
+        getline(*leitura, str, ',');
+    }
+    getline(*leitura, str, ',');
+    getline(*leitura, str, ',');
+    if(str[0] == '"')
+    {
+        if (checagem(str)) 
+        {
+            getline(*leitura, str, '"');
+            getline(*leitura, str, ',');
+            if (checagem(str))
+            {
+                while (checagem(str)) 
+                {
+                    getline(*leitura, str, '"');
+                    getline(*leitura, str, ',');
+                }
+            }
+        }
+    } 
+    getline(*leitura, str, ',');
+    int ID = stoi(str); // -std=c++11
+    getline(*leitura, str);
+    return ID;
+}
+
+int testeLeituraStruct(fstream* leitura) {
+    string str;
+    getline(*leitura, str, ',');
+    getline(*leitura, str, ',');
+    if (checagem(str))
+    {
+        getline(*leitura, str, ',');
+    }
+    getline(*leitura, str, ',');
+    getline(*leitura, str, ',');
+    if(str[0] == '"')
+    {
+        if (checagem(str)) 
+        {
+            getline(*leitura, str, '"');
+            getline(*leitura, str, ',');
+            if (checagem(str))
+            {
+                while (checagem(str)) 
+                {
+                    getline(*leitura, str, '"');
+                    getline(*leitura, str, ',');
+                }
+            }
+        }
+    } 
+    getline(*leitura, str, ',');
+    int ID = stoi(str); // -std=c++11
+    getline(*leitura, str);
+    return ID;
+}
+
+
+void cenario1() 
 {
     fstream leitura("bgg-13m-reviews.csv");
     fstream entrada("entrada.txt");
     fstream saida("saida.txt");
+    int* vetArc = new int[506542];
+    userRatingId vetor[500000];
 
-    //while(!entrada.eof()) // enquanto não termina de ler todo o arquivo "entrada.txt"
-    //{
-        //string strN;
-        //getline(entrada, strN); // pega o valor de N dentro do arquivo de entrada e joga para a string strN
-        //int qntdID = stoi(strN);
-        int qntdID = 600000;
-        int* vetArq = new int[qntdID];
-
-        //for(int cont = 0 ; cont < 5 ; cont++) // 5 conjuntos pra cada valor de N
-        //{
-            if(leitura.is_open()) // leitura do arquivo "bgg-13m-reviews.csv"
-            {
-                int i = 0;
-                int cont = 0;
-                string str;
-                getline(leitura, str); // getline para passar pela primeira linha de referência
-
-                while(i < 600000)
-                {
-                    getline(leitura, str, ',');
-                    getline(leitura, str, ',');
-                    if (TaFodaAq(str))
-                        getline(leitura, str, ',');
-                    getline(leitura, str, ',');
-                    getline(leitura, str, ',');
-                    if(str[0] == '"')
-                    {
-                        if (TaFodaAq(str)) {
-                            getline(leitura, str, '"');
-                            getline(leitura, str, ',');
-                            if (TaFodaAq(str)) {
-                                while (TaFodaAq(str)) {
-                                    getline(leitura, str, '"');
-                                    getline(leitura, str, ',');
-                                }
-                            }
-                        }
-                    } 
-
-                    getline(leitura, str, ',');
-                    int ID = stoi(str); // -std=c++11
-                    getline(leitura, str);
-                    str.clear();
-                    cout << "ID " << cont << ": " << ID << "\n";
-                    vetArq[cont] = ID;
-                    cont++;
-                    i++;
-                }
-                cout << "its done\n";
-                delete [] vetArq; 
-            } else {
-                cout << "ERRO: NAO FOI POSSIVEL ABRIR O ARQUIVO .CSV";
+    if(leitura.is_open()) // leitura do arquivo "bgg-13m-reviews.csv"
+    {
+        int i = 0;
+        int j = 0;
+        int cont = 0;
+        int aleatorio;
+        string str;
+        getline(leitura, str); // getline para passar pela primeira linha de referência
+        for (j; j < 506541; j++) 
+        {
+            aleatorio = random(0, 26);
+            for (int k = 0; k < aleatorio; k++) {
+                getline(leitura, str);  // joga as linhas fora (antes da linha sortida de cada bloco)
             }
-            leitura.close();
-        //}
-    //}
+            vetArc[j] = testeLeitura(&leitura);
+            for (int k = aleatorio + 1; k < 26; k++) {
+                getline(leitura, str);  // joga as linhas fora (depois da linha sortida de cada bloco)
+             }
+        }
+        aleatorio = random(0, 8);
+        for (int k = 0; k < aleatorio; k++) {
+            getline(leitura, str);  // joga as linhas fora (antes da linha sortida de cada bloco)
+        }
+        vetArc[j] = testeLeitura(&leitura);
+        delete [] vetArc; 
+
+    } else {
+        cout << "ERRO: NAO FOI POSSIVEL ABRIR O ARQUIVO .CSV";
+    }
+
+    leitura.close();
 }
 
 int main()
 {
-    cenario1();
+    cenario11();
     return 0;
 }
