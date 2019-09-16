@@ -120,15 +120,20 @@ int testeLeitura(fstream* leitura) {
     return ID;
 }
 
-int testeLeituraStruct(fstream* leitura) {
+void testeLeituraStruct(fstream* leitura, userRatingId* vetorStruct, int i)
+{
     string str;
     getline(*leitura, str, ',');
     getline(*leitura, str, ',');
+    vetorStruct[i].user = str;
     if (checagem(str))
     {
         getline(*leitura, str, ',');
+        vetorStruct[i].user = vetorStruct[i].user + str;
     }
     getline(*leitura, str, ',');
+    vetorStruct[i].rating = stof(str);
+
     getline(*leitura, str, ',');
     if(str[0] == '"')
     {
@@ -147,41 +152,40 @@ int testeLeituraStruct(fstream* leitura) {
         }
     } 
     getline(*leitura, str, ',');
-    int ID = stoi(str); // -std=c++11
+    vetorStruct[i].id = stoi(str);
     getline(*leitura, str);
-    return ID;
 }
 
 
-void cenario1() 
+void cenario11() 
 {
     fstream leitura("bgg-13m-reviews.csv");
     fstream entrada("entrada.txt");
     fstream saida("saida.txt");
     int* vetArc = new int[506542];
-    userRatingId vetor[500000];
 
     if(leitura.is_open()) // leitura do arquivo "bgg-13m-reviews.csv"
     {
-        int i = 0;
         int j = 0;
-        int cont = 0;
         int aleatorio;
         string str;
         getline(leitura, str); // getline para passar pela primeira linha de referência
         for (j; j < 506541; j++) 
         {
             aleatorio = random(0, 26);
-            for (int k = 0; k < aleatorio; k++) {
+            for (int k = 0; k < aleatorio; k++) 
+            {
                 getline(leitura, str);  // joga as linhas fora (antes da linha sortida de cada bloco)
             }
             vetArc[j] = testeLeitura(&leitura);
-            for (int k = aleatorio + 1; k < 26; k++) {
+            for (int k = aleatorio + 1; k < 26; k++) 
+            {
                 getline(leitura, str);  // joga as linhas fora (depois da linha sortida de cada bloco)
              }
         }
-        aleatorio = random(0, 8);
-        for (int k = 0; k < aleatorio; k++) {
+        aleatorio = random(0, 7);
+        for (int k = 0; k < aleatorio; k++) 
+        {
             getline(leitura, str);  // joga as linhas fora (antes da linha sortida de cada bloco)
         }
         vetArc[j] = testeLeitura(&leitura);
@@ -194,8 +198,51 @@ void cenario1()
     leitura.close();
 }
 
+void cenario12()
+{
+    fstream leitura("bgg-13m-reviews.csv");
+    fstream entrada("entrada.txt");
+    fstream saida("saida.txt");
+    userRatingId* vetorStruct = new userRatingId[506542];
+
+    if(leitura.is_open()) // leitura do arquivo "bgg-13m-reviews.csv"
+    {
+        int j = 0;
+        int aleatorio;
+        string str;
+        getline(leitura, str); // getline para passar pela primeira linha de referência
+
+        for (j; j < 506541; j++) 
+        {
+            aleatorio = random(0, 26);
+            for (int k = 0; k < aleatorio; k++) 
+            {
+                getline(leitura, str);  // joga as linhas fora (antes da linha sortida de cada bloco)
+            }
+            testeLeituraStruct(&leitura, vetorStruct, j);
+            for (int k = aleatorio + 1; k < 26; k++) 
+            {
+                getline(leitura, str);  // joga as linhas fora (depois da linha sortida de cada bloco)
+             }
+        }
+        aleatorio = random(0, 7);
+        for (int k = 0; k < aleatorio; k++) 
+        {
+            getline(leitura, str);  // joga as linhas fora (antes da linha sortida de cada bloco)
+        }
+        testeLeituraStruct(&leitura, vetorStruct, j);
+
+        delete [] vetorStruct; 
+
+    } else {
+        cout << "ERRO: NAO FOI POSSIVEL ABRIR O ARQUIVO .CSV";
+    }
+
+    leitura.close();
+}
+
 int main()
 {
-    cenario11();
+    cenario12();
     return 0;
 }
