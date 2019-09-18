@@ -332,7 +332,7 @@ void analisaCenario11(int *vetregistro, int tamanho){
             }
             medias11(N[i], vetData, vetregistro);   //lança na funcao que retornarao as medias
             cout << "saiu do media";
-            saida << "Medias do conjunto de " << N[i] << " dados - Trocas: " << vetData[0] << ", Comparacoes: " << vetData[1] << " e Tempo: " << (double)vetData[2]/1000 << "\n";  //imprime no arquivo
+            saida << "Cenario11\nMedias do conjunto de " << N[i] << " dados - Trocas: " << vetData[0] << ", Comparacoes: " << vetData[1] << " e Tempo: " << (double)vetData[2]/1000 << "\n";  //imprime no arquivo
         }
 
         return;
@@ -374,7 +374,7 @@ void analisaCenario12(userRatingId *vetregistro, int tamanho){
             }
             medias11(N[i], vetData, vetregistro);   //lança na funcao que retornarao as medias
             cout << "saiu do media";
-            saida << "Medias do conjunto de " << N[i] << " dados - Trocas: " << vetData[0] << ", Comparacoes: " << vetData[1] << " e Tempo: " << (double)vetData[2]/1000 << "\n";  //imprime no arquivo
+            saida << "Cenario12\nMedias do conjunto de " << N[i] << " dados - Trocas: " << vetData[0] << ", Comparacoes: " << vetData[1] << " e Tempo: " << (double)vetData[2]/1000 << "\n";  //imprime no arquivo
         }
 
         return;
