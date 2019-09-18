@@ -172,7 +172,7 @@ void cenario11()
         getline(leitura, str); // getline para passar pela primeira linha de referência
         for (j; j < 506541; j++) 
         {
-            aleatorio = random(0, 26);
+            aleatorio = random(0, 25);
             for (int k = 0; k < aleatorio; k++) 
             {
                 getline(leitura, str);  // joga as linhas fora (antes da linha sortida de cada bloco)
@@ -214,7 +214,7 @@ void cenario12()
 
         for (j; j < 506541; j++) 
         {
-            aleatorio = random(0, 26);
+            aleatorio = random(0, 25);
             for (int k = 0; k < aleatorio; k++) 
             {
                 getline(leitura, str);  // joga as linhas fora (antes da linha sortida de cada bloco)

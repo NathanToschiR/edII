@@ -266,13 +266,12 @@ void medias12(int grupo, int *vetDados, userRatingId *vetConj){
     for(int i = 0; i < 5; i++){              //ele deve fazer isso 5 vezes, como pedido
         cout << "Entrou no For" << i+1 << "do media" << endl;
         c = 0;
-        while(c++ < grupo) {                 //preenche o vetor com valores aleat�rios referente � entrada
+        while(c++ < grupo) {                 //preenche um vetor com indices aleatorios do vetor com os arquivos
             r = randomLarge(506542);
             teste[c] = vetConj[r].id;
-            //cout << teste[c] << " ";
         }
         cout << endl;
-        auto t1 = std::chrono::high_resolution_clock::now();    //come�a a contar
+        auto t1 = std::chrono::high_resolution_clock::now();    //comeca a contar o tempo
         quickSort(teste, c, vetDados);
         auto t2 = std::chrono::high_resolution_clock::now();    //termina de contar
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
@@ -285,7 +284,7 @@ void medias12(int grupo, int *vetDados, userRatingId *vetConj){
     }
 
     cout << "Saiu do for analisa" << endl;
-    vetDados[0] = vetDados[0]/5.0;  //divide todos por 5 para fazer a m�dia
+    vetDados[0] = vetDados[0]/5.0;  //divide todos por 5 para fazer a media
     vetDados[1] = vetDados[1]/5.0;
     vetDados[2] = vetDados[2]/5.0;
     cout << "vai sair do analisa" << endl;
@@ -313,7 +312,6 @@ void analisaCenario11(int *vetregistro, int tamanho){
     getline(entrada, enes);             //cria um vetor com a quantidade que cada conjunto deverá ter
     while(grupo > 0){
         N[k] = stoi(enes);
-        //cout << "N: " << N[i] << endl;
         grupo--;
         k++;
         getline(entrada, enes);
