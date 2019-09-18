@@ -1,0 +1,25 @@
+# depslib dependency file v1.0
+1567566659 source:c:\users\nathan\desktop\codeblocks\testes\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<cstdlib>
+	<ctime>
+
+1567577553 source:c:\users\nathan\desktop\codeblocks\testes2\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<cstdlib>
+	<ctime>
+	<chrono>
+
+1568765388 source:c:\users\nathan\desktop\testes2\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<cstdlib>
+	<time.h>
+	<ctime>
+	<chrono>
+
