@@ -1,5 +1,10 @@
-Medias do conjunto de 1000 dados - Trocas: 4510, Comparacoes: 10823 e Tempo: 2.191
-Medias do conjunto de 5000 dados - Trocas: 28385, Comparacoes: 78690 e Tempo: 3.002
-Medias do conjunto de 10000 dados - Trocas: 73162, Comparacoes: 194347 e Tempo: 3.597
-Medias do conjunto de 50000 dados - Trocas: 336941, Comparacoes: 2023529 e Tempo: 9.985
-Medias do conjunto de 100000 dados - Trocas: 780567, Comparacoes: 6509216 e Tempo: 25.785
+Cenario12
+Medias do conjunto de 1000 dados - Trocas: 4425, Comparacoes: 10882 e Tempo: 2.842
+Cenario12
+Medias do conjunto de 5000 dados - Trocas: 31189, Comparacoes: 79087 e Tempo: 3.397
+Cenario12
+Medias do conjunto de 10000 dados - Trocas: 63203, Comparacoes: 187231 e Tempo: 4.196
+Cenario12
+Medias do conjunto de 50000 dados - Trocas: 386939, Comparacoes: 2050888 e Tempo: 11.391
+Cenario12
+Medias do conjunto de 100000 dados - Trocas: 760486, Comparacoes: 6525736 e Tempo: 26.586
