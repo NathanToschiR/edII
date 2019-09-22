@@ -210,7 +210,7 @@ void analisaCenario11(int *vetregistro){
         }
         medias11(N[i], vetData, vetregistro);   //lança na funcao que retornarao as medias
         cout << "saiu do media";
-        saida << "Medias do conjunto de " << N[i] << " dados - Trocas: " << vetData[0] << ", Comparacoes: " 
+        saida << "Medias do conjunto de " << N[i] << " dados - Trocas: " << vetData[0] << ", Comparacoes: "
         << vetData[1] << " e Tempo: " << (double)vetData[2]/1000 << "\n";  //imprime no arquivo
     }
 
@@ -315,17 +315,23 @@ void medias12(int grupo, int *vetDados, userRatingId *vetConj){
     int c = 0;
     cout << "Grupo: " << grupo << endl;
     int teste[grupo];
+    userRatingId testestruct[grupo];
 
     for(int i = 0; i < 5; i++){              //ele deve fazer isso 5 vezes, como pedido
         cout << "Entrou no For " << i+1 << "do media" << endl;
         c = 0;
-        while(c++ < grupo) {                 //preenche um vetor com indices aleatorios do vetor com os arquivos
+       /* while(c++ < grupo) {                 //preenche um vetor com indices aleatorios do vetor com os arquivos
             r = randomLarge(506542);
             teste[c] = vetConj[r].id;
         }
+    */
+        while(c++ < grupo){
+            r = randomLarge(506542);
+            testestruct[c] = vetConj[r];
+        }
         cout << endl;
         auto t1 = std::chrono::high_resolution_clock::now();    //comeca a contar o tempo
-        quickSort(teste, c, vetDados);
+        quickSortStruct(testestruct, c, vetDados);
         auto t2 = std::chrono::high_resolution_clock::now();    //termina de contar
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
         vetDados[2] = vetDados[2] + duration;
@@ -419,7 +425,7 @@ void analisaCenario12(userRatingId *vetregistro){
         }
         medias12(N[i], vetData, vetregistro);   //lança na funcao que retornarao as medias
         cout << "saiu do media";
-        saida << "Medias do conjunto de " << N[i] << " dados - Trocas: " << vetData[0] << ", Comparacoes: " 
+        saida << "Medias do conjunto de " << N[i] << " dados - Trocas: " << vetData[0] << ", Comparacoes: "
         << vetData[1] << " e Tempo: " << (double)vetData[2]/1000 << "\n";  //imprime no arquivo
     }
 
