@@ -1,1 +1,29 @@
 
+Cenario11
+Medias do conjunto de 1000 dados - Trocas: 4748, Comparacoes: 11109 e Tempo: 2.598
+Medias do conjunto de 5000 dados - Trocas: 33293, Comparacoes: 76391 e Tempo: 2.597
+Medias do conjunto de 10000 dados - Trocas: 73905, Comparacoes: 195038 e Tempo: 3.597
+Medias do conjunto de 50000 dados - Trocas: 366042, Comparacoes: 2027811 e Tempo: 12.992
+Medias do conjunto de 100000 dados - Trocas: 796036, Comparacoes: 6599947 e Tempo: 30.383
+
+Cenario12
+Medias do conjunto de 1000 dados - Trocas: 4895, Comparacoes: 11228 e Tempo: 1.199
+Medias do conjunto de 5000 dados - Trocas: 32420, Comparacoes: 78288 e Tempo: 5.397
+Medias do conjunto de 10000 dados - Trocas: 69062, Comparacoes: 186356 e Tempo: 4.198
+Medias do conjunto de 50000 dados - Trocas: 363844, Comparacoes: 2012417 e Tempo: 16.39
+Medias do conjunto de 100000 dados - Trocas: 788348, Comparacoes: 6556360 e Tempo: 35.98
+
+Cenario11
+Medias do conjunto de 1000 dados - Trocas: 5162, Comparacoes: 11036 e Tempo: 2.598
+Medias do conjunto de 5000 dados - Trocas: 34353, Comparacoes: 79115 e Tempo: 2.998
+Medias do conjunto de 10000 dados - Trocas: 71328, Comparacoes: 192362 e Tempo: 4.797
+Medias do conjunto de 50000 dados - Trocas: 387687, Comparacoes: 2014588 e Tempo: 12.993
+Medias do conjunto de 100000 dados - Trocas: 777414, Comparacoes: 6588932 e Tempo: 34.98
+
+Cenario12
+Medias do conjunto de 1000 dados - Trocas: 4799, Comparacoes: 10849 e Tempo: 2.798
+Medias do conjunto de 5000 dados - Trocas: 33566, Comparacoes: 77831 e Tempo: 2.798
+Medias do conjunto de 10000 dados - Trocas: 68306, Comparacoes: 192450 e Tempo: 4.517
+Medias do conjunto de 50000 dados - Trocas: 380117, Comparacoes: 2054075 e Tempo: 12.193
+Medias do conjunto de 100000 dados - Trocas: 795509, Comparacoes: 6542369 e Tempo: 34.78
+

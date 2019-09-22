@@ -314,22 +314,18 @@ void medias12(int grupo, int *vetDados, userRatingId *vetConj){
     int r;
     int c = 0;
     cout << "Grupo: " << grupo << endl;
-    int teste[grupo];
-    userRatingId testestruct[grupo];
+    userRatingId *testestruct = new userRatingId[grupo];
+    cout << "criou vetor de struct" << endl;
 
     for(int i = 0; i < 5; i++){              //ele deve fazer isso 5 vezes, como pedido
         cout << "Entrou no For " << i+1 << "do media" << endl;
         c = 0;
-       /* while(c++ < grupo) {                 //preenche um vetor com indices aleatorios do vetor com os arquivos
-            r = randomLarge(506542);
-            teste[c] = vetConj[r].id;
-        }
-    */
-        while(c++ < grupo){
+        while(c < grupo){
             r = randomLarge(506542);
             testestruct[c] = vetConj[r];
+            c++;
         }
-        cout << endl;
+        cout << "saiu do while" << endl;
         auto t1 = std::chrono::high_resolution_clock::now();    //comeca a contar o tempo
         quickSortStruct(testestruct, c, vetDados);
         auto t2 = std::chrono::high_resolution_clock::now();    //termina de contar
@@ -347,6 +343,7 @@ void medias12(int grupo, int *vetDados, userRatingId *vetConj){
     vetDados[1] = vetDados[1]/5.0;
     vetDados[2] = vetDados[2]/5.0;
     cout << "vai sair do analisa" << endl;
+
 
 
     return;
