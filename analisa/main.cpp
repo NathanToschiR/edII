@@ -177,7 +177,7 @@ int testeLeitura(fstream* leitura) {
 void analisaCenario11(int *vetregistro){
 
     fstream entrada("entrada.txt");
-    fstream saida("saida.txt");
+    fstream saida("saida.txt", ios::app);
 
     string enes, conj;
     int k = 0;
@@ -214,6 +214,7 @@ void analisaCenario11(int *vetregistro){
         << vetData[1] << " e Tempo: " << (double)vetData[2]/1000 << "\n";  //imprime no arquivo
     }
 
+    saida << endl;
     return;
 }
 
@@ -250,8 +251,6 @@ void cenario11()
 
 
         analisaCenario11(vetArc);
-
-
     } else {
         cout << "ERRO: NAO FOI POSSIVEL ABRIR O ARQUIVO .CSV";
     }
@@ -386,7 +385,7 @@ void testeLeituraStruct(fstream* leitura, userRatingId* vetorStruct, int i)
 void analisaCenario12(userRatingId *vetregistro){
 
     fstream entrada("entrada.txt");
-    fstream saida("saida.txt");
+    fstream saida("saida.txt", ios::app);
 
     string enes, conj;
     int k = 0;
@@ -424,14 +423,13 @@ void analisaCenario12(userRatingId *vetregistro){
         << vetData[1] << " e Tempo: " << (double)vetData[2]/1000 << "\n";  //imprime no arquivo
     }
 
+    saida << endl;
     return;
 }
 
 void cenario12()
 {
     fstream leitura("bgg-13m-reviews.csv");
-    fstream entrada("entrada.txt");
-    fstream saida("saida.txt");
     userRatingId* vetorStruct = new userRatingId[506542];
 
     if(leitura.is_open()) // leitura do arquivo "bgg-13m-reviews.csv"
