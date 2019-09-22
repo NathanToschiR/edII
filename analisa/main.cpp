@@ -309,33 +309,26 @@ void quickSortStruct(userRatingId *vet, int n, int *vetdados) {
 }
 
 void medias12(int grupo, int *vetDados, userRatingId *vetConj){
-
     cout << "Entrou no media" << endl;
     int r;
     int c = 0;
     cout << "Grupo: " << grupo << endl;
-    userRatingId *testestruct = new userRatingId[grupo];
-    cout << "criou vetor de struct" << endl;
+    userRatingId* testestruct = new userRatingId [grupo];
 
     for(int i = 0; i < 5; i++){              //ele deve fazer isso 5 vezes, como pedido
-        cout << "Entrou no For " << i+1 << "do media" << endl;
+        cout << "Entrou no For " << i+1 << " do media" << endl;
         c = 0;
         while(c < grupo){
             r = randomLarge(506542);
             testestruct[c] = vetConj[r];
             c++;
         }
-        cout << "saiu do while" << endl;
         auto t1 = std::chrono::high_resolution_clock::now();    //comeca a contar o tempo
         quickSortStruct(testestruct, c, vetDados);
         auto t2 = std::chrono::high_resolution_clock::now();    //termina de contar
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
         vetDados[2] = vetDados[2] + duration;
         cout << "\n";
-        /*for(int j = 0; j < grupo; j++){
-            cout << teste[j] << " ";
-        }*/
-
     }
 
     cout << "Saiu do for analisa" << endl;
@@ -401,7 +394,6 @@ void analisaCenario12(userRatingId *vetregistro){
     getline(entrada, enes);             //cria um vetor com a quantidade que cada conjunto deverá ter
     while(grupo > 0){
         N[k] = stoi(enes);
-        //cout << "N: " << N[i] << endl;
         grupo--;
         k++;
         getline(entrada, enes);
@@ -476,7 +468,7 @@ void cenario12()
 int main()
 {
     srand(time(NULL));
-    /*cout << "Escolha o cenario para ser testado.\n Digite '1' para o cenario 11, ou '2' para o cenario 12\n";
+    cout << "Escolha o cenario para ser testado.\n Digite '1' para o cenario 11, ou '2' para o cenario 12\n";
     int x;
     cin >> x;
 
@@ -486,11 +478,7 @@ int main()
         cenario12();
     }else {
         cout << "cenario invalido" << endl;
-    } */
-    cout << "Cenario11" << endl;
-    cenario11();
-    cout << "Cenario 12" << endl;
-    cenario12();
+    }
 
     cout <<"\n\nACABOU!!!" << endl;
     return 0;
