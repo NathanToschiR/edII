@@ -57,7 +57,7 @@ void auxQuickSort(int *vet, int p, int n, int *comp, int* troca)
     }
 }
 
-void quickSort(int *vet, int n, int *vetdados) {
+void quickSort(int *vet, int n, float *vetdados) {
     int comp = 0;
     int troca = 0;
     auxQuickSort(vet, 0, n, &comp, &troca);
@@ -168,7 +168,7 @@ void testeLeituraStruct(fstream* leitura, userRatingId* vetorStruct, int i)
     getline(*leitura, str);
 }
 
-void medias11(int grupo, int *vetDados, int *vetConj){
+void medias11(int grupo, float *vetDados, int *vetConj){
 
     cout << "Entrou no media" << endl;
     int r;
@@ -210,7 +210,7 @@ void medias11(int grupo, int *vetDados, int *vetConj){
 
 }
 
-void medias12(int grupo, int *vetDados, userRatingId *vetConj){
+void medias12(int grupo, float *vetDados, userRatingId *vetConj){
 
     cout << "Entrou no media" << endl;
     int r;
@@ -276,7 +276,7 @@ void analisaCenario11(int *vetregistro, int tamanho){
         cout << "Teste1.\n";
 
         int x;
-        int vetData[3];
+        float vetData[3];
         int i, j;
 
         for(i = 0; i < k; i++){          //para cada conjunto, a analise sera feita
@@ -318,7 +318,7 @@ void analisaCenario12(userRatingId *vetregistro, int tamanho){
         cout << "Teste1.\n";
 
         int x;
-        int vetData[3];
+        float vetData[3];
         int i, j;
 
         for(i = 0; i < k; i++){          //para cada conjunto, a analise sera feita
