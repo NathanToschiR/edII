@@ -174,7 +174,7 @@ void medias11(int grupo, float *vetDados, int *vetConj){
     int r;
     int c = 0;
     cout << "Grupo: " << grupo << endl;
-    int* teste = new int[grupo];
+    int teste[grupo];
     cout << "Criou o vet teste" << endl;
 
     for(int i = 0; i < 5; i++){              //ele deve fazer isso 5 vezes, como pedido
@@ -190,11 +190,6 @@ void medias11(int grupo, float *vetDados, int *vetConj){
         auto t2 = std::chrono::high_resolution_clock::now();    //termina de contar
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
         vetDados[2] = vetDados[2] + duration;
-        cout << "\n";
-        for(int j = 0; j < grupo; j++){
-            cout << teste[j] << " ";
-        }
-
     }
 
     cout << "Saiu do for analisa" << endl;
@@ -203,11 +198,7 @@ void medias11(int grupo, float *vetDados, int *vetConj){
     vetDados[2] = vetDados[2]/5.0;
     cout << "vai sair do analisa" << endl;
 
-    delete [] teste;
-
     return;
-
-
 }
 
 void medias12(int grupo, float *vetDados, userRatingId *vetConj){
@@ -216,7 +207,7 @@ void medias12(int grupo, float *vetDados, userRatingId *vetConj){
     int r;
     int c = 0;
     cout << "Grupo: " << grupo << endl;
-    int* teste = new int[grupo];
+    int teste[grupo];
     cout << "Criou o vet teste" << endl;
 
     for(int i = 0; i < 5; i++){              //ele deve fazer isso 5 vezes, como pedido
@@ -232,11 +223,6 @@ void medias12(int grupo, float *vetDados, userRatingId *vetConj){
         auto t2 = std::chrono::high_resolution_clock::now();    //termina de contar
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
         vetDados[2] = vetDados[2] + duration;
-        cout << "\n";
-        for(int j = 0; j < grupo; j++){
-            cout << teste[j] << " ";
-        }
-
     }
 
     cout << "Saiu do for analisa" << endl;
@@ -245,11 +231,7 @@ void medias12(int grupo, float *vetDados, userRatingId *vetConj){
     vetDados[2] = vetDados[2]/5.0;
     cout << "vai sair do analisa" << endl;
 
-    delete [] teste;
-
     return;
-
-
 }
 
 void analisaCenario11(int *vetregistro, int tamanho){
@@ -290,7 +272,6 @@ void analisaCenario11(int *vetregistro, int tamanho){
         }
 
         return;
-
 }
 
 void analisaCenario12(userRatingId *vetregistro, int tamanho){
@@ -315,24 +296,23 @@ void analisaCenario12(userRatingId *vetregistro, int tamanho){
         getline(entrada, enes);
     }
 
-        cout << "Teste1.\n";
+    cout << "Teste1.\n";
 
-        int x;
-        float vetData[3];
-        int i, j;
+    int x;
+    float vetData[3];
+    int i, j;
 
-        for(i = 0; i < k; i++){          //para cada conjunto, a analise sera feita
-            cout << "For numero " << i << endl;
-            for(j = 0; j < 3; j++){
-                vetData[j] = 0;         //zera o vetor de dados
-            }
-            medias12(N[i], vetData, vetregistro);   //lança na funcao que retornarao as medias
-            cout << "saiu do media";
-            saida << "Cenario12\nMedias do conjunto de " << N[i] << " dados - Trocas: " << vetData[0] << ", Comparacoes: " << vetData[1] << " e Tempo: " << (double)vetData[2]/1000 << "\n";  //imprime no arquivo
+    for(i = 0; i < k; i++){          //para cada conjunto, a analise sera feita
+        cout << "For numero " << i << endl;
+        for(j = 0; j < 3; j++){
+            vetData[j] = 0;         //zera o vetor de dados
         }
+        medias12(N[i], vetData, vetregistro);   //lança na funcao que retornarao as medias
+        cout << "saiu do media";
+        saida << "Cenario12\nMedias do conjunto de " << N[i] << " dados - Trocas: " << vetData[0] << ", Comparacoes: " << vetData[1] << " e Tempo: " << (double)vetData[2]/1000 << "\n";  //imprime no arquivo
+    }
 
-        return;
-
+    return;
 }
 
 
