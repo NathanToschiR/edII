@@ -344,7 +344,7 @@ void medias12(int grupo, int *vetDados, userRatingId *vetConj){
     vetDados[2] = vetDados[2]/5.0;
     cout << "vai sair do analisa" << endl;
 
-
+    delete [] testestruct;
 
     return;
 }
@@ -476,7 +476,7 @@ void cenario12()
 int main()
 {
     srand(time(NULL));
-    cout << "Escolha o cenario para ser testado.\n Digite '1' para o cenario 11, ou '2' para o cenario 12\n";
+    /*cout << "Escolha o cenario para ser testado.\n Digite '1' para o cenario 11, ou '2' para o cenario 12\n";
     int x;
     cin >> x;
 
@@ -486,7 +486,11 @@ int main()
         cenario12();
     }else {
         cout << "cenario invalido" << endl;
-    }
+    } */
+    cout << "Cenario11" << endl;
+    cenario11();
+    cout << "Cenario 12" << endl;
+    cenario12();
 
     cout <<"\n\nACABOU!!!" << endl;
     return 0;
