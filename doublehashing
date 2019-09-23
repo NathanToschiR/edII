@@ -1,0 +1,80 @@
+#include <iostream>
+#define N 1000
+using namespace std;
+
+struct Hash
+{
+    int vet[N];
+};
+
+int primoAnterior(int valor)
+{
+	int candidatoADivisor, resto;
+    bool ehPrimo;
+
+    candidatoADivisor = 2;
+
+    ehPrimo = false; // Supomos que o valor seja primo de inicio
+
+    if (valor <= 1)
+    {
+        cout << "ERRO: VALOR INVALIDO";
+        exit(1);
+    }
+
+    while (candidatoADivisor <= (valor / 2) && ehPrimo != true) 
+    {
+        resto = valor % candidatoADivisor;
+        if (resto == 0)
+        {
+            ehPrimo = false;
+            valor--;
+            candidatoADivisor = 2;
+        } // se nao for primo, pego o valor logo anterior ao valor inserido como argumento e faco o testes desde o inicio
+          // para checar se esse sim eh primo
+        candidatoADivisor++;
+    }
+
+    return valor;
+}
+
+void inicializarHash(Hash* hash, int tamanho)
+{
+    for(int i = 0 ; i < tamanho ; i++)
+    {
+        hash->vet[i] = 0;
+    }
+}
+
+int inserirDoubleHashing(Hash* hash, int valor, int tamanho)
+{
+    int posicao = valor % tamanho;
+    int colisoes = 0;
+    if(hash->vet[posicao] != 0)
+    {
+        while(hash->vet[posicao] != 0)
+        {
+            cout << "---- COLISAO ----- : ";
+            colisoes++;
+            posicao = (valor % tamanho + colisoes*(valor % primoAnterior(tamanho))) % tamanho;
+            cout << "VALOR " << valor << "    COLISOES " << colisoes <<  "    POSICAO " << posicao << endl;
+        }
+    }
+
+    hash->vet[posicao] = valor;
+    cout << "valor " << valor <<" posicao: "<< posicao << endl;
+    return posicao;
+}
+
+
+int main ()
+{
+    Hash rehashing;
+    inicializarHash(&rehashing, N);
+    inserirDoubleHashing(&rehashing, 5, N);
+    inserirDoubleHashing(&rehashing, 5, N);
+    inserirDoubleHashing(&rehashing, 5, N);
+    inserirDoubleHashing(&rehashing, 3, N);
+    
+    return 0;
+}
