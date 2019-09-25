@@ -116,9 +116,10 @@ void medias11(int grupo, int *vetDados, int *vetConj){
     for(int i = 0; i < 5; i++){              //ele deve fazer isso 5 vezes, como pedido
         cout << "Entrou no For " << i+1 << " do media" << endl;
         c = 0;
-        while(c++ < grupo) {                 //preenche o vetor com valores aleatorios referente a entrada
+        while(c < grupo) {                 //preenche o vetor com valores aleatorios referente a entrada
             r = randomLarge(506542);
             teste[c] = vetConj[r];
+            c++;
         }
         cout << endl;
         auto t1 = std::chrono::high_resolution_clock::now();    //comeca a contar
