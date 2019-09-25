@@ -216,12 +216,14 @@ void auxQuickSortMediana5(int *vet, int p, int n, int *comp, int* troca)
     }
 }
 
-void quickSortMediana(int *vet, int n) {
+void quickSortMediana(int *vet, int n, int *vetdados) {
     int comp = 0;
     int troca = 0;
     auxQuickSort(vet, 0, n, &comp, &troca);
     cout << "\nquickSort Trocas: " << troca;
     cout << "\nquickSort Comparacoes: " << comp << "\n";
+    vetdados[0] = vetdados[0] + troca;
+    vetdados[1] = vetdados[1] + comp;
 }
 
 // -------------------------------------------------------------- QUICKSORT COM INSERTION ------------------------------------------------------------------
@@ -288,7 +290,7 @@ void quickSort(int *vet, int n, int *vetdados, int m) {
 
 // ---------------------------------------------------------------------- LEITURA E CHAMADA ----------------------------------------------------------------
 
-void medias21(int grupo, int *vetDados, int *vetConj){
+void medias2(int grupo, int *vetDados, int *vetConj, int q, int v){
 
     cout << "Entrou no media" << endl;
     int r;
@@ -307,7 +309,13 @@ void medias21(int grupo, int *vetDados, int *vetConj){
         }
         cout << endl;
         auto t1 = std::chrono::high_resolution_clock::now();    //comeca a contar
-        quickSort(teste, grupo, vetDados);
+
+        if(q == 2){
+            quickSortMediana(teste, grupo, vetDados, v);
+        }else{
+            quickSort(teste, grupo, vetDados, v);
+        }
+
         auto t2 = std::chrono::high_resolution_clock::now();    //termina de contar
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
         vetDados[2] = vetDados[2] + duration;
@@ -355,7 +363,7 @@ int testeLeitura(fstream* leitura) {
     return ID;
 }
 
-void analisaCenario21(int *vetregistro){
+void analisaCenario2(int *vetregistro, int q, int v){
 
     fstream entrada("entrada.txt");
     fstream saida("saida.txt", ios::app);
@@ -382,14 +390,25 @@ void analisaCenario21(int *vetregistro){
     int vetData[3];
     int i, j;
 
-    saida << "Cenario11\n";
+    saida << "Cenario2\n";
+    switch (q) {
+        case '1':
+            cout << "Quicksort Recursivo" << endl;
+            break;
+        case '2':
+            cout << "Quicksort Mediana" << endl;
+            break;
+        case '3':
+            cout << "Quicksort Insert" << endl;
+            break;
+    }
 
     for(i = 0; i < k; i++){          //para cada conjunto, a analise sera feita
         cout << "\nFor numero " << i << endl;
         for(j = 0; j < 3; j++){
             vetData[j] = 0;         //zera o vetor de dados
         }
-        medias21(N[i], vetData, vetregistro);   //lança na funcao que retornarao as medias
+        medias2(N[i], vetData, vetregistro, q, v);   //lança na funcao que retornarao as medias
         cout << "saiu do media";
         saida << "Medias do conjunto de " << N[i] << " dados - Trocas: " << vetData[0] << ", Comparacoes: " 
         << vetData[1] << " e Tempo: " << (double)vetData[2]/1000 << "\n";  //imprime no arquivo
@@ -399,7 +418,7 @@ void analisaCenario21(int *vetregistro){
     return;
 }
 
-void cenario2()
+void cenario2(int q)
 {
     fstream leitura("bgg-13m-reviews.csv");
     int* vetArc = new int[506542];
@@ -431,7 +450,7 @@ void cenario2()
         vetArc[j] = testeLeitura(&leitura);
 
 
-        analisaCenario21(vetArc);
+        analisaCenario2(vetArc, q, v);
     } else {
         cout << "ERRO: NAO FOI POSSIVEL ABRIR O ARQUIVO .CSV";
     }
@@ -444,9 +463,30 @@ void cenario2()
 int main()
 {
     srand(time(NULL));
-    cout << "Escolha o cenario para ser testado.\n Digite '1' para o cenario 11, ou '2' para o cenario 12\n";
-    int x;
+    cout << "Escolha qual quicksort sera testado.\n Digite '1' para o quicksort recursivo,'2' para o quicksort mediana, ou '3' para o quicksort insert\n";
+    int x, y;
+
     cin >> x;
+
+    switch ( x )
+      {
+         case '1':
+            cenario2(1, 2);
+            break;
+         case '2':
+            cout << "Digite o valor de k (3 ou 5): " << endl;
+            cin >> y;
+            cenario2(2, y);
+            break;
+         case '3':
+            cout << "Digite o valor de n (10 ou 100): " << endl;
+            cin >> y;
+            cenario2(3, y);
+            break;
+        default:
+            cout << "Valor invalido!" << endl;
+            break;
+      }
 
 
 
