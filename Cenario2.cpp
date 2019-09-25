@@ -216,10 +216,14 @@ void auxQuickSortMediana5(int *vet, int p, int n, int *comp, int* troca)
     }
 }
 
-void quickSortMediana(int *vet, int n, int *vetdados) {
+void quickSortMediana(int *vet, int n, int *vetdados, int m) {
     int comp = 0;
     int troca = 0;
-    auxQuickSort(vet, 0, n, &comp, &troca);
+    if(m == 3){
+        auxQuickSortMediana3(vet, 0, n, &comp, &troca);
+    }else{
+        auxQuickSortMediana5(vet, 0, n, &comp, &troca);
+    }
     cout << "\nquickSort Trocas: " << troca;
     cout << "\nquickSort Comparacoes: " << comp << "\n";
     vetdados[0] = vetdados[0] + troca;
@@ -418,7 +422,7 @@ void analisaCenario2(int *vetregistro, int q, int v){
     return;
 }
 
-void cenario2(int q)
+void cenario2(int q, int v)
 {
     fstream leitura("bgg-13m-reviews.csv");
     int* vetArc = new int[506542];
