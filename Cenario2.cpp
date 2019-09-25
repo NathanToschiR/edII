@@ -106,6 +106,7 @@ void quickSort(int *vet, int n, int *vetdados) {
 }
 
 // ----------------------------------------------------------------- QUICKSORT MEDIANA ---------------------------------------------------------------------
+
 int* bubblesortBom(int* vet, int n, int* troca, int* comp)
 {
     for(int j = 0 ; j < n-1 ; j++)
@@ -127,14 +128,14 @@ int* bubblesortBom(int* vet, int n, int* troca, int* comp)
     return &vet[(n-1)/2];
 }
 
-void TrocaTroca(int* a, int* b, int* c, int* troca, int* comp){
+void TrocaTroca3(int* a, int* b, int* c, int* troca, int* comp){
     int vetHelp[3] = {*a, *b, *c};
     int* i = bubblesortBom(vetHelp, 3, troca, comp);
     if (*i != *c)
         trocar(i, c);
 }
 
-void auxQuickSort(int *vet, int p, int n, int *comp, int* troca)
+void auxQuickSortMediana3(int *vet, int p, int n, int *comp, int* troca)
 {
     if (n == 2)
     {
@@ -147,7 +148,7 @@ void auxQuickSort(int *vet, int p, int n, int *comp, int* troca)
     }
     if (n > 2)
     {
-        TrocaTroca(&vet[p], &vet[p + ((n - 1 - p)/2)], &vet[p + n - 1], troca, comp);
+        TrocaTroca3(&vet[p], &vet[p + ((n - 1 - p)/2)], &vet[p + n - 1], troca, comp);
         int r = vet[p + n - 1];
         int i = p;
         for (int j = p; j < p + n - 1; j++)
@@ -166,18 +167,63 @@ void auxQuickSort(int *vet, int p, int n, int *comp, int* troca)
         vet[p + n - 1] = vet[i];
         vet[i] = r;
         (*troca)++;
-        auxQuickSort(vet, p, i - p, comp, troca);
-        auxQuickSort(vet, i+1, p+n-i-1, comp, troca);
+        auxQuickSortMediana3(vet, p, i - p, comp, troca);
+        auxQuickSortMediana3(vet, i+1, p+n-i-1, comp, troca);
     }
 }
 
-void quickSort(int *vet, int n) {
+void TrocaTroca5(int* a, int* b, int* c, int* d, int* e, int* troca, int* comp){
+    int vetHelp[5] = {*a, *b, *c, *d, *e};
+    int* i = bubblesortBom(vetHelp, 5, troca, comp);
+    if (*i != *c)
+        trocar(i, c);
+}
+
+void auxQuickSortMediana5(int *vet, int p, int n, int *comp, int* troca)
+{
+    if (n == 2)
+    {
+        (*comp)++;
+        if (vet[p] > vet[p + 1])
+        {
+            trocar(&vet[p], &vet[p+1]);
+            (*troca)++;
+        }
+    }
+    if (n > 2)
+    {
+        TrocaTroca5(&vet[p], &vet[(3*p + n - 2)/4], &vet[(p + n - 1)/2], &vet[(p + 3*p - 3)/4]&vet[p + n - 1], troca, comp);
+        int r = vet[p + n - 1];
+        int i = p;
+        for (int j = p; j < p + n - 1; j++)
+        {
+            if (vet[j] < r)
+            {
+                if (j != i)
+                {
+                    trocar(&vet[i], &vet[j]);
+                    (*troca)++;
+                }
+                i++;
+            }
+        }
+        *comp = *comp + n - 1;
+        vet[p + n - 1] = vet[i];
+        vet[i] = r;
+        (*troca)++;
+        auxQuickSortMediana5(vet, p, i - p, comp, troca);
+        auxQuickSortMediana5(vet, i+1, p+n-i-1, comp, troca);
+    }
+}
+
+void quickSortMediana(int *vet, int n) {
     int comp = 0;
     int troca = 0;
     auxQuickSort(vet, 0, n, &comp, &troca);
     cout << "\nquickSort Trocas: " << troca;
     cout << "\nquickSort Comparacoes: " << comp << "\n";
 }
+
 // -------------------------------------------------------------- QUICKSORT COM INSERTION ------------------------------------------------------------------
 
 int insertionSort(int *vet, int n, int* troca)
@@ -201,9 +247,9 @@ int insertionSort(int *vet, int n, int* troca)
     return compar;
 }
 
-void auxQuickSort(int *vet, int p, int n, int *comp, int* troca)
+void auxQuickSort(int *vet, int p, int n, int m, int *comp, int* troca)
 {
-    if (n <= 10)
+    if (n <= m)
         insertionSort(vet, n, troca);
     else
     {
@@ -230,19 +276,19 @@ void auxQuickSort(int *vet, int p, int n, int *comp, int* troca)
     }
 }
 
-void quickSort(int *vet, int n, int *vetdados) {
+void quickSort(int *vet, int n, int *vetdados, int m) {
     int comp = 0;
     int troca = 0;
-    auxQuickSort(vet, 0, n, &comp, &troca);
+    auxQuickSort(vet, 0, n, m, &comp, &troca);
     cout << "\nquickSort Trocas: " << troca;
     cout << "\nquickSort Comparacoes: " << comp << "\n";
     vetdados[0] = troca + vetdados[0];
     vetdados[1] = comp + vetdados[1];
 }
 
-// ---------------------------------------------------------------------- LEITURA --------------------------------------------------------------------------
+// ---------------------------------------------------------------------- LEITURA E CHAMADA ----------------------------------------------------------------
 
-void medias11(int grupo, int *vetDados, int *vetConj){
+void medias21(int grupo, int *vetDados, int *vetConj){
 
     cout << "Entrou no media" << endl;
     int r;
@@ -253,9 +299,11 @@ void medias11(int grupo, int *vetDados, int *vetConj){
     for(int i = 0; i < 5; i++){              //ele deve fazer isso 5 vezes, como pedido
         cout << "Entrou no For " << i+1 << " do media" << endl;
         c = 0;
-        while(c++ < grupo) {                 //preenche o vetor com valores aleatorios referente a entrada
+        while(c < grupo) {                 //preenche o vetor com valores aleatorios referente a entrada
             r = randomLarge(506542);
             teste[c] = vetConj[r];
+            trocar(&vetConj[r], &vetConj[506542 - c]);
+            c++;
         }
         cout << endl;
         auto t1 = std::chrono::high_resolution_clock::now();    //comeca a contar
@@ -341,7 +389,7 @@ void analisaCenario21(int *vetregistro){
         for(j = 0; j < 3; j++){
             vetData[j] = 0;         //zera o vetor de dados
         }
-        medias11(N[i], vetData, vetregistro);   //lança na funcao que retornarao as medias
+        medias21(N[i], vetData, vetregistro);   //lança na funcao que retornarao as medias
         cout << "saiu do media";
         saida << "Medias do conjunto de " << N[i] << " dados - Trocas: " << vetData[0] << ", Comparacoes: " 
         << vetData[1] << " e Tempo: " << (double)vetData[2]/1000 << "\n";  //imprime no arquivo
@@ -400,13 +448,7 @@ int main()
     int x;
     cin >> x;
 
-    if(x == 1){
-        cenario11();
-    }else if(x == 2){
-        cenario12();
-    }else {
-        cout << "cenario invalido" << endl;
-    }
+
 
     cout <<"\n\nACABOU!!!" << endl;
     return 0;
