@@ -1,3 +1,4 @@
+
 #include <iostream>
 #define N 1000
 using namespace std;
@@ -50,14 +51,17 @@ int inserirDoubleHashing(Hash* hash, int valor, int tamanho)
 {
     int posicao = valor % tamanho;
     int colisoes = 0;
-    if(hash->vet[posicao] != 0)
+    int primoAnterior = primoAnterior(tamanho);
+    
+    while(hash->vet[posicao] != 0)
     {
-        while(hash->vet[posicao] != 0)
+        cout << "---- COLISAO ----- : ";
+        colisoes++;
+        posicao = (valor % tamanho + ((colisoes*(valor % primoAnterior)))) % tamanho;
+        cout << "VALOR " << valor << "    COLISOES " << colisoes <<  "    POSICAO " << posicao << endl;
+        if(colisoes == tamanho-1)
         {
-            cout << "---- COLISAO ----- : ";
-            colisoes++;
-            posicao = (valor % tamanho + colisoes*(valor % primoAnterior(tamanho))) % tamanho;
-            cout << "VALOR " << valor << "    COLISOES " << colisoes <<  "    POSICAO " << posicao << endl;
+            cout << "ERRO: HASH LOTADA\n";
         }
     }
 
