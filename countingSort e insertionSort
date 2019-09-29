@@ -1,0 +1,44 @@
+int* countingSort(int* vet, int n)
+{
+    int vetOcorrencias[272409]; // 272409 maior ID do arquivo
+    int* vetAux = new int[n];
+
+    for(int i = 0 ; i < 27240910 ; i++)
+    {
+        vetOcorrencias[i] = 0; 
+    } // zerando todas as ocorrencias no vetor de ocorrencias
+
+    for(int i = 0 ; i < n ; i++)
+    {
+        (vetOcorrencias[vet[i]])++; 
+    } // vou na posicao do vetOcorrencias referente ao ID do vet e incremento 1 na ocorrencia dele
+
+    for(int i = 1 ; i < 272409 ; i++)
+    {
+        vetOcorrencias[i] += vetOcorrencias[i-1]; 
+    } // somo as ocorrencias para saber quantos elementos sao menores ou iguais ao elemento i
+
+    for(int i = 272408 ; i >= 0 ; i--)
+    {
+        vetAux[vetOcorrencias[vet[i]]-1] = vet[i]; // vet[i]-1 pois o vetor vai do indice 0 a n-1
+        vetOcorrencias[vet[i]]--; // decremeneto um na ocorrencia do elemento pois ja inseri ele no vetAux
+    } 
+
+    return vetAux;
+}
+
+void insertionSort(int *vet, int n)
+{
+    for(int i = 0; i < n ; i++)
+    {
+        for(int j = i - 1; j >= 0 ; j--)
+        {
+            if(vet[j] > vet[j+1])
+            {
+                trocar(&vet[j], &vet[j+1]);
+            }
+            else
+                break;
+        }
+    }
+}
