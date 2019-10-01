@@ -3,7 +3,7 @@ int* countingSort(int* vet, int n)
     int vetOcorrencias[272409]; // 272409 maior ID do arquivo
     int* vetAux = new int[n];
 
-    for(int i = 0 ; i < 27240910 ; i++)
+    for(int i = 0 ; i < 272409 ; i++)
     {
         vetOcorrencias[i] = 0; 
     } // zerando todas as ocorrencias no vetor de ocorrencias
