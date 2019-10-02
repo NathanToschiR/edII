@@ -254,7 +254,7 @@ void inserirDoubleHashing(userId* vet, int nVet, unsigned long* vetDados)
     int N = primoPosterior(nVet);
     userId* hash = new userId [N];
     inicializarHash(hash, N);
-    int user;
+    unsigned long user;
     
     for(int i = 0 ; i < nVet ; i++)
     {
@@ -262,11 +262,11 @@ void inserirDoubleHashing(userId* vet, int nVet, unsigned long* vetDados)
         {
             user = vet[i].user[z] + user;
         }
-        int chave = user + vet[i].id;
+        unsigned long chave = user + vet[i].id;
         int posicao =  chave % N;
-        int colisoes = 0;
+        unsigned long colisoes = 0;
         int primoAnt = primoAnterior(N);
-        int compar = 0;
+        unsigned long compar = 0;
 
         while(hash[posicao].id != -1)
         {
