@@ -1,0 +1,110 @@
+Cenario2
+Quicksort Recursivo
+Medias do conjunto de 1000 dados - Trocas: 5263, Comparacoes: 11324 e Tempo: 5.196
+Medias do conjunto de 5000 dados - Trocas: 32086, Comparacoes: 79079 e Tempo: 2.597
+Medias do conjunto de 10000 dados - Trocas: 71037, Comparacoes: 188461 e Tempo: 3.869
+Medias do conjunto de 50000 dados - Trocas: 413267, Comparacoes: 2018695 e Tempo: 14.79
+Medias do conjunto de 100000 dados - Trocas: 764228, Comparacoes: 6406988 e Tempo: 31.111
+Medias do conjunto de 500000 dados - Trocas: 4157969, Comparacoes: 121742067 e Tempo: 355.276
+Medias do conjunto de 700000 dados - Trocas: 5654262, Comparacoes: 248018414 e Tempo: 682.551
+Medias do conjunto de 1000000 dados - Trocas: 8275292, Comparacoes: -351431788 e Tempo: 1333.11
+
+Cenario2
+Quicksort Mediana
+Medias do conjunto de 1000 dados - Trocas: 5091, Comparacoes: 12731 e Tempo: 3.397
+Medias do conjunto de 5000 dados - Trocas: 31365, Comparacoes: 92113 e Tempo: 2.894
+Medias do conjunto de 10000 dados - Trocas: 62837, Comparacoes: 225351 e Tempo: 4.397
+Medias do conjunto de 50000 dados - Trocas: 367131, Comparacoes: 2311532 e Tempo: 16.044
+Medias do conjunto de 100000 dados - Trocas: 734880, Comparacoes: 7155012 e Tempo: 33.624
+Medias do conjunto de 500000 dados - Trocas: 3875972, Comparacoes: 129268035 e Tempo: 391.756
+Medias do conjunto de 700000 dados - Trocas: 5632098, Comparacoes: 259990892 e Tempo: 744.106
+Medias do conjunto de 1000000 dados - Trocas: 8131317, Comparacoes: -332857695 e Tempo: 1444.25
+
+Cenario2
+Quicksort Mediana
+Medias do conjunto de 1000 dados - Trocas: 6795, Comparacoes: 15326 e Tempo: 0.999
+Medias do conjunto de 5000 dados - Trocas: 40627, Comparacoes: 101030 e Tempo: 4.201
+Medias do conjunto de 10000 dados - Trocas: 84907, Comparacoes: 240273 e Tempo: 4.796
+Medias do conjunto de 50000 dados - Trocas: 473683, Comparacoes: 2276888 e Tempo: 16.381
+Medias do conjunto de 100000 dados - Trocas: 1029455, Comparacoes: 7087170 e Tempo: 35.38
+Medias do conjunto de 500000 dados - Trocas: 5390100, Comparacoes: 125106764 e Tempo: 389.605
+Medias do conjunto de 700000 dados - Trocas: 7413550, Comparacoes: 253363599 e Tempo: 742.045
+Medias do conjunto de 1000000 dados - Trocas: 11132447, Comparacoes: -345788793 e Tempo: 1451.38
+
+Cenario2
+Quicksort Insert
+Medias do conjunto de 1000 dados - Trocas: 3993, Comparacoes: 10609 e Tempo: 1.998
+Medias do conjunto de 5000 dados - Trocas: 27036, Comparacoes: 69951 e Tempo: 2.398
+Medias do conjunto de 10000 dados - Trocas: 65476, Comparacoes: 174720 e Tempo: 4.398
+Medias do conjunto de 50000 dados - Trocas: 388370, Comparacoes: 1944706 e Tempo: 13.337
+Medias do conjunto de 100000 dados - Trocas: 755918, Comparacoes: 6252186 e Tempo: 28.982
+Medias do conjunto de 500000 dados - Trocas: 3984756, Comparacoes: 121217918 e Tempo: 361.551
+Medias do conjunto de 700000 dados - Trocas: 5727061, Comparacoes: 247452547 e Tempo: 712.301
+Medias do conjunto de 1000000 dados - Trocas: 7887326, Comparacoes: -352636470 e Tempo: 1348.4
+
+Cenario2
+Quicksort Insert
+Medias do conjunto de 1000 dados - Trocas: 4469, Comparacoes: 7510 e Tempo: 2.108
+Medias do conjunto de 5000 dados - Trocas: 21624, Comparacoes: 50536 e Tempo: 2.598
+Medias do conjunto de 10000 dados - Trocas: 47904, Comparacoes: 110399 e Tempo: 3.997
+Medias do conjunto de 50000 dados - Trocas: 318692, Comparacoes: 1165567 e Tempo: 8.744
+Medias do conjunto de 100000 dados - Trocas: 641263, Comparacoes: 4485951 e Tempo: 23.988
+Medias do conjunto de 500000 dados - Trocas: 3867115, Comparacoes: 113946664 e Tempo: 329.407
+Medias do conjunto de 700000 dados - Trocas: 5316916, Comparacoes: 237963601 e Tempo: 650.74
+Medias do conjunto de 1000000 dados - Trocas: 7818479, Comparacoes: -366185547 e Tempo: 1302.47
+
+Cenario2
+Quicksort Recursivo
+Medias do conjunto de 1000 dados - Trocas: 5134, Comparacoes: 11033 e Tempo: 0.999
+Medias do conjunto de 5000 dados - Trocas: 30040, Comparacoes: 77321 e Tempo: 3.13
+Medias do conjunto de 10000 dados - Trocas: 69707, Comparacoes: 187854 e Tempo: 4.517
+Medias do conjunto de 50000 dados - Trocas: 415095, Comparacoes: 2040383 e Tempo: 12.778
+Medias do conjunto de 100000 dados - Trocas: 784327, Comparacoes: 6292463 e Tempo: 32.169
+Medias do conjunto de 500000 dados - Trocas: 3947328, Comparacoes: 121707484 e Tempo: 352.661
+Medias do conjunto de 700000 dados - Trocas: 6115865, Comparacoes: 248669925 e Tempo: 666.37
+Medias do conjunto de 1000000 dados - Trocas: 8596646, Comparacoes: -352015481 e Tempo: 1302.89
+
+Cenario2
+Quicksort Mediana
+Medias do conjunto de 1000 dados - Trocas: 5143, Comparacoes: 12570 e Tempo: 2.004
+Medias do conjunto de 5000 dados - Trocas: 29771, Comparacoes: 90928 e Tempo: 2.199
+Medias do conjunto de 10000 dados - Trocas: 65127, Comparacoes: 226198 e Tempo: 3.398
+Medias do conjunto de 50000 dados - Trocas: 362709, Comparacoes: 2303462 e Tempo: 16.235
+Medias do conjunto de 100000 dados - Trocas: 733597, Comparacoes: 7195999 e Tempo: 36.301
+Medias do conjunto de 500000 dados - Trocas: 3916297, Comparacoes: 129049920 e Tempo: 379.751
+Medias do conjunto de 700000 dados - Trocas: 5683834, Comparacoes: 260417478 e Tempo: 726.05
+Medias do conjunto de 1000000 dados - Trocas: 8166955, Comparacoes: -331843443 e Tempo: 1396.96
+
+Cenario2
+Quicksort Mediana
+Medias do conjunto de 1000 dados - Trocas: 7119, Comparacoes: 14998 e Tempo: 0.999
+Medias do conjunto de 5000 dados - Trocas: 40104, Comparacoes: 104289 e Tempo: 2.997
+Medias do conjunto de 10000 dados - Trocas: 85690, Comparacoes: 240723 e Tempo: 3.997
+Medias do conjunto de 50000 dados - Trocas: 480532, Comparacoes: 2281871 e Tempo: 15.989
+Medias do conjunto de 100000 dados - Trocas: 1002516, Comparacoes: 7043577 e Tempo: 35.18
+Medias do conjunto de 500000 dados - Trocas: 5534561, Comparacoes: 125229658 e Tempo: 387.677
+Medias do conjunto de 700000 dados - Trocas: 7497818, Comparacoes: 252178801 e Tempo: 715.285
+Medias do conjunto de 1000000 dados - Trocas: 10328906, Comparacoes: -345257074 e Tempo: 1382.05
+
+Cenario2
+Quicksort Insert
+Medias do conjunto de 1000 dados - Trocas: 4605, Comparacoes: 10245 e Tempo: 0.799
+Medias do conjunto de 5000 dados - Trocas: 31726, Comparacoes: 74551 e Tempo: 3.398
+Medias do conjunto de 10000 dados - Trocas: 61854, Comparacoes: 178907 e Tempo: 4.198
+Medias do conjunto de 50000 dados - Trocas: 371442, Comparacoes: 1937796 e Tempo: 13.056
+Medias do conjunto de 100000 dados - Trocas: 754428, Comparacoes: 6286357 e Tempo: 32.515
+Medias do conjunto de 500000 dados - Trocas: 3976462, Comparacoes: 121654704 e Tempo: 347.84
+Medias do conjunto de 700000 dados - Trocas: 5835976, Comparacoes: 247979527 e Tempo: 683.144
+Medias do conjunto de 1000000 dados - Trocas: 8056190, Comparacoes: -352791411 e Tempo: 1290.6
+
+Cenario2
+Quicksort Insert
+Medias do conjunto de 1000 dados - Trocas: 4531, Comparacoes: 8797 e Tempo: 1.199
+Medias do conjunto de 5000 dados - Trocas: 23778, Comparacoes: 49762 e Tempo: 1.598
+Medias do conjunto de 10000 dados - Trocas: 54241, Comparacoes: 115507 e Tempo: 4.199
+Medias do conjunto de 50000 dados - Trocas: 308423, Comparacoes: 1159801 e Tempo: 9.193
+Medias do conjunto de 100000 dados - Trocas: 652284, Comparacoes: 4535094 e Tempo: 23.02
+Medias do conjunto de 500000 dados - Trocas: 3732033, Comparacoes: 113778219 e Tempo: 324.664
+Medias do conjunto de 700000 dados - Trocas: 5131402, Comparacoes: 237848201 e Tempo: 633.002
+Medias do conjunto de 1000000 dados - Trocas: 8163014, Comparacoes: -365363112 e Tempo: 1258.52
+
