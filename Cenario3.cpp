@@ -109,10 +109,10 @@ void quickSort(int *vet, int n, int *vetdados) {
 
 void countingSort(int* vet, int n)
 {
-    int vetOcorrencias[13170074]; // 272409 maior ID do arquivo
+    int vetOcorrencias[13170075]; // 272409 maior ID do arquivo
     int* vetAux = new int[n];
 
-    for(int i = 0 ; i < 13170074 ; i++)
+    for(int i = 0 ; i < 13170075 ; i++)
     {
         vetOcorrencias[i] = 0; 
     } // zerando todas as ocorrencias no vetor de ocorrencias
@@ -122,7 +122,7 @@ void countingSort(int* vet, int n)
         (vetOcorrencias[vet[i]])++; 
     } // vou na posicao do vetOcorrencias referente ao ID do vet e incremento 1 na ocorrencia dele
 
-    for(int i = 1 ; i < 13170074 ; i++)
+    for(int i = 1 ; i < 13170075 ; i++)
     {
         vetOcorrencias[i] += vetOcorrencias[i-1]; 
     } // somo as ocorrencias para saber quantos elementos sao menores ou iguais ao elemento i
