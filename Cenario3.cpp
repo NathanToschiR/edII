@@ -107,12 +107,12 @@ void quickSort(int *vet, int n, int *vetdados) {
 
 // ---------------------------------------------------------------------- COUNTINGSORT ----------------------------------------------------------------------
 
-int* countingSort(int* vet, int n)
+void countingSort(int* vet, int n)
 {
-    int vetOcorrencias[272409]; // 272409 maior ID do arquivo
+    int vetOcorrencias[13170074]; // 272409 maior ID do arquivo
     int* vetAux = new int[n];
 
-    for(int i = 0 ; i < 272409 ; i++)
+    for(int i = 0 ; i < 13170074 ; i++)
     {
         vetOcorrencias[i] = 0; 
     } // zerando todas as ocorrencias no vetor de ocorrencias
@@ -122,23 +122,28 @@ int* countingSort(int* vet, int n)
         (vetOcorrencias[vet[i]])++; 
     } // vou na posicao do vetOcorrencias referente ao ID do vet e incremento 1 na ocorrencia dele
 
-    for(int i = 1 ; i < 272409 ; i++)
+    for(int i = 1 ; i < 13170074 ; i++)
     {
         vetOcorrencias[i] += vetOcorrencias[i-1]; 
     } // somo as ocorrencias para saber quantos elementos sao menores ou iguais ao elemento i
 
-    for(int i = 272408 ; i >= 0 ; i--)
+    for(int i = n ; i >= 0 ; i--)
     {
         vetAux[vetOcorrencias[vet[i]]-1] = vet[i]; // vet[i]-1 pois o vetor vai do indice 0 a n-1
         vetOcorrencias[vet[i]]--; // decremeneto um na ocorrencia do elemento pois ja inseri ele no vetAux
-    } 
+    }
 
-    return vetAux;
+    for(int i = 0 ; i < n ; i++)
+    {
+        vet[i] = vetAux[i];
+    }
+
+    delete [] vetAux;
 }
 
 // --------------------------------------------------------------------INSERTIONSORT -----------------------------------------------------------------------
 
-void insertionSort(int *vet, int n, long *vetdados) {
+void insertionSort(int *vet, int n, unsigned int *vetdados) {
     int comp = 0;
     int troca = 0;
     for(int i = 1; i < n ; i++)
@@ -209,7 +214,7 @@ void auxMergeSort(int *vet, int inicio, int fim, int *vet1, int* comp) {
     }
 }
 
-void MergeSort(int *vet, int n, long* vetdados) {
+void MergeSort(int *vet, int n, unsigned int* vetdados) {
     int comp = 0;
     int vet1[n];
     auxMergeSort(vet, 0, n - 1, vet1, &comp);
@@ -247,7 +252,7 @@ void BuildMaxHeap(int* vet, int n, int* comp, int* troca) {
   }
 }
 
-void HeapSort(int* vet, int n, long *vetdados) {
+void HeapSort(int* vet, int n, unsigned int *vetdados) {
     int troca = 0;
     int comp = 0;
     BuildMaxHeap(vet, n, &comp, &troca);
@@ -314,7 +319,7 @@ void auxQuickSortInsertion(int *vet, int p, int n, int m, int *comp, int* troca)
     }
 }
 
-void quickSortInsertion(int *vet, int n, long *vetdados, int m) {
+void quickSortInsertion(int *vet, int n, unsigned int *vetdados, int m) {
     int comp = 0;
     int troca = 0;
     auxQuickSortInsertion(vet, 0, n, m, &comp, &troca);
@@ -326,7 +331,7 @@ void quickSortInsertion(int *vet, int n, long *vetdados, int m) {
 
 // ---------------------------------------------------------------------- LEITURA E CHAMADA ----------------------------------------------------------------
 
-void medias2(int grupo, long *vetDados, int *vetConj, int q, int* vetAux){
+void medias2(int grupo, unsigned int *vetDados, int *vetConj, int q, int* vetAux){
 
     cout << "Entrou no media" << endl;
     int r;
@@ -434,7 +439,7 @@ void analisaCenario3(int *vetregistro, int q, int* vetAux){
     cout << "Teste1.\n";
 
     int x;
-    long vetData[3];
+    unsigned int vetData[3];
     int i, j;
 
     saida << "Cenario 3\n";
