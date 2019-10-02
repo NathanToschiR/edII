@@ -95,7 +95,7 @@ void auxQuickSort(int *vet, int p, int n, int *comp, int* troca)
     }
 }
 
-void quickSort(int *vet, int n, int *vetdados) {
+void quickSort(int *vet, int n, unsigned int *vetdados) {
     int comp = 0;
     int troca = 0;
     auxQuickSort(vet, 0, n, &comp, &troca);
@@ -216,7 +216,7 @@ void auxQuickSortMediana5(int *vet, int p, int n, int *comp, int* troca)
     }
 }
 
-void quickSortMediana(int *vet, int n, int *vetdados, int m) {
+void quickSortMediana(int *vet, int n, unsigned int *vetdados, int m) {
     int comp = 0;
     int troca = 0;
     if(m == 3){
@@ -282,7 +282,7 @@ void auxQuickSortInsertion(int *vet, int p, int n, int m, int *comp, int* troca)
     }
 }
 
-void quickSortInsertion(int *vet, int n, int *vetdados, int m) {
+void quickSortInsertion(int *vet, int n, unsigned int *vetdados, int m) {
     int comp = 0;
     int troca = 0;
     auxQuickSortInsertion(vet, 0, n, m, &comp, &troca);
@@ -294,7 +294,7 @@ void quickSortInsertion(int *vet, int n, int *vetdados, int m) {
 
 // ---------------------------------------------------------------------- LEITURA E CHAMADA ----------------------------------------------------------------
 
-void medias2(int grupo, int *vetDados, int *vetConj, int q, int v, int* vetAux){
+void medias2(int grupo, unsigned int *vetDados, int *vetConj, int q, int v, int* vetAux){
     int r;
     int c = 0;
 
@@ -388,7 +388,7 @@ void analisaCenario2(int *vetregistro, int q, int v, int* vetAux){
     }
 
     int x;
-    int vetData[3];
+    unsigned int vetData[3];
     int i, j;
 
     saida << "Cenario2\n";
