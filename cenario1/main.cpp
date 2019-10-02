@@ -106,15 +106,12 @@ void quickSort(int *vet, int n, int *vetdados) {
 }
 
 void medias11(int grupo, int *vetDados, int *vetConj){
-
-    cout << "Entrou no media" << endl;
     int r;
     int c = 0;
     cout << "Grupo: " << grupo << endl;
     int teste[grupo];
 
     for(int i = 0; i < 5; i++){              //ele deve fazer isso 5 vezes, como pedido
-        cout << "Entrou no For " << i+1 << " do media" << endl;
         c = 0;
         while(c < grupo) {                 //preenche o vetor com valores aleatorios referente a entrada
             r = randomLarge(506542);
@@ -128,17 +125,11 @@ void medias11(int grupo, int *vetDados, int *vetConj){
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
         vetDados[2] = vetDados[2] + duration;
         cout << "\n";
-        /*for(int j = 0; j < grupo; j++){
-            cout << teste[j] << " ";
-        }*/
-
     }
 
-    cout << "\nSaiu do for analisa" << endl;
     vetDados[0] = vetDados[0]/5.0;  //divide todos por 5 para fazer a m�dia
     vetDados[1] = vetDados[1]/5.0;
     vetDados[2] = vetDados[2]/5.0;
-    cout << "vai sair do analisa" << endl;
 
     return;
 }
@@ -196,8 +187,6 @@ void analisaCenario11(int *vetregistro){
         getline(entrada, enes);
     }
 
-    cout << "Teste1.\n";
-
     int x;
     int vetData[3];
     int i, j;
@@ -205,12 +194,10 @@ void analisaCenario11(int *vetregistro){
     saida << "Cenario11\n";
 
     for(i = 0; i < k; i++){          //para cada conjunto, a analise sera feita
-        cout << "\nFor numero " << i << endl;
         for(j = 0; j < 3; j++){
             vetData[j] = 0;         //zera o vetor de dados
         }
         medias11(N[i], vetData, vetregistro);   //lança na funcao que retornarao as medias
-        cout << "saiu do media";
         saida << "Medias do conjunto de " << N[i] << " dados - Trocas: " << vetData[0] << ", Comparacoes: "
         << vetData[1] << " e Tempo: " << (double)vetData[2]/1000 << "\n";  //imprime no arquivo
     }
@@ -310,14 +297,12 @@ void quickSortStruct(userRatingId *vet, int n, int *vetdados) {
 }
 
 void medias12(int grupo, int *vetDados, userRatingId *vetConj){
-    cout << "Entrou no media" << endl;
     int r;
     int c = 0;
     cout << "Grupo: " << grupo << endl;
     userRatingId* testestruct = new userRatingId [grupo];
 
     for(int i = 0; i < 5; i++){              //ele deve fazer isso 5 vezes, como pedido
-        cout << "Entrou no For " << i+1 << " do media" << endl;
         c = 0;
         while(c < grupo){
             r = randomLarge(506542);
@@ -332,11 +317,9 @@ void medias12(int grupo, int *vetDados, userRatingId *vetConj){
         cout << "\n";
     }
 
-    cout << "Saiu do for analisa" << endl;
     vetDados[0] = vetDados[0]/5.0;  //divide todos por 5 para fazer a media
     vetDados[1] = vetDados[1]/5.0;
     vetDados[2] = vetDados[2]/5.0;
-    cout << "vai sair do analisa" << endl;
 
     delete [] testestruct;
 
@@ -400,8 +383,6 @@ void analisaCenario12(userRatingId *vetregistro){
         getline(entrada, enes);
     }
 
-    cout << "Teste1.\n";
-
     int x;
     int vetData[3];
     int i, j;
@@ -409,12 +390,10 @@ void analisaCenario12(userRatingId *vetregistro){
     saida << "Cenario12\n";
 
     for(i = 0; i < k; i++){          //para cada conjunto, a analise sera feita
-        cout << "For numero " << i << endl;
         for(j = 0; j < 3; j++){
             vetData[j] = 0;         //zera o vetor de dados
         }
         medias12(N[i], vetData, vetregistro);   //lança na funcao que retornarao as medias
-        cout << "saiu do media";
         saida << "Medias do conjunto de " << N[i] << " dados - Trocas: " << vetData[0] << ", Comparacoes: "
         << vetData[1] << " e Tempo: " << (double)vetData[2]/1000 << "\n";  //imprime no arquivo
     }
