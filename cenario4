@@ -149,7 +149,7 @@ void inserirEncadeamentoCoalescido(userId* vet, int nVet, unsigned long* vetDado
     int N = primoPosterior(nVet);
     userIdCoalescido* hash = new userIdCoalescido [N];
     inicializarHashCoalescido(hash, N);
-    int user;
+    unsigned long user;
 
     for(int i = 0 ; i < nVet ; i++)
     {
@@ -157,11 +157,11 @@ void inserirEncadeamentoCoalescido(userId* vet, int nVet, unsigned long* vetDado
         {
             user = vet[i].user[z] + user;
         }
-        int chave = user + vet[i].id;
+        unsigned long chave = user + vet[i].id;
         int posicao = chave % N;
         int posicaoAnterior;
         int j = N-1; // tamanho no vetor
-        int compar = 0;
+        unsigned long compar = 0;
 
         if(hash[posicao].id[1] >= -1)
         {
@@ -195,12 +195,12 @@ void inserirEncadeamentoCoalescido(userId* vet, int nVet, unsigned long* vetDado
         vetDados[0] = vetDados[0] + compar;
     }
 
-    double memoriaUtilizada = N*4/(1024*1024);
+    double memoriaUtilizada = N*4/(1024);
     vetDados[1] = vetDados[1] + memoriaUtilizada;
 
     // como int tem 32 bits e N é o numero de elementos int que tem no vetor, N*32 é a quantidade
     // de bits que o vetor ocupa, como 1 byte = 8 bits, N*32/8 = N*4 é a quantidade de bytes que o vetor ocupa
-    // N*4/(1024*1024) é a quantidade em megabytes que o vetor ocupa
+    // N*4/(1024) é a quantidade em kilobytes que o vetor ocupa
 
     delete [] hash;
 }
@@ -212,7 +212,7 @@ void inserirEnderecamentoLinear(userId* vet, int nVet, unsigned long* vetDados)
     int N = primoPosterior(nVet);
     userId* hash = new userId [N];
     inicializarHash(hash, N);
-    int user;
+    unsigned long user;
 
     for(int i = 0 ; i < nVet ; i++)
     {
@@ -221,10 +221,10 @@ void inserirEnderecamentoLinear(userId* vet, int nVet, unsigned long* vetDados)
             user = vet[i].user[z] + user;
         }
         
-        int chave = vet[i].id + user;
+        unsigned long chave = vet[i].id + user;
         int posicao = chave % N;
-        int j = 1;
-        int compar = 0;
+        unsigned long j = 1;
+        unsigned long compar = 0;
 
         if(hash[posicao].id == -1)
             compar++;
@@ -242,7 +242,7 @@ void inserirEnderecamentoLinear(userId* vet, int nVet, unsigned long* vetDados)
         hash[posicao].user = vet[i].user;
         vetDados[0] = vetDados[0] + compar;
     }
-    double memoriaUtilizada = N*4/(1024*1024);
+    double memoriaUtilizada = N*4/(1024);
     vetDados[1] = vetDados[1] + memoriaUtilizada;
 
     delete [] hash;
@@ -255,7 +255,7 @@ void inserirDoubleHashing(userId* vet, int nVet, unsigned long* vetDados)
     userId* hash = new userId [N];
     inicializarHash(hash, N);
     int user;
-
+    
     for(int i = 0 ; i < nVet ; i++)
     {
         for(int z = 0 ; z < vet[i].user.length() ; z++)
@@ -271,7 +271,6 @@ void inserirDoubleHashing(userId* vet, int nVet, unsigned long* vetDados)
         while(hash[posicao].id != -1)
         {
             compar++;
-            colisoes++;
             posicao = ((chave % N) + (colisoes*(primoAnt - (chave % primoAnt)))) % N;
         } // colisoes
 
@@ -279,7 +278,7 @@ void inserirDoubleHashing(userId* vet, int nVet, unsigned long* vetDados)
         hash[posicao].user = vet[i].user;
         vetDados[0] = vetDados[0] + compar;
     }
-    double memoriaUtilizada = N*4/(1024*1024);
+    double memoriaUtilizada = N*4/(1024);
     vetDados[1] = vetDados[1] + memoriaUtilizada;
 
     delete [] hash;
@@ -299,10 +298,10 @@ void inserirQuadratico(userId* vet, int nVet, unsigned long* vetDados)
         {
             user = vet[i].user[z] + user;
         }
-        int chave = vet[i].id + user;
+        unsigned long chave = vet[i].id + user;
         int posicao = chave % N;
-        int j = 1;
-        int compar = 0;
+        unsigned long j = 1;
+        unsigned long compar = 0;
 
         if(hash[posicao].id == -1)
             compar++;
@@ -319,7 +318,7 @@ void inserirQuadratico(userId* vet, int nVet, unsigned long* vetDados)
         hash[posicao].user = vet[i].user;
         vetDados[0] = vetDados[0] + compar;
     }
-    double memoriaUtilizada = N*4/(1024*1024);
+    double memoriaUtilizada = N*4/(1024);
     vetDados[1] = vetDados[1] + memoriaUtilizada;
 
     delete [] hash;
@@ -369,7 +368,8 @@ void inserirSeparado(userId* vet, int nVet, unsigned int* vetDados){
 void testeLeituraStruct(fstream* leitura, userId* vetorStruct, int i)
 {
     string str;
-    getline(*leitura, str, ',');
+    getline(*leitura, str, ','); // id da avaliacao
+    vetorStruct[i].id = stoi(str);
     getline(*leitura, str, ',');
     vetorStruct[i].user = str;
     if (checagem(str))
@@ -377,27 +377,6 @@ void testeLeituraStruct(fstream* leitura, userId* vetorStruct, int i)
         getline(*leitura, str, ',');
         vetorStruct[i].user = vetorStruct[i].user + str;
     }
-    getline(*leitura, str, ',');
-
-    getline(*leitura, str, ',');
-    if(str[0] == '"')
-    {
-        if (checagem(str)) 
-        {
-            getline(*leitura, str, '"');
-            getline(*leitura, str, ',');
-            if (checagem(str))
-            {
-                while (checagem(str)) 
-                {
-                    getline(*leitura, str, '"');
-                    getline(*leitura, str, ',');
-                }
-            }
-        }
-    } 
-    getline(*leitura, str, ',');
-    vetorStruct[i].id = stoi(str);
     getline(*leitura, str);
 }
 
@@ -419,7 +398,6 @@ void medias4(int grupo, unsigned long *vetDados, userId *vetRegistro, int q, use
             trocarStruct(&vetRegistro[r], &vetRegistro[506542 - c]);
             c++;
         }
-        cout << "saiu for";
         cout << endl;
 
         switch (q) {
@@ -432,9 +410,9 @@ void medias4(int grupo, unsigned long *vetDados, userId *vetRegistro, int q, use
             case 3:
                 inserirDoubleHashing(vetAux, grupo, vetDados);
                 break;
-            case 4:
+            //case 4:
                 //inserirSeparado(vetAux, grupo, vetDados);
-                break;
+                //break;
             case 5:
                 inserirEncadeamentoCoalescido(vetAux, grupo, vetDados);
                 break;
@@ -502,7 +480,7 @@ void analisaCenario4(userId *vetRegistro, int q, userId* vetAux){
         medias4(N[i], vetDados, vetRegistro, q, vetAux);   // lança na funcao que retornarao as medias
         cout << "saiu do media";
         saida << "Medias do conjunto de " << N[i] << " dados - Comparacoes: " << vetDados[0] << ", Memoria utilizada: " 
-        << (double)vetDados[1] << "\n";  // imprime no arquivo
+        << (double)vetDados[1] << " kb\n";  // imprime no arquivo
     }
 
     saida << endl;
