@@ -5,6 +5,7 @@ No::No()
 {
     prox = NULL;
     id = -1;
+    user = "";
 }
 
 No::~No()

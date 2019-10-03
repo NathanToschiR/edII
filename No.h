@@ -3,7 +3,7 @@
 #include <string>
 #include <string.h>
 
-using std::string;
+using namespace std;
 
 #ifndef NO_H
 #define NO_H
