@@ -41,22 +41,6 @@ void trocar(int* a, int* b)
     *b = aux;
 } // criada função troca para simplificar os códigos
 
-bool checagem(string str) {
-    if (str.length() == 0)
-        return 0;
-    else {
-        int cont = 0;
-        for (int i = 0; i < str.length(); i++) {
-            if (str[i] == '"')
-            cont++;
-        }
-        if (cont % 2 == 0)
-            return 0;
-        else
-            return 1;
-    }
-}
-
 // -------------------------------------------------------------- QUICKSORT RECURSIVO ---------------------------------------------------------------------
 
 void auxQuickSort(int *vet, int p, int n, int *comp, int* troca)
@@ -301,10 +285,10 @@ void medias2(int grupo, unsigned int *vetDados, int *vetConj, int q, int v, int*
     for(int i = 0; i < 5; i++){              //ele deve fazer isso 5 vezes, como pedido
         c = 0;
         while(c < grupo) {                 //preenche o vetor com valores aleatorios referente a entrada
-            r = randomLarge(1013084);
-            vetAux[c] = vetConj[r];
-            trocar(&vetConj[r], &vetConj[1013084 - c]);
-            c++;
+            r = randomLarge(1013081 - c);                  // Para nao haver repeticoes no vetor que iremos ordenar (vetAux), quando geramos um numero
+            vetAux[c] = vetConj[r];                        // aleatorio, passamos o elemento correspondente a essa posicao para vetAux e trocamos este elemento,
+            trocar(&vetConj[r], &vetConj[1013081 - c]);    // no vetConj, com o ultimo elemento do vetor e geramos um numero aleatorio entre 0 e 1013082 - c,
+            c++;                                           // para q nao coletemos o mesmo valor uma outra vez
         }
         cout << endl;
         auto t1 = std::chrono::high_resolution_clock::now();    //comeca a contar
@@ -327,43 +311,11 @@ void medias2(int grupo, unsigned int *vetDados, int *vetConj, int q, int v, int*
 
     }
 
-    vetDados[0] = vetDados[0]/5.0;  //divide todos por 5 para fazer a m�dia
+    vetDados[0] = vetDados[0]/5.0;  //divide todos por 5 para fazer a media
     vetDados[1] = vetDados[1]/5.0;
     vetDados[2] = vetDados[2]/5.0;
 
     return;
-}
-
-int testeLeitura(fstream* leitura) {
-    string str;
-    getline(*leitura, str, ',');
-    getline(*leitura, str, ',');
-    if (checagem(str))
-    {
-        getline(*leitura, str, ',');
-    }
-    getline(*leitura, str, ',');
-    getline(*leitura, str, ',');
-    if(str[0] == '"')
-    {
-        if (checagem(str))
-        {
-            getline(*leitura, str, '"');
-            getline(*leitura, str, ',');
-            if (checagem(str))
-            {
-                while (checagem(str))
-                {
-                    getline(*leitura, str, '"');
-                    getline(*leitura, str, ',');
-                }
-            }
-        }
-    }
-    getline(*leitura, str, ',');
-    int ID = stoi(str); // -std=c++11
-    getline(*leitura, str);
-    return ID;
 }
 
 void analisaCenario2(int *vetregistro, int q, int v, int* vetAux){
@@ -397,10 +349,18 @@ void analisaCenario2(int *vetregistro, int q, int v, int* vetAux){
             saida << "Quicksort Recursivo" << endl;
             break;
         case 2:
-            saida << "Quicksort Mediana" << endl;
+            saida << "Quicksort Mediana";
+            if (v == 3)
+                saida << " k = 3" << endl;
+            else
+                saida << " k = 5" << endl;
             break;
         case 3:
-            saida << "Quicksort Insert" << endl;
+            saida << "Quicksort Insert";
+            if (v == 10)
+                saida << " m = 10" << endl;
+            else
+                saida << " m = 100" << endl;
             break;
     }
 
@@ -420,7 +380,7 @@ void analisaCenario2(int *vetregistro, int q, int v, int* vetAux){
 void cenario2(int q, int v, int* vetAux)
 {
     fstream leitura("bgg-13m-reviews.csv");
-    int* vetArc = new int[1013084];
+    int* vetArc = new int[1013082];
 
     if(leitura.is_open()) // leitura do arquivo "bgg-13m-reviews.csv"
     {
@@ -428,17 +388,16 @@ void cenario2(int q, int v, int* vetAux)
         int aleatorio;
         string str;
         getline(leitura, str); // getline para passar pela primeira linha de referência
-        for (j; j < 1013082; j++)
+        for (j; j < 1013081; j++)
         {
             aleatorio = random(0, 12);
-            for (int k = 0; k < aleatorio; k++)
-            {
-                getline(leitura, str);  // joga as linhas fora (antes da linha sortida de cada bloco)
-            }
-            vetArc[j] = testeLeitura(&leitura);
-            for (int k = aleatorio + 1; k < 13; k++)
-            {
-                getline(leitura, str);  // joga as linhas fora (depois da linha sortida de cada bloco)
+            for (int k = 0; k < 13; k++) {
+                if (k == aleatorio) {
+                    getline(leitura, str, ',');
+                    vetArc[j] = stoi(str);
+                }
+                else
+                    getline(leitura, str);
             }
         }
         aleatorio = random(0, 7);
@@ -446,8 +405,8 @@ void cenario2(int q, int v, int* vetAux)
         {
             getline(leitura, str);  // joga as linhas fora (antes da linha sortida de cada bloco)
         }
-        vetArc[j] = testeLeitura(&leitura);
-
+        getline(leitura, str, ',');
+        vetArc[j] = stoi(str);
 
         analisaCenario2(vetArc, q, v, vetAux);
     } else {
@@ -488,7 +447,7 @@ int main()
             break;
       }
 
-
+    cout << "ACABOU!!!" << endl;
     delete [] vetAux;
     return 0;
 }
