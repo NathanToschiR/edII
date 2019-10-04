@@ -10,9 +10,8 @@ using namespace std;
 
 // ------------------------------------------------------------ FUNCOES AUXILIARES ------------------------------------------------------------------
 
-struct userRatingId {
+struct userId {
     string user;
-    float rating;
     int id;
 } ;
 
@@ -25,7 +24,7 @@ int random(int min, int max)
     return num;
 }
 
-int randomLarge(int max)
+int randomLarge(int max)  // Funcao que nos permite pegar um numero aleatorio entre 0 e 506541
 {
     int num;
     num = ((rand() * rand() ) % max);
@@ -40,6 +39,14 @@ void trocar(int* a, int* b)
     *a = *b;
     *b = aux;
 } // criada função troca para simplificar os códigos
+
+void trocarStruct(userId* a, userId* b)
+{
+    userId aux;
+    aux = *a;
+    *a = *b;
+    *b = aux;
+}
 
 bool checagem(string str) {
     if (str.length() == 0)
@@ -59,7 +66,7 @@ bool checagem(string str) {
 
 // ------------------------------------- CENARIO 1 - PARTE 1 - TIPO DE DADOS: VETOR DE INTEIROS (ID) ------------------------------------------------------------------
 
-void auxQuickSort(int *vet, int p, int n, int *comp, int* troca)
+void auxQuickSort(int *vet, int p, int n, int *comp, int* troca) // p é o inicio e n o numero de elementos em cada chamada recursiva do QuickSort 
 {
     if (n == 2)
     {
@@ -86,7 +93,7 @@ void auxQuickSort(int *vet, int p, int n, int *comp, int* troca)
                 i++;
             }
         }
-        *comp = *comp + n - 1;
+        *comp = *comp + n - 1;    // O numero de comparaçoes a cada chamada recursiva depende apenas do numero de elementos atual (n - 1 comparacoes)
         vet[p + n - 1] = vet[i];
         vet[i] = r;
         (*troca)++;
@@ -105,22 +112,25 @@ void quickSort(int *vet, int n, int *vetdados) {
     vetdados[1] = comp + vetdados[1];
 }
 
-void medias11(int grupo, int *vetDados, int *vetConj){
+void medias11(int grupo, int *vetDados, int *vetConj){ // Grupo representa o N (1000, 5000, 10000, 500000, 100000 e 500000)
     int r;
     int c = 0;
     cout << "Grupo: " << grupo << endl;
-    int teste[grupo];
+    int vet[grupo];
 
-    for(int i = 0; i < 5; i++){              //ele deve fazer isso 5 vezes, como pedido
+    for(int i = 0; i < 5; i++){              //ele deve fazer isso 5 vezes, como pedido, para coletar a media
         c = 0;
         while(c < grupo) {                 //preenche o vetor com valores aleatorios referente a entrada
-            r = randomLarge(506542);
-            teste[c] = vetConj[r];
-            c++;
+            r = randomLarge(506541 - c);                  // Para nao haver repeticoes no vetor que iremos ordenar (vetAux), quando geramos um numero
+            vet[c] = vetConj[r];                        // aleatorio, passamos o elemento correspondente a essa posicao para vetAux e trocamos este elemento,
+            trocar(&vetConj[r], &vetConj[506541 - c]);    // no vetConj, com o ultimo elemento do vetor e geramos um numero aleatorio entre 0 e 1013082 - c,
+            c++;                                          // para q nao coletemos o mesmo valor uma outra vez
         }
         cout << endl;
         auto t1 = std::chrono::high_resolution_clock::now();    //comeca a contar
-        quickSort(teste, grupo, vetDados);
+
+        quickSort(vet, grupo, vetDados);
+
         auto t2 = std::chrono::high_resolution_clock::now();    //termina de contar
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
         vetDados[2] = vetDados[2] + duration;
@@ -134,38 +144,6 @@ void medias11(int grupo, int *vetDados, int *vetConj){
     return;
 }
 
-int testeLeitura(fstream* leitura) {
-    string str;
-    getline(*leitura, str, ',');
-    getline(*leitura, str, ',');
-    if (checagem(str))
-    {
-        getline(*leitura, str, ',');
-    }
-    getline(*leitura, str, ',');
-    getline(*leitura, str, ',');
-    if(str[0] == '"')
-    {
-        if (checagem(str))
-        {
-            getline(*leitura, str, '"');
-            getline(*leitura, str, ',');
-            if (checagem(str))
-            {
-                while (checagem(str))
-                {
-                    getline(*leitura, str, '"');
-                    getline(*leitura, str, ',');
-                }
-            }
-        }
-    }
-    getline(*leitura, str, ',');
-    int ID = stoi(str); // -std=c++11
-    getline(*leitura, str);
-    return ID;
-}
-
 void analisaCenario11(int *vetregistro){
 
     fstream entrada("entrada.txt");
@@ -174,32 +152,32 @@ void analisaCenario11(int *vetregistro){
     string enes, conj;
     int k = 0;
 
-    getline(entrada, conj);                     //descobre quantos conjuntos serão gerados
-    int grupo = stoi(conj);
-    cout << "\nConjunto: " << grupo << endl;
-    int N[grupo];
+    getline(entrada, conj);                     //le o numero de conjuntos que serao gerados a partir do arquivo de entrada
+    int numGrupos = stoi(conj);
+    cout << "\nConjunto: " << numGrupos << endl;
+    int N[numGrupos];
 
-    getline(entrada, enes);             //cria um vetor com a quantidade que cada conjunto deverá ter
-    while(grupo > 0){
+    getline(entrada, enes);             //cria um vetor com a quantidade que cada conjunto deverá ter (N[0] = 1000, N[1] = 5000, ...)
+    while(numGrupos > 0){
         N[k] = stoi(enes);
-        grupo--;
+        numGrupos--;
         k++;
         getline(entrada, enes);
     }
 
     int x;
-    int vetData[3];
+    int vetDados[3]; // Vetor que armazena as metricas (numero de comparacoes e trocas, tempo)
     int i, j;
 
     saida << "Cenario11\n";
 
     for(i = 0; i < k; i++){          //para cada conjunto, a analise sera feita
         for(j = 0; j < 3; j++){
-            vetData[j] = 0;         //zera o vetor de dados
+            vetDados[j] = 0;         //zera o vetor de dados
         }
-        medias11(N[i], vetData, vetregistro);   //lança na funcao que retornarao as medias
-        saida << "Medias do conjunto de " << N[i] << " dados - Trocas: " << vetData[0] << ", Comparacoes: "
-        << vetData[1] << " e Tempo: " << (double)vetData[2]/1000 << "\n";  //imprime no arquivo
+        medias11(N[i], vetDados, vetregistro);   //lança na funcao que retornarao as medias
+        saida << "Medias do conjunto de " << N[i] << " dados - Trocas: " << vetDados[0] << ", Comparacoes: "
+        << vetDados[1] << " e Tempo: " << (double)vetDados[2]/1000 << "\n";  //imprime no arquivo de saida
     }
 
     saida << endl;
@@ -209,7 +187,7 @@ void analisaCenario11(int *vetregistro){
 void cenario11()
 {
     fstream leitura("bgg-13m-reviews.csv");
-    int* vetArc = new int[506542];
+    int* vetConj = new int[506542];
 
     if(leitura.is_open()) // leitura do arquivo "bgg-13m-reviews.csv"
     {
@@ -220,14 +198,13 @@ void cenario11()
         for (j; j < 506541; j++)
         {
             aleatorio = random(0, 25);
-            for (int k = 0; k < aleatorio; k++)
-            {
-                getline(leitura, str);  // joga as linhas fora (antes da linha sortida de cada bloco)
-            }
-            vetArc[j] = testeLeitura(&leitura);
-            for (int k = aleatorio + 1; k < 26; k++)
-            {
-                getline(leitura, str);  // joga as linhas fora (depois da linha sortida de cada bloco)
+            for (int k = 0; k < 26; k++) {
+                if (k == aleatorio) {
+                    getline(leitura, str, ',');
+                    vetConj[j] = stoi(str);
+                }
+                else
+                    getline(leitura, str);
             }
         }
         aleatorio = random(0, 7);
@@ -235,22 +212,23 @@ void cenario11()
         {
             getline(leitura, str);  // joga as linhas fora (antes da linha sortida de cada bloco)
         }
-        vetArc[j] = testeLeitura(&leitura);
+        getline(leitura, str, ',');
+        vetConj[j] = stoi(str);
 
 
-        analisaCenario11(vetArc);
+        analisaCenario11(vetConj);
     } else {
         cout << "ERRO: NAO FOI POSSIVEL ABRIR O ARQUIVO .CSV";
     }
 
-    delete [] vetArc;
+    delete [] vetConj;
 
     leitura.close();
 }
 
 // ------------------------------------- CENARIO 1 - PARTE 2 - TIPO DE DADOS: VETOR DE STRUCTS (USER, RATING, ID) ------------------------------------------------------
 
-void auxQuickSortStruct(userRatingId *vet, int p, int n, int *comp, int* troca)
+void auxQuickSortStruct(userId *vet, int p, int n, int *comp, int* troca)
 {
     if (n == 2)
     {
@@ -286,7 +264,7 @@ void auxQuickSortStruct(userRatingId *vet, int p, int n, int *comp, int* troca)
     }
 }
 
-void quickSortStruct(userRatingId *vet, int n, int *vetdados) {
+void quickSortStruct(userId *vet, int n, int *vetdados) {
     int comp = 0;
     int troca = 0;
     auxQuickSortStruct(vet, 0, n, &comp, &troca);
@@ -296,21 +274,22 @@ void quickSortStruct(userRatingId *vet, int n, int *vetdados) {
     vetdados[1] = comp + vetdados[1];
 }
 
-void medias12(int grupo, int *vetDados, userRatingId *vetConj){
+void medias12(int grupo, int *vetDados, userId *vetConj){
     int r;
     int c = 0;
     cout << "Grupo: " << grupo << endl;
-    userRatingId* testestruct = new userRatingId [grupo];
+    userId* vetStruct = new userId [grupo];
 
     for(int i = 0; i < 5; i++){              //ele deve fazer isso 5 vezes, como pedido
         c = 0;
-        while(c < grupo){
-            r = randomLarge(506542);
-            testestruct[c] = vetConj[r];
-            c++;
+        while(c < grupo) {                 //preenche o vetor com valores aleatorios referente a entrada
+            r = randomLarge(506541 - c);                  // Para nao haver repeticoes no vetor que iremos ordenar (vetAux), quando geramos um numero
+            vetStruct[c] = vetConj[r];                  // aleatorio, passamos o elemento correspondente a essa posicao para vetAux e trocamos este elemento,
+            trocarStruct(&vetConj[r], &vetConj[506541 - c]);    // no vetConj, com o ultimo elemento do vetor e geramos um numero aleatorio entre 0 e 1013082 - c,
+            c++;                                          // para q nao coletemos o mesmo valor uma outra vez
         }
         auto t1 = std::chrono::high_resolution_clock::now();    //comeca a contar o tempo
-        quickSortStruct(testestruct, c, vetDados);
+        quickSortStruct(vetStruct, c, vetDados);
         auto t2 = std::chrono::high_resolution_clock::now();    //termina de contar
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
         vetDados[2] = vetDados[2] + duration;
@@ -321,48 +300,27 @@ void medias12(int grupo, int *vetDados, userRatingId *vetConj){
     vetDados[1] = vetDados[1]/5.0;
     vetDados[2] = vetDados[2]/5.0;
 
-    delete [] testestruct;
+    delete [] vetStruct;
 
     return;
 }
 
-void testeLeituraStruct(fstream* leitura, userRatingId* vetorStruct, int i)
+void PreencheVetArc(fstream* leitura, userId* vetorStruct, int i) // Preenche o vet vetConj com os Ids e os users
 {
     string str;
     getline(*leitura, str, ',');
+    vetorStruct[i].id = stoi(str);
     getline(*leitura, str, ',');
     vetorStruct[i].user = str;
-    if (checagem(str))
-    {
+    if (checagem(str))   // Ha users que possuem virgula, logo devemos checar se esse é o caso e passar o resto do nome para o user da Struct,
+    {                    // caso contrario o getline para na virgula no meio do nome nao pega ele por completo
         getline(*leitura, str, ',');
         vetorStruct[i].user = vetorStruct[i].user + str;
     }
-    getline(*leitura, str, ',');
-    vetorStruct[i].rating = stof(str);
-
-    getline(*leitura, str, ',');
-    if(str[0] == '"')
-    {
-        if (checagem(str))
-        {
-            getline(*leitura, str, '"');
-            getline(*leitura, str, ',');
-            if (checagem(str))
-            {
-                while (checagem(str))
-                {
-                    getline(*leitura, str, '"');
-                    getline(*leitura, str, ',');
-                }
-            }
-        }
-    }
-    getline(*leitura, str, ',');
-    vetorStruct[i].id = stoi(str);
     getline(*leitura, str);
 }
 
-void analisaCenario12(userRatingId *vetregistro){
+void analisaCenario12(userId *vetregistro) {
 
     fstream entrada("entrada.txt");
     fstream saida("saida.txt", ios::app);
@@ -370,32 +328,32 @@ void analisaCenario12(userRatingId *vetregistro){
     string enes, conj;
     int k = 0;
 
-    getline(entrada, conj);                     //descobre quantos conjuntos serão gerados
-    int grupo = stoi(conj);
-    cout << "\nConjunto: " << grupo << endl;
-    int N[grupo];
+    getline(entrada, conj);                     //le o numero de conjuntos que serao gerados a partir do arquivo de entrada
+    int numGrupos = stoi(conj);
+    cout << "\nConjunto: " << numGrupos << endl;
+    int N[numGrupos];
 
-    getline(entrada, enes);             //cria um vetor com a quantidade que cada conjunto deverá ter
-    while(grupo > 0){
+    getline(entrada, enes);             //cria um vetor com a quantidade que cada conjunto deverá ter (N[0] = 1000, N[1] = 5000, ...)
+    while(numGrupos > 0){
         N[k] = stoi(enes);
-        grupo--;
+        numGrupos--;
         k++;
         getline(entrada, enes);
     }
 
     int x;
-    int vetData[3];
+    int vetDados[3]; // Vetor que armazena as metricas (numero de comparacoes e trocas, tempo)
     int i, j;
 
     saida << "Cenario12\n";
 
     for(i = 0; i < k; i++){          //para cada conjunto, a analise sera feita
         for(j = 0; j < 3; j++){
-            vetData[j] = 0;         //zera o vetor de dados
+            vetDados[j] = 0;         //zera o vetor de dados
         }
-        medias12(N[i], vetData, vetregistro);   //lança na funcao que retornarao as medias
-        saida << "Medias do conjunto de " << N[i] << " dados - Trocas: " << vetData[0] << ", Comparacoes: "
-        << vetData[1] << " e Tempo: " << (double)vetData[2]/1000 << "\n";  //imprime no arquivo
+        medias12(N[i], vetDados, vetregistro);   //lança na funcao que retornarao as medias
+        saida << "Medias do conjunto de " << N[i] << " dados - Trocas: " << vetDados[0] << ", Comparacoes: "
+        << vetDados[1] << " e Tempo: " << (double)vetDados[2]/1000 << "\n";  //imprime no arquivo de saida
     }
 
     saida << endl;
@@ -405,7 +363,7 @@ void analisaCenario12(userRatingId *vetregistro){
 void cenario12()
 {
     fstream leitura("bgg-13m-reviews.csv");
-    userRatingId* vetorStruct = new userRatingId[506542];
+    userId* vetorStruct = new userId[506542];
 
     if(leitura.is_open()) // leitura do arquivo "bgg-13m-reviews.csv"
     {
@@ -417,22 +375,20 @@ void cenario12()
         for (j; j < 506541; j++)
         {
             aleatorio = random(0, 25);
-            for (int k = 0; k < aleatorio; k++)
-            {
-                getline(leitura, str);  // joga as linhas fora (antes da linha sortida de cada bloco)
+            for (int k = 0; k < 26; k++) {
+                if (k == aleatorio) {
+                    PreencheVetArc(&leitura, vetorStruct, j);
+                }
+                else
+                    getline(leitura, str);
             }
-            testeLeituraStruct(&leitura, vetorStruct, j);
-            for (int k = aleatorio + 1; k < 26; k++)
-            {
-                getline(leitura, str);  // joga as linhas fora (depois da linha sortida de cada bloco)
-             }
         }
         aleatorio = random(0, 7);
         for (int k = 0; k < aleatorio; k++)
         {
             getline(leitura, str);  // joga as linhas fora (antes da linha sortida de cada bloco)
         }
-        testeLeituraStruct(&leitura, vetorStruct, j);
+        PreencheVetArc(&leitura, vetorStruct, j);
 
         analisaCenario12(vetorStruct);
 
@@ -448,7 +404,7 @@ void cenario12()
 int main()
 {
     srand(time(NULL));
-    cout << "Escolha o cenario para ser testado.\n Digite '1' para o cenario 11, ou '2' para o cenario 12\n";
+    cout << "Escolha o cenario para ser testado.\n Digite '1' para a parte 1 do cenario 1, ou '2' para a parte 2\n";
     int x;
     cin >> x;
 
