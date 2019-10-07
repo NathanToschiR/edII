@@ -322,7 +322,7 @@ void medias3(int grupo, unsigned int *vetDados, int *vetConj, int q, int* vetAux
 
 void analisaCenario3(int *vetregistro, int q, int* vetAux){
 
-    fstream entrada("entrada.txt");
+    fstream entrada("entraada.txt");
     fstream saida("saida.txt", ios::app);
 
     string enes, conj;
