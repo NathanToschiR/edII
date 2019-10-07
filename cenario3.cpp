@@ -269,20 +269,17 @@ void quickSortInsertion100(int *vet, int n, unsigned int *vetdados) {
 // ---------------------------------------------------------------------- LEITURA E CHAMADA ----------------------------------------------------------------
 
 void medias3(int grupo, unsigned int *vetDados, int *vetConj, int q, int* vetAux){
-
-    cout << "Entrou no media" << endl;
     int r;
     int c = 0;
     cout << "Grupo: " << grupo << endl;
 
     for(int i = 0; i < 5; i++){              //ele deve fazer isso 5 vezes, como pedido
-        cout << "Entrou no For " << i+1 << " do media" << endl;
         c = 0;
         while(c < grupo) {                 //preenche o vetor com valores aleatorios referente a entrada
-            r = randomLarge(506542 - c);
-            vetAux[c] = vetConj[r];
-            trocar(&vetConj[r], &vetConj[506542 - c]);
-            c++;
+            r = randomLarge(506541 - c);                  // Para nao haver repeticoes no vetor que iremos ordenar (vetAux), quando geramos um numero
+            vetAux[c] = vetConj[r];                       // aleatorio, passamos o elemento correspondente a essa posicao para vetAux e trocamos este elemento,
+            trocar(&vetConj[r], &vetConj[506541 - c]);    // no vetConj, com o ultimo elemento do vetor e geramos, para o proximo valor de c, um numero 
+            c++;                                          // aleatorio entre 0 e 506541 - c, para q nao coletemos o mesmo valor uma outra vez
         }
         cout << endl;
         auto t1 = std::chrono::high_resolution_clock::now();    //comeca a contar
@@ -320,36 +317,36 @@ void medias3(int grupo, unsigned int *vetDados, int *vetConj, int q, int* vetAux
     return;
 }
 
-void analisaCenario3(int *vetregistro, int q, int* vetAux){
+void analisaCenario3(int *vetConj, int q, int* vetAux){
 
-    fstream entrada("entraada.txt");
+    fstream entrada("entrada.txt");
     fstream saida("saida.txt", ios::app);
 
     string enes, conj;
     int k = 0;
 
-    getline(entrada, conj);                     //descobre quantos conjuntos serão gerados
-    int grupo = stoi(conj);
-    cout << "\nConjunto: " << grupo << endl;
-    int N[grupo];
+    getline(entrada, conj);                     //le o numero de conjuntos que serao gerados a partir do arquivo de entrada
+    int numGrupos = stoi(conj);
+    cout << "\nConjunto: " << numGrupos << endl;
+    int N[numGrupos];
 
-    getline(entrada, enes);             //cria um vetor com a quantidade que cada conjunto deverá ter
-    while(grupo > 0){
+    getline(entrada, enes);             //cria um vetor com a quantidade que cada conjunto deverá ter (N[0] = 1000, N[1] = 5000, ...)
+    while(numGrupos > 0){
         N[k] = stoi(enes);
-        grupo--;
+        numGrupos--;
         k++;
         getline(entrada, enes);
     }
 
     int x;
-    unsigned int vetData[3];  // Alguns numeros de comparacoes e trocas extrapolam o alcance do int
+    unsigned int vetDados[3]; // Vetor que armazena as metricas (numero de comparacoes e trocas, tempo)
     int i, j;
 
     saida << "Cenario 3\n";
 
     switch (q) {
         case 1:
-            saida << "QuickSort" << endl;
+            saida << "QuickSort com Insertion m = 100" << endl;
             break;
         case 2:
             saida << "InsetionSort" << endl;
@@ -368,12 +365,12 @@ void analisaCenario3(int *vetregistro, int q, int* vetAux){
     for(i = 0; i < k; i++){          //para cada conjunto, a analise sera feita
         cout << "\nFor numero " << i << endl;
         for(j = 0; j < 3; j++){
-            vetData[j] = 0;         //zera o vetor de dados
+            vetDados[j] = 0;         //zera o vetor de dados
         }
-        medias3(N[i], vetData, vetregistro, q, vetAux);   //lança na funcao que retornarao as medias
+        medias3(N[i], vetDados, vetConj, q, vetAux);   //lança na funcao que retornarao as medias
         cout << "saiu do media";
-        saida << "Medias do conjunto de " << N[i] << " dados - Trocas: " << vetData[0] << ", Comparacoes: " 
-        << vetData[1] << " e Tempo: " << (double)vetData[2]/1000 << "\n";  //imprime no arquivo
+        saida << "Medias do conjunto de " << N[i] << " dados - Trocas: " << vetDados[0] << ", Comparacoes: " 
+        << vetDados[1] << " e Tempo: " << (double)vetDados[2]/1000 << "\n";  //imprime no arquivo
     }
 
     saida << endl;
@@ -383,41 +380,39 @@ void analisaCenario3(int *vetregistro, int q, int* vetAux){
 void cenario3(int q, int* vetAux)
 {
     fstream leitura("bgg-13m-reviews.csv");
-    int* vetArc = new int[506542];
-
+    int* vetConj = new int[506542];
     if(leitura.is_open()) // leitura do arquivo "bgg-13m-reviews.csv"
     {
         int j = 0;
         int aleatorio;
         string str;
         getline(leitura, str); // getline para passar pela primeira linha de referência
-        for (j; j < 506541; j++)
+        for (j; j < 506541; j++)  // Passagem dos ids para o vetor auxiliar vetConj
         {
             aleatorio = random(0, 25);
             for (int k = 0; k < 26; k++) {
-                if (k == aleatorio) {
+                if (k == aleatorio) {      // Coleta o id da lina selecionada dentro do grupo
                     getline(leitura, str, ',');
-                    vetArc[j] = stoi(str);
+                    vetConj[j] = stoi(str);
                 }
                 else
-                    getline(leitura, str);                
+                    getline(leitura, str); // Joga fora as linhas que n foram selecionadas no grupo
             }
         }
         aleatorio = random(0, 7);
         for (int k = 0; k < aleatorio; k++)
         {
-            getline(leitura, str);  // joga as linhas fora (antes da linha sortida de cada bloco)
+            getline(leitura, str);
         }
-        getline(leitura, str, ',');
-        vetArc[j] = stoi(str);
+        getline(leitura, str, ',');  // Coleta o id da linha selecionada no ultimo grupo, de 8 linhas
+        vetConj[j] = stoi(str);
 
-
-        analisaCenario3(vetArc, q, vetAux);
+        analisaCenario3(vetConj, q, vetAux);
     } else {
         cout << "ERRO: NAO FOI POSSIVEL ABRIR O ARQUIVO .CSV";
     }
 
-    delete [] vetArc;
+    delete [] vetConj;
 
     leitura.close();
 }
@@ -426,7 +421,8 @@ int main()
 {
     srand(time(NULL));
     int* vetAux = new int[500000];
-    cout << "Escolha qual Algoritmo de Ordenacao sera testado.\n Digite '1' para o QuicksortInsertion,'2' para o InsertionSort, '3' para o MergeSort, '4' para o HeapSort ou '5' para CountingSort\n";
+    cout << "Escolha qual Algoritmo de Ordenacao sera testado.\n Digite '1' para o QuicksortInsertion,'2' para o InsertionSort, '3' para o MergeSort,";
+    cout << " '4' para o HeapSort ou '5' para CountingSort\n";
     int x, y;
 
     cin >> x;
