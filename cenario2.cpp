@@ -25,7 +25,7 @@ int random(int min, int max)
     return num;
 }
 
-int randomLarge(int max)
+int randomLarge(int max)  // Funcao que nos permite pegar um numero aleatorio entre 0 e 1013081
 {
     int num;
     num = ((rand() * rand() ) % max);
@@ -43,7 +43,7 @@ void trocar(int* a, int* b)
 
 // -------------------------------------------------------------- QUICKSORT RECURSIVO ---------------------------------------------------------------------
 
-void auxQuickSort(int *vet, int p, int n, int *comp, int* troca)
+void auxQuickSort(int *vet, int p, int n, int *comp, int* troca) // p é o inicio e n o numero de elementos em cada chamada recursiva do QuickSort 
 {
     if (n == 2)
     {
@@ -54,15 +54,15 @@ void auxQuickSort(int *vet, int p, int n, int *comp, int* troca)
         }
         (*comp)++;
     }
-    if (n > 2)
+    if (n > 2) // Se n = 1 nao é necessario nenhuma ação
     {
-        int r = vet[p + n - 1];
+        int r = vet[p + n - 1]; // pivo
         int i = p;
         for (int j = p; j < p + n - 1; j++)
         {
             if (vet[j] <= r)
             {
-                if (j != i)
+                if (j != i) // Podemos ter i = j e isso causa problemas na troca
                 {
                     trocar(&vet[i], &vet[j]);
                     (*troca)++;
@@ -70,8 +70,8 @@ void auxQuickSort(int *vet, int p, int n, int *comp, int* troca)
                 i++;
             }
         }
-        *comp = *comp + n - 1;
-        vet[p + n - 1] = vet[i];
+        *comp = *comp + n - 1;    // O numero de comparaçoes a cada chamada recursiva depende apenas do numero de elementos atual (n - 1 comparacoes)
+        vet[p + n - 1] = vet[i];    // Coloca pivo na sua devida posicao
         vet[i] = r;
         (*troca)++;
         auxQuickSort(vet, p, i - p, comp, troca);
@@ -91,8 +91,7 @@ void quickSort(int *vet, int n, unsigned int *vetdados) {
 
 // ----------------------------------------------------------------- QUICKSORT MEDIANA ---------------------------------------------------------------------
 
-int* bubblesortBom(int* vet, int n, int* troca, int* comp)
-{
+int* bubblesortMediana(int* vet, int n, int* troca, int* comp) { // Funciona para k = 3 e k = 5
     for(int j = 0 ; j < n-1 ; j++)
     {
         bool teste = false;
@@ -112,15 +111,14 @@ int* bubblesortBom(int* vet, int n, int* troca, int* comp)
     return &vet[(n-1)/2];
 }
 
-void TrocaTroca3(int* a, int* b, int* c, int* troca, int* comp){
-    int vetHelp[3] = {*a, *b, *c};
-    int* i = bubblesortBom(vetHelp, 3, troca, comp);
+void retornaMediana3(int* a, int* b, int* c, int* troca, int* comp) { // Retorna a mediana para o QuickSort mediana com k = 3
+    int vetHelp[3] = {*a, *b, *c};                                    // e coloca este elemento no final do vetor, para que este seja o pivo
+    int* i = bubblesortMediana(vetHelp, 3, troca, comp);
     if (*i != *c)
         trocar(i, c);
 }
 
-void auxQuickSortMediana3(int *vet, int p, int n, int *comp, int* troca)
-{
+void auxQuickSortMediana3(int *vet, int p, int n, int *comp, int* troca) {
     if (n == 2)
     {
         (*comp)++;
@@ -132,8 +130,8 @@ void auxQuickSortMediana3(int *vet, int p, int n, int *comp, int* troca)
     }
     if (n > 2)
     {
-        TrocaTroca3(&vet[p], &vet[p + ((n - 1 - p)/2)], &vet[p + n - 1], troca, comp);
-        int r = vet[p + n - 1];
+        retornaMediana3(&vet[p], &vet[p + ((n - 1 - p)/2)], &vet[p + n - 1], troca, comp);
+        int r = vet[p + n - 1];  // Pivo, que agora é a mediana retornada
         int i = p;
         for (int j = p; j < p + n - 1; j++)
         {
@@ -156,9 +154,9 @@ void auxQuickSortMediana3(int *vet, int p, int n, int *comp, int* troca)
     }
 }
 
-void TrocaTroca5(int* a, int* b, int* c, int* d, int* e, int* troca, int* comp){
-    int vetHelp[5] = {*a, *b, *c, *d, *e};
-    int* i = bubblesortBom(vetHelp, 5, troca, comp);
+void retornaMediana5(int* a, int* b, int* c, int* d, int* e, int* troca, int* comp){ // Retorna a mediana para o QuickSort mediana com k = 5
+    int vetHelp[5] = {*a, *b, *c, *d, *e};                                           // e coloca este elemento no final do vetor, para que este seja o pivo
+    int* i = bubblesortMediana(vetHelp, 5, troca, comp);
     if (*i != *c)
         trocar(i, c);
 }
@@ -176,8 +174,8 @@ void auxQuickSortMediana5(int *vet, int p, int n, int *comp, int* troca)
     }
     if (n > 2)
     {
-        TrocaTroca5(&vet[p], &vet[(3*p + n - 2)/4], &vet[(p + n - 1)/2], &vet[(p + 3*p - 3)/4], &vet[p + n - 1], troca, comp);
-        int r = vet[p + n - 1];
+        retornaMediana5(&vet[p], &vet[(3*p + n - 2)/4], &vet[(p + n - 1)/2], &vet[(p + 3*p - 3)/4], &vet[p + n - 1], troca, comp);
+        int r = vet[p + n - 1];  // Pivo, que agora é a mediana retornada
         int i = p;
         for (int j = p; j < p + n - 1; j++)
         {
@@ -200,10 +198,10 @@ void auxQuickSortMediana5(int *vet, int p, int n, int *comp, int* troca)
     }
 }
 
-void quickSortMediana(int *vet, int n, unsigned int *vetdados, int m) {
+void quickSortMediana(int *vet, int n, unsigned int *vetdados, int k) {
     int comp = 0;
     int troca = 0;
-    if(m == 3){
+    if(k == 3){
         auxQuickSortMediana3(vet, 0, n, &comp, &troca);
     }else{
         auxQuickSortMediana5(vet, 0, n, &comp, &troca);
@@ -216,7 +214,7 @@ void quickSortMediana(int *vet, int n, unsigned int *vetdados, int m) {
 
 // -------------------------------------------------------------- QUICKSORT COM INSERTION ------------------------------------------------------------------
 
-int insertionSort(int *vet, int n, int* troca)
+int insertionSortQuick(int *vet, int n, int* troca)
 {
     int aux;
     int compar = 0;
@@ -239,8 +237,8 @@ int insertionSort(int *vet, int n, int* troca)
 
 void auxQuickSortInsertion(int *vet, int p, int n, int m, int *comp, int* troca)
 {
-    if (n <= m)
-        (*comp) = (*comp) + insertionSort(vet, n, troca);
+    if (n <= m)    // Apenas mudamos o caso base para operarmos com o Insertion a partir do m escolhido
+        (*comp) = (*comp) + insertionSortQuick(vet, n, troca);
     else
     {
         int r = vet[p + n - 1];
@@ -298,10 +296,10 @@ void medias2(int grupo, unsigned int *vetDados, int *vetConj, int q, int v, int*
                 quickSort(vetAux, grupo, vetDados);
                 break;
             case 2:
-                quickSortMediana(vetAux, grupo, vetDados, v);
+                quickSortMediana(vetAux, grupo, vetDados, v); // v para diferenciar k = 3 de k = 5
                 break;
             case 3:
-                quickSortInsertion(vetAux, grupo, vetDados, v);
+                quickSortInsertion(vetAux, grupo, vetDados, v); // v para diferenciar m = 10 de m = 100
                 break;
         }
 
@@ -318,29 +316,29 @@ void medias2(int grupo, unsigned int *vetDados, int *vetConj, int q, int v, int*
     return;
 }
 
-void analisaCenario2(int *vetregistro, int q, int v, int* vetAux){
+void analisaCenario2(int *vetConj, int q, int v, int* vetAux){
 
-    fstream entrada("entrada.txt");
-    fstream saida("saida.txt", ios::app);
+    fstream entrada("entradaExperimental.txt");
+    fstream saida("saidaExperimental.txt", ios::app);
 
     string enes, conj;
     int k = 0;
 
-    getline(entrada, conj);                     //descobre quantos conjuntos serão gerados
-    int grupo = stoi(conj);
-    cout << "\nConjunto: " << grupo << endl;
-    int N[grupo];
+    getline(entrada, conj);                 //le o numero de conjuntos que serao gerados a partir do arquivo de entrada
+    int numGrupo = stoi(conj);
+    cout << "\nConjunto: " << numGrupo << endl;
+    int N[numGrupo];
 
-    getline(entrada, enes);             //cria um vetor com a quantidade que cada conjunto deverá ter
-    while(grupo > 0){
+    getline(entrada, enes);             //cria um vetor com a quantidade que cada conjunto deverá ter (N[0] = 1000, N[1] = 5000, ...)
+    while(numGrupo > 0){
         N[k] = stoi(enes);
-        grupo--;
+        numGrupo--;
         k++;
         getline(entrada, enes);
     }
 
     int x;
-    unsigned int vetData[3];
+    unsigned int vetDados[3];    // Vetor que armazena as metricas (numero de comparacoes e trocas, tempo)
     int i, j;
 
     saida << "Cenario2\n";
@@ -366,11 +364,11 @@ void analisaCenario2(int *vetregistro, int q, int v, int* vetAux){
 
     for(i = 0; i < k; i++){          //para cada conjunto, a analise sera feita
         for(j = 0; j < 3; j++){
-            vetData[j] = 0;         //zera o vetor de dados
+            vetDados[j] = 0;         //zera o vetor de dados
         }
-        medias2(N[i], vetData, vetregistro, q, v, vetAux);   //lança na funcao que retornarao as medias
-        saida << "Medias do conjunto de " << N[i] << " dados - Trocas: " << vetData[0] << ", Comparacoes: " 
-        << vetData[1] << " e Tempo: " << (double)vetData[2]/1000 << "\n";  //imprime no arquivo
+        medias2(N[i], vetDados, vetConj, q, v, vetAux);   //lança na funcao que retornarao as medias
+        saida << "Medias do conjunto de " << N[i] << " dados - Trocas: " << vetDados[0] << ", Comparacoes: " 
+        << vetDados[1] << " e Tempo: " << (double)vetDados[2]/1000 << "\n";  //imprime no arquivo
     }
 
     saida << endl;
@@ -380,7 +378,7 @@ void analisaCenario2(int *vetregistro, int q, int v, int* vetAux){
 void cenario2(int q, int v, int* vetAux)
 {
     fstream leitura("bgg-13m-reviews.csv");
-    int* vetArc = new int[1013082];
+    int* vetConj = new int[1013082];
 
     if(leitura.is_open()) // leitura do arquivo "bgg-13m-reviews.csv"
     {
@@ -388,32 +386,32 @@ void cenario2(int q, int v, int* vetAux)
         int aleatorio;
         string str;
         getline(leitura, str); // getline para passar pela primeira linha de referência
-        for (j; j < 1013081; j++)
+        for (j; j < 1013081; j++)  // Passagem dos ids para o vetor auxiliar vetConj, que agora terá 1013082 elementos
         {
             aleatorio = random(0, 12);
             for (int k = 0; k < 13; k++) {
-                if (k == aleatorio) {
+                if (k == aleatorio) {      // Coleta o id da lina selecionada dentro do grupo
                     getline(leitura, str, ',');
-                    vetArc[j] = stoi(str);
+                    vetConj[j] = stoi(str);
                 }
                 else
-                    getline(leitura, str);
+                    getline(leitura, str); // Joga fora as linhas que n foram selecionadas no grupo
             }
         }
         aleatorio = random(0, 7);
         for (int k = 0; k < aleatorio; k++)
         {
-            getline(leitura, str);  // joga as linhas fora (antes da linha sortida de cada bloco)
+            getline(leitura, str);
         }
-        getline(leitura, str, ',');
-        vetArc[j] = stoi(str);
+        getline(leitura, str, ',');  // Coleta o id da linha selecionada no ultimo grupo, de 8 linhas
+        vetConj[j] = stoi(str);
 
-        analisaCenario2(vetArc, q, v, vetAux);
+        analisaCenario2(vetConj, q, v, vetAux);
     } else {
         cout << "ERRO: NAO FOI POSSIVEL ABRIR O ARQUIVO .CSV";
     }
 
-    delete [] vetArc;
+    delete [] vetConj;
 
     leitura.close();
 }
