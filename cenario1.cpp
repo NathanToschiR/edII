@@ -322,7 +322,7 @@ void PreencheVetArc(fstream* leitura, userId* vetorStruct, int i) // Preenche o 
 
 void analisaCenario12(userId *vetregistro) {
 
-    fstream entrada("entrada.txt");
+    fstream entrada("entraada.txt");
     fstream saida("saida.txt", ios::app);
 
     string enes, conj;
