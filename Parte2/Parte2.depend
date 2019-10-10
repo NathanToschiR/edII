@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1570723872 source:c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho2\edii\parte2\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<cstdlib>
+	<algorithm>
+

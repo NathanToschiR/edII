@@ -8,7 +8,7 @@ using namespace std;
 struct userId {
     int idJogo;
     int id;
-    string TheWho;
+    string categoria;
 } ;
 
 bool procuraVirgula(string str) {
@@ -84,7 +84,7 @@ int main() {
                 getline(leitura, str, ','); // ver aq
                 str = str + ']';
             }
-            vetConj[j].TheWho = str;
+            vetConj[j].categoria = str;
             for (int k = 0; k < 7; k++) {
                 getline(leitura, str, ',');
                 if (denovo(str)) {
@@ -125,4 +125,4 @@ int main() {
     delete [] vetConj;
 
     leitura.close();
-} 
+}
