@@ -3,6 +3,7 @@
 #include <string>
 #include <cstdlib>
 #include <algorithm>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -48,6 +49,19 @@ bool denovo(string str) {
     return 0;
 }
 
+string substitui(string str, string inicial, string final){
+    //filtra as categorias
+    std::string replace = inicial;
+
+    //Find 'replace'
+    std::size_t pos = str.find(replace);
+
+    //If it found 'replace', replace it with "night"
+    if (pos != std::string::npos)
+    str.replace(pos, replace.length(), final);
+    return str;
+}
+
 void leitura(userId* vetConj){
     fstream leitura("games_detailed_info.csv");
 
@@ -84,11 +98,15 @@ void leitura(userId* vetConj){
                 getline(leitura, str, ','); // ver aq
                 str = str + ']';
             }
-            /*str.erase(std::remove(str.begin(), str.end(), '['), str.end());
+
+            str = substitui(str, "Children's Game", "Childrens Game");
+            str = substitui(str, "Childrens Game", "'Childrens Game'");
+
+            str.erase(std::remove(str.begin(), str.end(), '['), str.end());
             str.erase(std::remove(str.begin(), str.end(), ']'), str.end());
             str.erase(std::remove(str.begin(), str.end(), '"'), str.end());
             str.erase(std::remove(str.begin(), str.end(), ' '), str.end());
-*/
+
             vetConj[j].categoria = str;
             for (int k = 0; k < 7; k++) {
                 getline(leitura, str, ',');
