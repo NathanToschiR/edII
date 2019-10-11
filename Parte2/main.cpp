@@ -13,6 +13,12 @@ struct userId {
     string categoria;
 } ;
 
+struct categorias {
+    string nome;
+    float quant;
+    double freq;
+};
+
 bool procuraVirgula(string str) {
     for (int k = 0; k < str.length(); k++) {
         if (str[k] == ']') {
@@ -60,6 +66,54 @@ string substitui(string str, string inicial, string final){
     if (pos != std::string::npos)
     str.replace(pos, replace.length(), final);
     return str;
+}
+
+bool estaNoVetor(categorias* vetCat, string categoria, int tam){
+    for(int i = 0; i < tam; i++){
+        if(vetCat[i].nome == categoria){
+            return true;
+        }
+    }
+    return false;
+}
+
+void frequencia(userId* vetConj, int tamanho){
+    string vetCategorias[tamanho];
+    int i;
+
+    for(i = 0; i < tamanho; i++){
+        vetCategorias[i] = vetConj[i].categoria;
+    }
+
+    categorias vetCat[tamanho];
+    int j = 0;
+
+    for(i = 0; i < tamanho; i++){
+        if(!estaNoVetor(vetCat, vetCategorias[i], tamanho)){
+            vetCat[j].nome = vetCategorias[i];
+            j++;
+        }
+    }
+
+
+    for(int k = 0; k < j; k++){
+        for(i = 0; i < tamanho; i++){
+            if(vetCategorias[i] == vetCat[k].nome){
+                vetCat[k].quant++;
+            }
+        }
+        vetCat[k].freq = (vetCat[k].quant/((float)(tamanho)))*100.0;
+
+    }
+
+    for(i = 0; i < j; i++){
+
+        cout << "Categoria: " << vetCat[i].nome << " /Quantidade: " << vetCat[i].quant << " /Frequencia: " << vetCat[i].freq << "%"<< endl;
+
+    }
+
+    return;
+
 }
 
 void leitura(userId* vetConj){
@@ -154,13 +208,9 @@ int main() {
     userId* vetConj = new userId[17063];
     leitura(vetConj);
 
-    cout << "Saiu do leitura";
+   cout << "Saiu do leitura" << endl;
 
-   // frequencia(vetConj);
-
-    for(int i = 0; i < 17063; i++){
-        cout << vetConj[i].categoria << " ";
-    }
+   frequencia(vetConj, 17063);
 
     delete [] vetConj;
 
