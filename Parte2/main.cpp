@@ -7,7 +7,7 @@
 
 using namespace std;
 
-struct userId {
+struct userIds {
     int idJogo;
     int id;
     string categoria;
@@ -15,7 +15,7 @@ struct userId {
 
 struct categorias {
     string nome;
-    float quant;
+    float quant = 1;
     double freq;
 };
 
@@ -77,59 +77,125 @@ bool estaNoVetor(categorias* vetCat, string categoria, int tam){
     return false;
 }
 
-void frequencia(userId* vetConj, int tamanho){
-    string vetCategorias[tamanho];
-    int i;
+int primoPosterior(int valor)
+{
+	int candidatoADivisor, resto;
+    bool ehPrimo;
 
-    for(i = 0; i < tamanho; i++){
-        vetCategorias[i] = vetConj[i].categoria;
+    candidatoADivisor = 2;
+
+    ehPrimo = false; // Supomos que o valor seja primo de inicio
+
+    if (valor <= 1)
+    {
+        cout << "ERRO: VALOR INVALIDO";
     }
 
-    categorias vetCat[tamanho];
-    int j = 0;
+    while (candidatoADivisor <= (valor / 2) && ehPrimo != true) 
+    {
+        resto = valor % candidatoADivisor;
+        if (resto == 0)
+        {
+            ehPrimo = false;
+            valor++;
+            candidatoADivisor = 2;
+        } // se nao for primo, pego o valor logo posterior ao valor inserido como argumento e faco os testes desde o inicio
+          // para checar se esse sim eh primo
+        candidatoADivisor++;
+    }
+    return valor;
+}
 
-    for(i = 0; i < tamanho; i++){
-        if(!estaNoVetor(vetCat, vetCategorias[i], tamanho)){
-            vetCat[j].nome = vetCategorias[i];
-            j++;
+void inserirQuadratico(categorias* vetCategorias, int nVet, unsigned long* vetDados) {
+    int N = primoPosterior(nVet);
+    categorias* hash = new categorias[N];
+    inicializarHash(hash, N);
+    int nome;
+
+    for(int i = 0; i < nVet; i++)
+    {
+        nome = 0;
+        for(int z = 0 ; z < vetCategorias[i].nome.length() ; z++)
+        {
+            nome = vetCategorias[i].nome[z] + nome;
         }
-    }
+        unsigned long chave = vet[i].id + nome;
+        int posicao = chave % N;
+        unsigned long j = 1;
+        unsigned long compar = 0;
 
-
-    for(int k = 0; k < j; k++){
-        for(i = 0; i < tamanho; i++){
-            if(vetCategorias[i] == vetCat[k].nome){
-                vetCat[k].quant++;
+        if(hash[posicao].id == -1)
+            compar++;
+        else 
+        {
+            while(hash[posicao].id != -1)
+            {
+                posicao = (chave + j*j) % N;
+                j++;
+                compar++;
             }
         }
-        vetCat[k].freq = (vetCat[k].quant/((float)(tamanho)))*100.0;
+        hash[posicao].nome = vetCategorias[i].nome;
+        hash[posicao].quant = vetCategorias[i].quant;
+        hash[posicao].freq = vetCategorias[i].freq;
+        vetDados[0] = vetDados[0] + compar;
+    }
+    double memoriaUtilizada = N/256;
+    vetDados[1] = vetDados[1] + memoriaUtilizada;
 
+    delete [] hash;
+}
+
+void frequencia(userIds* vetConj, int tamanho){
+    categorias vetCategorias[85];
+    fstream saida("fuck.txt", ios::app);
+    string strAux ("Comeco");
+    string str = strAux;
+    int contador = 0, superContador = 0; //zero da um a mais pois
+    for (int k = 0; k < 17062; k++) {
+        saida << vetConj[k].categoria;
+        saida << ',';
+    }
+    saida.close();
+    fstream leitura("fuck.txt");
+    while(!leitura.eof()) {
+        getline(leitura, str, ',');
+        if (!estaNoVetor(vetCategorias, str, contador)) {
+            vetCategorias[contador].nome = str;
+            contador++;
+        }
+        else {
+            for (int h = 0; h < contador; h++) {
+                if (vetCategorias[h].nome == str)
+                    vetCategorias[h].quant++;
+            }
+        }
+        superContador++;
+    }
+    cout << contador << "  " << superContador << endl;
+
+    for(int i = 0; i < contador - 1; i++){
+        vetCategorias[i].freq = (vetCategorias[i].quant/((float)(superContador - 1)))*100.0;
+        cout << "Categoria: " << vetCategorias[i].nome << " /Quantidade: " << vetCategorias[i].quant << " /Frequencia: " << vetCategorias[i].freq << "%"<< endl;
     }
 
-    for(i = 0; i < j; i++){
-
-        cout << "Categoria: " << vetCat[i].nome << " /Quantidade: " << vetCat[i].quant << " /Frequencia: " << vetCat[i].freq << "%"<< endl;
-
-    }
 
     return;
 
 }
 
-void leitura(userId* vetConj){
+void leitura(userIds* vetConj){
     fstream leitura("games_detailed_info.csv");
 
      if(leitura.is_open()) // leitura do arquivo "bgg-13m-reviews.csv"
     {
         int j = 0;
-        int aleatorio;
-        string str;
-        getline(leitura, str); // getline para passar pela primeira linha de referência
+        string str, strAux;
+        getline(leitura, str); // getline para passar pela primeira linha de referÃªncia
         for (j; j < 17062; j++)  // Passagem dos ids para o vetor auxiliar vetConj
         {
             getline(leitura, str, ',');
             vetConj[j].id = stoi(str);
-            cout << vetConj[j].id << "  ";
             for (int k = 0; k < 16; k++){
                 getline(leitura, str, ',');
             }
@@ -148,8 +214,9 @@ void leitura(userId* vetConj){
             }
             getline(leitura, str, ',');
             if (str[0] == '"' && !procuraVirgula(str)) {
-                getline(leitura, str,']');
-                getline(leitura, str, ','); // ver aq
+                getline(leitura, strAux,']');
+                str = str + ',' + strAux;
+                getline(leitura, strAux, ','); // ver aq
                 str = str + ']';
             }
 
@@ -185,7 +252,6 @@ void leitura(userId* vetConj){
                 }
             }
             getline(leitura, str, ',');
-            cout << str << "  ";
             if (j == 2704)
                 vetConj[j].idJogo = 132497;
             if (j == 10833)
@@ -193,7 +259,6 @@ void leitura(userId* vetConj){
             if (j != 2704 && j != 10833)
                 vetConj[j].idJogo = stoi(str);
             getline(leitura, str);
-            cout << endl;
         }
     } else {
         cout << "ERRO: NAO FOI POSSIVEL ABRIR O ARQUIVO .CSV";
@@ -204,13 +269,13 @@ void leitura(userId* vetConj){
 }
 
 int main() {
-    //fstream saida("fuck.txt", ios::app);
-    userId* vetConj = new userId[17063];
+    fstream saida("fuck.txt", ios::app);
+    userIds* vetConj = new userIds[17063];
     leitura(vetConj);
 
-   cout << "Saiu do leitura" << endl;
+    cout << "Saiu do leitura" << endl;
 
-   frequencia(vetConj, 17063);
+    frequencia(vetConj, 17063);
 
     delete [] vetConj;
 
