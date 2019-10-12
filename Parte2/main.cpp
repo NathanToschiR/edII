@@ -106,6 +106,15 @@ int primoPosterior(int valor)
     return valor;
 }
 
+void inicializarHash(categorias* hash, int N)
+{
+    for (int i = 0 ; i < N ; i++)
+    {
+        hash[i].nome = "";
+        hash[i].freq = 0;
+    }
+}
+
 void inserirQuadratico(categorias* vetCategorias, int nVet, unsigned long* vetDados) {
     int N = primoPosterior(nVet);
     categorias* hash = new categorias[N];
@@ -140,11 +149,12 @@ void inserirQuadratico(categorias* vetCategorias, int nVet, unsigned long* vetDa
         hash[posicao].freq = vetCategorias[i].freq;
         vetDados[0] = vetDados[0] + compar;
     }
-    double memoriaUtilizada = N/256;
-    vetDados[1] = vetDados[1] + memoriaUtilizada;
 
     delete [] hash;
 }
+
+void pesquisarCategoria(categorias* categoria)
+{}
 
 void frequencia(userIds* vetConj, int tamanho){
     categorias vetCategorias[85];
@@ -187,7 +197,7 @@ void frequencia(userIds* vetConj, int tamanho){
 void leitura(userIds* vetConj){
     fstream leitura("games_detailed_info.csv");
 
-     if(leitura.is_open()) // leitura do arquivo "bgg-13m-reviews.csv"
+     if(leitura.is_open()) // leitura do arquivo "games_detailed_info.csv"
     {
         int j = 0;
         string str, strAux;
