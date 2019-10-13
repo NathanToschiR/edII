@@ -31,7 +31,7 @@ struct nomes {
     double freq;
 };
 
-bool procuraVirgula(string str) {
+bool procuraChave(string str) {
     for (int k = 0; k < str.length(); k++) {
         if (str[k] == ']') {
             return 1;
@@ -89,6 +89,15 @@ bool estaNoVetor(categorias* vetCat, string categoria, int tam){
     return false;
 }
 
+bool estaNoVetorUser(nomes* vetCat, string categoria, int tam){
+    for(int i = 0; i < tam; i++){
+        if(vetCat[i].nome == categoria){
+            return true;
+        }
+    }
+    return false;
+}
+
 int primoPosterior(int valor)
 {
 	int candidatoADivisor, resto;
@@ -124,6 +133,7 @@ void inicializarHash(categorias* hash, int N)
     {
         hash[i].nome = "";
         hash[i].freq = 0;
+        hash[i].quant = -1;
     }
 }
 
@@ -140,16 +150,16 @@ void inserirQuadratico(categorias* vetCategorias, int nVet, unsigned long* vetDa
         {
             nome = vetCategorias[i].nome[z] + nome;
         }
-        unsigned long chave = vet[i].id + nome;
+        unsigned long chave = vetCategorias[i].quant + nome;
         int posicao = chave % N;
         unsigned long j = 1;
         unsigned long compar = 0;
 
-        if(hash[posicao].id == -1)
+        if(hash[posicao].quant == -1)
             compar++;
         else
         {
-            while(hash[posicao].id != -1)
+            while(hash[posicao].quant != -1)
             {
                 posicao = (chave + j*j) % N;
                 j++;
@@ -213,21 +223,21 @@ void frequenciaNome(userRatingId* vetConj, int tamanho){
     string str = strAux;
     int contador = 0, superContador = 0; //zero da um a mais pois
     for (int k = 0; k < 506542; k++) {
-        saida << vetConj[k].nome;
+        saida << vetConj[k].user;
         saida << ',';
     }
     saida.close();
     fstream leitura("fuck2.txt");
     while(!leitura.eof()) {
         getline(leitura, str, ',');
-        if (!estaNoVetor(vetNomes, str, contador)) {
+        if (!estaNoVetorUser(vetNomes, str, contador)) {
             vetNomes[contador].nome = str;
             contador++;
         }
         else {
             for (int h = 0; h < contador; h++) {
-                if (vetCategorias[h].nome == str)
-                    vetCategorias[h].quant++;
+                if (vetNomes[h].nome == str)
+                    vetNomes[h].quant++;
             }
         }
         superContador++;
@@ -236,7 +246,7 @@ void frequenciaNome(userRatingId* vetConj, int tamanho){
 
     for(int i = 0; i < contador - 1; i++){
         vetNomes[i].freq = (vetNomes[i].quant/((float)(superContador - 1)))*100.0;
-        cout << "Categoria: " << vetCategorias[i].nome << " /Quantidade: " << vetCategorias[i].quant << " /Frequencia: " << vetCategorias[i].freq << "%"<< endl;
+        cout << "Categoria: " << vetNomes[i].nome << " /Quantidade: " << vetNomes[i].quant << " /Frequencia: " << vetNomes[i].freq << "%"<< endl;
     }
 
 
@@ -261,7 +271,7 @@ void leitura(userIds* vetConj){
                 getline(leitura, str, ',');
             }
             getline(leitura, str, ',');
-            if (str[0] == '"' && !procuraVirgula(str)) {
+            if (str[0] == '"' && !procuraChave(str)) {
                 getline(leitura, str, ']');
                 getline(leitura, str, ',');
             }
@@ -269,12 +279,12 @@ void leitura(userIds* vetConj){
             getline(leitura, str, ',');
             getline(leitura, str, ',');
             getline(leitura, str, ',');
-            if (str[0] == '"' && !procuraVirgula(str)) {
+            if (str[0] == '"' && !procuraChave(str)) {
                 getline(leitura, str, ']');
                 getline(leitura, str, ',');
             }
             getline(leitura, str, ',');
-            if (str[0] == '"' && !procuraVirgula(str)) {
+            if (str[0] == '"' && !procuraChave(str)) {
                 getline(leitura, strAux,']');
                 str = str + ',' + strAux;
                 getline(leitura, strAux, ','); // ver aq
@@ -296,7 +306,7 @@ void leitura(userIds* vetConj){
                     getline(leitura, str, '"');
                     getline(leitura, str, ',');
                 }
-                if (str[0] == '"' && !procuraVirgula(str)) {
+                if (str[0] == '"' && !procuraChave(str)) {
                     getline(leitura, str, ']');
                     getline(leitura, str, ',');
                 }
@@ -331,39 +341,39 @@ void leitura(userIds* vetConj){
 
 void LeituraUser(userRatingId* vetorStruct, int i)
 {
-    fstream leitura("bgg-13m-reviews" ios:app);
+    fstream leitura("bgg-13m-reviews.csv");
     string str;
-    getline(*leitura, str, ',');
-    getline(*leitura, str, ',');
+    getline(leitura, str, ',');
+    getline(leitura, str, ',');
     vetorStruct[i].user = str;
     if (checagem(str))
     {
-        getline(*leitura, str, ',');
+        getline(leitura, str, ',');
         vetorStruct[i].user = vetorStruct[i].user + str;
     }
-    getline(*leitura, str, ',');
+    getline(leitura, str, ',');
     vetorStruct[i].rating = stof(str);
 
-    getline(*leitura, str, ',');
+    getline(leitura, str, ',');
     if(str[0] == '"')
     {
         if (checagem(str))
         {
-            getline(*leitura, str, '"');
-            getline(*leitura, str, ',');
+            getline(leitura, str, '"');
+            getline(leitura, str, ',');
             if (checagem(str))
             {
                 while (checagem(str))
                 {
-                    getline(*leitura, str, '"');
-                    getline(*leitura, str, ',');
+                    getline(leitura, str, '"');
+                    getline(leitura, str, ',');
                 }
             }
         }
     }
-    getline(*leitura, str, ',');
+    getline(leitura, str, ',');
     vetorStruct[i].id = stoi(str);
-    getline(*leitura, str);
+    getline(leitura, str);
 }
 
 int main() {
