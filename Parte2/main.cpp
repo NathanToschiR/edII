@@ -13,9 +13,21 @@ struct userIds {
     string categoria;
 } ;
 
+struct userRatingId {
+    string user;
+    float rating;
+    int id;
+} ;
+
 struct categorias {
     string nome;
     float quant = 1;
+    double freq;
+};
+
+struct nomes {
+    string nome;
+    float quant;
     double freq;
 };
 
@@ -91,7 +103,7 @@ int primoPosterior(int valor)
         cout << "ERRO: VALOR INVALIDO";
     }
 
-    while (candidatoADivisor <= (valor / 2) && ehPrimo != true) 
+    while (candidatoADivisor <= (valor / 2) && ehPrimo != true)
     {
         resto = valor % candidatoADivisor;
         if (resto == 0)
@@ -135,7 +147,7 @@ void inserirQuadratico(categorias* vetCategorias, int nVet, unsigned long* vetDa
 
         if(hash[posicao].id == -1)
             compar++;
-        else 
+        else
         {
             while(hash[posicao].id != -1)
             {
@@ -193,6 +205,45 @@ void frequencia(userIds* vetConj, int tamanho){
     return;
 
 }
+
+void frequenciaNome(userRatingId* vetConj, int tamanho){
+    nomes vetNomes[506542];
+    fstream saida("fuck2.txt", ios::app);
+    string strAux ("Comeco");
+    string str = strAux;
+    int contador = 0, superContador = 0; //zero da um a mais pois
+    for (int k = 0; k < 506542; k++) {
+        saida << vetConj[k].nome;
+        saida << ',';
+    }
+    saida.close();
+    fstream leitura("fuck2.txt");
+    while(!leitura.eof()) {
+        getline(leitura, str, ',');
+        if (!estaNoVetor(vetNomes, str, contador)) {
+            vetNomes[contador].nome = str;
+            contador++;
+        }
+        else {
+            for (int h = 0; h < contador; h++) {
+                if (vetCategorias[h].nome == str)
+                    vetCategorias[h].quant++;
+            }
+        }
+        superContador++;
+    }
+    cout << contador << "  " << superContador << endl;
+
+    for(int i = 0; i < contador - 1; i++){
+        vetNomes[i].freq = (vetNomes[i].quant/((float)(superContador - 1)))*100.0;
+        cout << "Categoria: " << vetCategorias[i].nome << " /Quantidade: " << vetCategorias[i].quant << " /Frequencia: " << vetCategorias[i].freq << "%"<< endl;
+    }
+
+
+    return;
+
+}
+
 
 void leitura(userIds* vetConj){
     fstream leitura("games_detailed_info.csv");
@@ -278,6 +329,43 @@ void leitura(userIds* vetConj){
 
 }
 
+void LeituraUser(userRatingId* vetorStruct, int i)
+{
+    fstream leitura("bgg-13m-reviews" ios:app);
+    string str;
+    getline(*leitura, str, ',');
+    getline(*leitura, str, ',');
+    vetorStruct[i].user = str;
+    if (checagem(str))
+    {
+        getline(*leitura, str, ',');
+        vetorStruct[i].user = vetorStruct[i].user + str;
+    }
+    getline(*leitura, str, ',');
+    vetorStruct[i].rating = stof(str);
+
+    getline(*leitura, str, ',');
+    if(str[0] == '"')
+    {
+        if (checagem(str))
+        {
+            getline(*leitura, str, '"');
+            getline(*leitura, str, ',');
+            if (checagem(str))
+            {
+                while (checagem(str))
+                {
+                    getline(*leitura, str, '"');
+                    getline(*leitura, str, ',');
+                }
+            }
+        }
+    }
+    getline(*leitura, str, ',');
+    vetorStruct[i].id = stoi(str);
+    getline(*leitura, str);
+}
+
 int main() {
     fstream saida("fuck.txt", ios::app);
     userIds* vetConj = new userIds[17063];
@@ -286,6 +374,8 @@ int main() {
     cout << "Saiu do leitura" << endl;
 
     frequencia(vetConj, 17063);
+
+    userRatingId* vetNomes = new userRatingId[506542];
 
     delete [] vetConj;
 
