@@ -16,7 +16,7 @@ struct userId{
 
 struct userIdCoalescido{
     string user;
-    int id[2];
+    int id[2]; // id[0] é o valor do id e id[1] é a flag da próxima posicao(0 ~ N)/posicao vazia (-2)/fim do percurso(-1)
 };
 
 int random(int min, int max)
@@ -26,7 +26,7 @@ int random(int min, int max)
     num = (rand()%(max-min));
 
     return num;
-}
+}  // Funcao para pegar um numero aleatorio entre min e max
 
 int randomLarge(int max)
 {
@@ -66,7 +66,7 @@ bool checagem(string str) {
         else
             return 1;
     }
-}
+} // funcao para contornar os problemas na leitura do arquivo "bgg-13m-reviews.csv"
 
 void inicializarHash(userId* hash, int N)
 {
@@ -103,7 +103,7 @@ int primoAnterior(int valor)
         candidatoADivisor++;
     }
     return valor;
-}
+} // funçao que retorna o valor primo anterior ao valor passado como argumento
 
 int primoPosterior(int valor)
 {
@@ -132,14 +132,15 @@ int primoPosterior(int valor)
         candidatoADivisor++;
     }
     return valor;
-}
+} // funçao que retorna o valor primo anterior ao valor passado como argumento
+
 // -------------------------------------------------- HASH ENCADEAMENTO COALESCIDO ------------------------------------------------------------------------
 
 void inicializarHashCoalescido(userIdCoalescido* hash, int N) // N é o tamanho
 {
     for(int i = 0 ; i < N ; i++)
     {
-        hash[i].id[1] = -2; // posicao do proximo
+        hash[i].id[1] = -2; // posicao do proximo (-2 significa posicao vazia)
         hash[i].id[0] = 0;  // valor do id
     }
 }
@@ -149,19 +150,19 @@ void inserirEncadeamentoCoalescido(userId* vet, int nVet, unsigned long* vetDado
     int N = primoPosterior(nVet);
     userIdCoalescido* hash = new userIdCoalescido [N];
     inicializarHashCoalescido(hash, N);
-    unsigned long user;
+    unsigned long user; // variavel que armazena a string user como um valor inteiro
 
     for(int i = 0 ; i < nVet ; i++)
     {
         for(int z = 0 ; z < vet[i].user.length() ; z++)
         {
             user = vet[i].user[z] + user;
-        }
+        } // tratamento da string para inteiro (código ASCII) para tambem funcionar como chave de ordenaçao
         unsigned long chave = user + vet[i].id;
         int posicao = chave % N;
         int posicaoAnterior;
         int j = N-1; // tamanho no vetor
-        unsigned long compar = 0;
+        unsigned long compar = 0; // acumulador do numero de comparacoes
 
         if(hash[posicao].id[1] >= -1)
         {
@@ -171,7 +172,7 @@ void inserirEncadeamentoCoalescido(userId* vet, int nVet, unsigned long* vetDado
                 posicao = hash[posicao].id[1];
                 posicaoAnterior = posicao;
                 compar++;
-            }
+            } // enquanto nao chegarmos ao fim do "percurso" atualizamos o valor da posicao com o valor
             if(hash[posicao].id[1] != -2)
             {
                 posicao = j;
@@ -212,14 +213,14 @@ void inserirEnderecamentoLinear(userId* vet, int nVet, unsigned long* vetDados)
     int N = primoPosterior(nVet);
     userId* hash = new userId [N];
     inicializarHash(hash, N);
-    unsigned long user;
+    unsigned long user; // variavel que armazena a string user como um valor inteiro
 
     for(int i = 0 ; i < nVet ; i++)
     {
         for(int z = 0 ; z < vet[i].user.length() ; z++)
         {
             user = vet[i].user[z] + user;
-        }
+        } // tratamento da string para inteiro (código ASCII) para tambem funcionar como chave de ordenaçao
         
         unsigned long chave = vet[i].id + user;
         int posicao = chave % N;
@@ -254,14 +255,14 @@ void inserirDoubleHashing(userId* vet, int nVet, unsigned long* vetDados)
     int N = primoPosterior(nVet);
     userId* hash = new userId [N];
     inicializarHash(hash, N);
-    unsigned long user;
+    unsigned long user; // variavel que armazena a string user como um valor inteiro
     
     for(int i = 0 ; i < nVet ; i++)
     {
         for(int z = 0 ; z < vet[i].user.length() ; z++)
         {
             user = vet[i].user[z] + user;
-        }
+        } // tratamento da string para inteiro (código ASCII) para tambem funcionar como chave de ordenaçao
         unsigned long chave = user + vet[i].id;
         unsigned int posicao =  chave % N;
         unsigned long colisoes = 0;
@@ -291,14 +292,14 @@ void inserirQuadratico(userId* vet, int nVet, unsigned long* vetDados)
     int N = primoPosterior(nVet);
     userId* hash = new userId[N];
     inicializarHash(hash, N);
-    int user;
+    int user; // variavel que armazena a string user como um valor inteiro
 
     for(int i = 0; i < nVet; i++)
     {
         for(int z = 0 ; z < vet[i].user.length() ; z++)
         {
             user = vet[i].user[z] + user;
-        }
+        } // tratamento da string para inteiro (código ASCII) para tambem funcionar como chave de ordenaçao
         unsigned long chave = vet[i].id + user;
         int posicao = chave % N;
         unsigned long j = 1;
@@ -430,7 +431,7 @@ void medias4(int grupo, unsigned long *vetDados, userId *vetRegistro, int q, use
 
 void analisaCenario4(userId *vetRegistro, int q, userId* vetAux){
 
-    fstream entrada("entraada.txt");
+    fstream entrada("entrada.txt");
     fstream saida("saida.txt", ios::app);
 
     string enes, conj;
