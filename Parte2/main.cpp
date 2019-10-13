@@ -137,7 +137,7 @@ void inicializarHash(categorias* hash, int N)
     }
 }
 
-void inserirQuadratico(categorias* vetCategorias, int nVet, unsigned long* vetDados) {
+categorias* inserirQuadratico(categorias* vetCategorias, int nVet) {
     int N = primoPosterior(nVet);
     categorias* hash = new categorias[N];
     inicializarHash(hash, N);
@@ -153,30 +153,57 @@ void inserirQuadratico(categorias* vetCategorias, int nVet, unsigned long* vetDa
         unsigned long chave = vetCategorias[i].quant + nome;
         int posicao = chave % N;
         unsigned long j = 1;
-        unsigned long compar = 0;
 
-        if(hash[posicao].quant == -1)
-            compar++;
-        else
+        while(hash[posicao].quant != -1)
         {
-            while(hash[posicao].quant != -1)
-            {
-                posicao = (chave + j*j) % N;
-                j++;
-                compar++;
-            }
+            posicao = (chave + j*j) % N;
+            j++;
         }
+        
         hash[posicao].nome = vetCategorias[i].nome;
         hash[posicao].quant = vetCategorias[i].quant;
         hash[posicao].freq = vetCategorias[i].freq;
-        vetDados[0] = vetDados[0] + compar;
     }
 
-    delete [] hash;
+    return hash;
 }
 
-void pesquisarCategoria(categorias* categoria)
-{}
+int pesquisarCategoria(categorias* hashCategorias, int nVet, string categoriaPesquisada)
+{
+    int N = primoPosterior(nVet);
+    unsigned int chave = 0;
+    int posicao;
+    for(int i = 0 ; i < categoriaPesquisada.length() ; i++)
+    {
+        chave = categoriaPesquisada[i] + chave; // tratamento de string para int pela tabela ASCII
+    }
+
+    posicao = chave % N;
+
+    if(hashCategorias[posicao].nome == categoriaPesquisada)
+    {
+        return posicao;
+    }
+    else
+    {
+        int i = 1;
+        posicao = (chave + i*i) % N;
+        while(hashCategorias[posicao].nome != categoriaPesquisada)
+        {
+            i++;
+            posicao = (chave + i*i) % N;
+            if(i == N)
+            {
+                cout << "\nERRO: CHAVE NAO ENCONTRADA NA HASH\n";
+                exit(1);
+            } // caso o numero de testes para possivel posiçao vazia for igual ao tamanho do vetor
+              // quer dizer que o elemento nao se encontra na hash
+        }
+
+        return posicao;
+    }
+    
+}
 
 void frequencia(userIds* vetConj, int tamanho){
     categorias vetCategorias[85];
