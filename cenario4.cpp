@@ -90,7 +90,7 @@ int primoAnterior(int valor)
         cout << "ERRO: VALOR INVALIDO";
     }
 
-    while (candidatoADivisor <= (valor / 2) && ehPrimo != true) 
+    while (candidatoADivisor <= (valor / 2) && ehPrimo != true)
     {
         resto = valor % candidatoADivisor;
         if (resto == 0)
@@ -119,7 +119,7 @@ int primoPosterior(int valor)
         cout << "ERRO: VALOR INVALIDO";
     }
 
-    while (candidatoADivisor <= (valor / 2) && ehPrimo != true) 
+    while (candidatoADivisor <= (valor / 2) && ehPrimo != true)
     {
         resto = valor % candidatoADivisor;
         if (resto == 0)
@@ -176,7 +176,7 @@ void inserirEncadeamentoCoalescido(userId* vet, int nVet, unsigned long* vetDado
             if(hash[posicao].id[1] != -2)
             {
                 posicao = j;
-                while (hash[posicao].id[1] != -2) 
+                while (hash[posicao].id[1] != -2)
                 {
                     posicao--;
                     compar++;
@@ -221,7 +221,7 @@ void inserirEnderecamentoLinear(userId* vet, int nVet, unsigned long* vetDados)
         {
             user = vet[i].user[z] + user;
         } // tratamento da string para inteiro (código ASCII) para tambem funcionar como chave de ordenaçao
-        
+
         unsigned long chave = vet[i].id + user;
         int posicao = chave % N;
         unsigned long j = 1;
@@ -229,7 +229,7 @@ void inserirEnderecamentoLinear(userId* vet, int nVet, unsigned long* vetDados)
 
         if(hash[posicao].id == -1)
             compar++;
-        else 
+        else
         {
             while(hash[posicao].id != -1)
             {
@@ -256,7 +256,7 @@ void inserirDoubleHashing(userId* vet, int nVet, unsigned long* vetDados)
     userId* hash = new userId [N];
     inicializarHash(hash, N);
     unsigned long user; // variavel que armazena a string user como um valor inteiro
-    
+
     for(int i = 0 ; i < nVet ; i++)
     {
         for(int z = 0 ; z < vet[i].user.length() ; z++)
@@ -307,7 +307,7 @@ void inserirQuadratico(userId* vet, int nVet, unsigned long* vetDados)
 
         if(hash[posicao].id == -1)
             compar++;
-        else 
+        else
         {
             while(hash[posicao].id != -1)
             {
@@ -330,38 +330,38 @@ void inserirQuadratico(userId* vet, int nVet, unsigned long* vetDados)
 
 void auxInserirSeparado(No* no, int id, string user, unsigned long* vetDados){
     static unsigned long compaar = 0;
-    if((no->getId() != -1) && (no->getProx() == NULL))
+    if((no->getId() != -1) && (no->getProx() == NULL))     //se o nó na posição não estiver vazio e não tiver um próximo nó preenchido
     {
-        No* novono = new No;
+        No* novono = new No;           //cria o próximo nó e insere o valor
         novono->setId(id);
         no->setProx(novono);
         compaar++;
-    } else if(no->getId() != -1 && no->getProx() != NULL)
+    } else if(no->getId() != -1 && no->getProx() != NULL)       //se o nó não estiver vazio e seu próximo está preenchido, vai até o próximo e repete
     {
         auxInserirSeparado(no->getProx(), id, user, vetDados);
         compaar++;
-    }else{
+    }else{               //se o nó estiver vazio, preenche o mesmo com os valores
         no->setId(id);
         no->setUser(user);
-        vetDados[0] = vetDados[0] + compaar;
+        vetDados[0] = vetDados[0] + compaar;   //soma no vetor de dados para calculo da media
     }
 }
 
 void inserirSeparado(userId* vet, int nVet, unsigned long* vetDados){
-    int N = primoPosterior(nVet);
-    No *hash = new No[N];
+    int N = primoPosterior(nVet);  //encontra o primo posterior
+    No *hash = new No[N];          //cria o hash, que é um vetor de nós de com o tamanho igual ao primo posterior
     unsigned long posicao, user;
 
-    for(int i = 0; i < nVet; i++){
+    for(int i = 0; i < nVet; i++){         //for que irá inserir todos os elementos do vetor de tamanho nVet, um dos tamanho de conjunto informados no arquivo entrada.txt
         for(int z = 0 ; z < vet[i].user.length() ; z++)
         {
             user = vet[i].user[z] + user;
         }
-        posicao = (user + vet[i].id) % N;
-        auxInserirSeparado(&hash[posicao], vet[i].id, vet[i].user, vetDados);
+        posicao = (user + vet[i].id) % N;       //calcula onde ele será inserido no hash
+        auxInserirSeparado(&hash[posicao], vet[i].id, vet[i].user, vetDados);        //insere no hash
     }
-    double memoriaUtilizada = N/256;
-    vetDados[1] = vetDados[1] + memoriaUtilizada;
+    double memoriaUtilizada = N/256;            //cálculo da memória
+    vetDados[1] = vetDados[1] + memoriaUtilizada;   //o cálculo da memória é inserida no vetor de dados para o calculo de media posterior
     delete [] hash;
 }
 
@@ -481,7 +481,7 @@ void analisaCenario4(userId *vetRegistro, int q, userId* vetAux){
         }
         medias4(N[i], vetDados, vetRegistro, q, vetAux);   // lança na funcao que retornarao as medias
         cout << "saiu do media";
-        saida << "Medias do conjunto de " << N[i] << " dados - Comparacoes: " << vetDados[0] << ", Memoria utilizada: " 
+        saida << "Medias do conjunto de " << N[i] << " dados - Comparacoes: " << vetDados[0] << ", Memoria utilizada: "
         << (double)vetDados[1] << " kb\n";  // imprime no arquivo
     }
 
