@@ -23,8 +23,8 @@ int random(int min, int max)
     num = (rand()%(max-min));
 
     return num;
-}
-
+} // Funcao para pegar um numero aleatorio entre min e max
+ 
 int randomLarge(int max)
 {
     int num;
@@ -56,22 +56,22 @@ void countingSort(int* vet, int n)
     for(int i = 0 ; i < n ; i++)
     {
         (vetOcorrencias[vet[i]])++; 
-    } // vou na posicao do vetOcorrencias referente ao ID do vet e incremento 1 na ocorrencia dele
+    } // vamos na posicao do vetOcorrencias referente ao ID do vet e incremento 1 na ocorrencia dele
 
     for(int i = 1 ; i < 13170075 ; i++)
     {
         vetOcorrencias[i] += vetOcorrencias[i-1]; 
-    } // somo as ocorrencias para saber quantos elementos sao menores ou iguais ao elemento i
+    } // somamos acumuladamente as ocorrencias para saber quantos elementos sao menores ou iguais ao elemento i
 
     for(int i = n ; i >= 0 ; i--)
     {
         vetAux[vetOcorrencias[vet[i]]-1] = vet[i]; // vet[i]-1 pois o vetor vai do indice 0 a n-1
-        vetOcorrencias[vet[i]]--; // decremeneto um na ocorrencia do elemento pois ja inseri ele no vetAux
+        vetOcorrencias[vet[i]]--; // decrementamos um na ocorrencia do elemento pois ja inseri ele no vetAux
     }
 
     for(int i = 0 ; i < n ; i++)
     {
-        vet[i] = vetAux[i];
+        vet[i] = vetAux[i]; // transfirimos os elementos do vetAux, que sera deletado, para o vet, o vetor que queremos ordenar
     }
 
     delete [] vetAux;
@@ -273,7 +273,7 @@ void medias3(int grupo, unsigned int *vetDados, int *vetConj, int q, int* vetAux
     int c = 0;
     cout << "Grupo: " << grupo << endl;
 
-    for(int i = 0; i < 5; i++){              //ele deve fazer isso 5 vezes, como pedido
+    for(int i = 0; i < 5; i++){            //ele deve fazer isso 5 vezes, como pedido
         c = 0;
         while(c < grupo) {                 //preenche o vetor com valores aleatorios referente a entrada
             r = randomLarge(506541 - c);                  // Para nao haver repeticoes no vetor que iremos ordenar (vetAux), quando geramos um numero
@@ -282,7 +282,7 @@ void medias3(int grupo, unsigned int *vetDados, int *vetConj, int q, int* vetAux
             c++;                                          // aleatorio entre 0 e 506541 - c, para q nao coletemos o mesmo valor uma outra vez
         }
         cout << endl;
-        auto t1 = std::chrono::high_resolution_clock::now();    //comeca a contar
+        auto t1 = std::chrono::high_resolution_clock::now();    //comeca a contar o tempo
 
         switch (q) {
             case 1:
@@ -302,7 +302,7 @@ void medias3(int grupo, unsigned int *vetDados, int *vetConj, int q, int* vetAux
                 break;
         }
 
-        auto t2 = std::chrono::high_resolution_clock::now();    //termina de contar
+        auto t2 = std::chrono::high_resolution_clock::now();    //termina de contar o tempo
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
         vetDados[2] = vetDados[2] + duration;
 
