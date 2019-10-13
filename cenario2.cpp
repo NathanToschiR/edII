@@ -23,15 +23,15 @@ int random(int min, int max)
     num = (rand()%(max-min));
 
     return num;
-}
+} // Funcao para pegar um numero aleatorio entre min e max
 
-int randomLarge(int max)  // Funcao que nos permite pegar um numero aleatorio entre 0 e 1013081
+int randomLarge(int max)  
 {
     int num;
     num = ((rand() * rand() ) % max);
 
     return num;
-}
+} // Funcao que nos permite pegar um numero aleatorio entre 0 e 1013081
 
 void trocar(int* a, int* b)
 {
@@ -280,7 +280,7 @@ void medias2(int grupo, unsigned int *vetDados, int *vetConj, int q, int v, int*
     int r;
     int c = 0;
 
-    for(int i = 0; i < 5; i++){              //ele deve fazer isso 5 vezes, como pedido
+    for(int i = 0; i < 5; i++){            //ele deve fazer isso 5 vezes, como pedido
         c = 0;
         while(c < grupo) {                 //preenche o vetor com valores aleatorios referente a entrada
             r = randomLarge(1013081 - c);                  // Para nao haver repeticoes no vetor que iremos ordenar (vetAux), quando geramos um numero
@@ -289,7 +289,7 @@ void medias2(int grupo, unsigned int *vetDados, int *vetConj, int q, int v, int*
             c++;                                           // para q nao coletemos o mesmo valor uma outra vez
         }
         cout << endl;
-        auto t1 = std::chrono::high_resolution_clock::now();    //comeca a contar
+        auto t1 = std::chrono::high_resolution_clock::now();    //comeca a contar o tempo
 
         switch (q) {
             case 1:
@@ -303,7 +303,7 @@ void medias2(int grupo, unsigned int *vetDados, int *vetConj, int q, int v, int*
                 break;
         }
 
-        auto t2 = std::chrono::high_resolution_clock::now();    //termina de contar
+        auto t2 = std::chrono::high_resolution_clock::now();    //termina de contar o tempo
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
         vetDados[2] = vetDados[2] + duration;
 
@@ -324,7 +324,7 @@ void analisaCenario2(int *vetConj, int q, int v, int* vetAux){
     string enes, conj;
     int k = 0;
 
-    getline(entrada, conj);                 //le o numero de conjuntos que serao gerados a partir do arquivo de entrada
+    getline(entrada, conj);              //le o numero de conjuntos que serao gerados a partir do arquivo de entrada
     int numGrupo = stoi(conj);
     cout << "\nConjunto: " << numGrupo << endl;
     int N[numGrupo];
