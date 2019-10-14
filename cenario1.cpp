@@ -15,7 +15,7 @@ struct userId {
     int id;
 } ;
 
-int random(int min, int max) 
+int random(int min, int max)
 {
     int num;
     srand(time(NULL));
@@ -24,7 +24,7 @@ int random(int min, int max)
     return num;
 } // Funcao para pegar um numero aleatorio entre min e max
 
-int randomLarge(int max)  
+int randomLarge(int max)
 {
     int num;
     num = ((rand() * rand() ) % max);
@@ -50,7 +50,7 @@ void trocarStruct(userId* a, userId* b)
 
 // ------------------------------------- CENARIO 1 - PARTE 1 - TIPO DE DADOS: VETOR DE INTEIROS (ID) ------------------------------------------------------------------
 
-void auxQuickSort(int *vet, int p, int n, int *comp, int* troca) // p é o inicio e n o numero de elementos em cada chamada recursiva do QuickSort 
+void auxQuickSort(int *vet, int p, int n, int *comp, int* troca) // p é o inicio e n o numero de elementos em cada chamada recursiva do QuickSort
 {
     if (n == 2)
     {
@@ -107,7 +107,7 @@ void medias11(int grupo, int *vetDados, int *vetConj){ // Grupo representa o N (
         while(c < grupo) {                 //preenche o vetor com valores aleatorios referente a entrada
             r = randomLarge(506541 - c);                  // Para nao haver repeticoes no vetor que iremos ordenar (vet), quando geramos um numero
             vet[c] = vetConj[r];                          // aleatorio, passamos o elemento correspondente a essa posicao para vet e trocamos este elemento,
-            trocar(&vetConj[r], &vetConj[506541 - c]);    // no vetConj, com o ultimo elemento do vetor e geramos, para o proximo valor de c, um numero 
+            trocar(&vetConj[r], &vetConj[506541 - c]);    // no vetConj, com o ultimo elemento do vetor e geramos, para o proximo valor de c, um numero
             c++;                                          // aleatorio entre 0 e 506541 - c, para q nao coletemos o mesmo valor uma outra vez
         }
         cout << endl;
@@ -130,7 +130,7 @@ void medias11(int grupo, int *vetDados, int *vetConj){ // Grupo representa o N (
 
 void analisaCenario11(int *vetConj){
 
-    fstream entrada("entrada.txt");
+    fstream entrada("entraada.txt");
     fstream saida("saida.txt", ios::app);
 
     string enes, conj;
@@ -303,7 +303,7 @@ void PreencheVetorStruct(fstream* leitura, userId* vetorStruct, int i) // Preenc
 
 void analisaCenario12(userId *vetConj) {
 
-    fstream entrada("entrada.txt");
+    fstream entraada("entrada.txt");
     fstream saida("saida.txt", ios::app);
 
     string enes, conj;

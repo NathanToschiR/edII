@@ -431,7 +431,7 @@ void medias4(int grupo, unsigned long *vetDados, userId *vetRegistro, int q, use
 
 void analisaCenario4(userId *vetRegistro, int q, userId* vetAux){
 
-    fstream entrada("entrada.txt");
+    fstream entrada("entraada.txt");
     fstream saida("saida.txt", ios::app);
 
     string enes, conj;

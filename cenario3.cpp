@@ -24,7 +24,7 @@ int random(int min, int max)
 
     return num;
 } // Funcao para pegar um numero aleatorio entre min e max
- 
+
 int randomLarge(int max)
 {
     int num;
@@ -50,17 +50,17 @@ void countingSort(int* vet, int n)
 
     for(int i = 0 ; i < 13170075 ; i++)
     {
-        vetOcorrencias[i] = 0; 
+        vetOcorrencias[i] = 0;
     } // zerando todas as ocorrencias no vetor de ocorrencias
 
     for(int i = 0 ; i < n ; i++)
     {
-        (vetOcorrencias[vet[i]])++; 
+        (vetOcorrencias[vet[i]])++;
     } // vamos na posicao do vetOcorrencias referente ao ID do vet e incremento 1 na ocorrencia dele
 
     for(int i = 1 ; i < 13170075 ; i++)
     {
-        vetOcorrencias[i] += vetOcorrencias[i-1]; 
+        vetOcorrencias[i] += vetOcorrencias[i-1];
     } // somamos acumuladamente as ocorrencias para saber quantos elementos sao menores ou iguais ao elemento i
 
     for(int i = n ; i >= 0 ; i--)
@@ -278,7 +278,7 @@ void medias3(int grupo, unsigned int *vetDados, int *vetConj, int q, int* vetAux
         while(c < grupo) {                 //preenche o vetor com valores aleatorios referente a entrada
             r = randomLarge(506541 - c);                  // Para nao haver repeticoes no vetor que iremos ordenar (vetAux), quando geramos um numero
             vetAux[c] = vetConj[r];                       // aleatorio, passamos o elemento correspondente a essa posicao para vetAux e trocamos este elemento,
-            trocar(&vetConj[r], &vetConj[506541 - c]);    // no vetConj, com o ultimo elemento do vetor e geramos, para o proximo valor de c, um numero 
+            trocar(&vetConj[r], &vetConj[506541 - c]);    // no vetConj, com o ultimo elemento do vetor e geramos, para o proximo valor de c, um numero
             c++;                                          // aleatorio entre 0 e 506541 - c, para q nao coletemos o mesmo valor uma outra vez
         }
         cout << endl;
@@ -319,7 +319,7 @@ void medias3(int grupo, unsigned int *vetDados, int *vetConj, int q, int* vetAux
 
 void analisaCenario3(int *vetConj, int q, int* vetAux){
 
-    fstream entrada("entrada.txt");
+    fstream entrada("entraada.txt");
     fstream saida("saida.txt", ios::app);
 
     string enes, conj;
@@ -369,7 +369,7 @@ void analisaCenario3(int *vetConj, int q, int* vetAux){
         }
         medias3(N[i], vetDados, vetConj, q, vetAux);   //lança na funcao que retornarao as medias
         cout << "saiu do media";
-        saida << "Medias do conjunto de " << N[i] << " dados - Trocas: " << vetDados[0] << ", Comparacoes: " 
+        saida << "Medias do conjunto de " << N[i] << " dados - Trocas: " << vetDados[0] << ", Comparacoes: "
         << vetDados[1] << " e Tempo: " << (double)vetDados[2]/1000 << "\n";  //imprime no arquivo
     }
 
