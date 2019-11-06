@@ -1,7 +1,6 @@
 #ifndef NORN_H
 #define NORN_H
 #include <iostream>
-#include "arvoreRN.h"
 
 class noRN
 {
@@ -15,8 +14,6 @@ class noRN
         void setEsq(noRN* esq);
         noRN* getDir();
         void setDir(noRN* dir);
-        arvoreRN* getArvore();
-        void setArvore(arvoreRN* arv);
         noRN* getPai();
         noRN* getTio();
         noRN* getAvo();

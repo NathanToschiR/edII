@@ -1,7 +1,7 @@
 #ifndef ARVORERN_H
 #define ARVORERN_H
 #include <iostream>
-#include "noRN.h"
+#include "../include/noRN.h"
 
 class arvoreRN
 {
@@ -15,14 +15,16 @@ class arvoreRN
         void inserirValor(int valor);
         noRN* hNegra(arvoreRN* arv);
         void auxHNegra(noRN* raiz, int hNegraE, int hNegraRD);
+        void imprimirArv();
+        void auxImprimirArv(noRN* no);
+
+    private:
+        noRN* raiz;
+        void getFamilia(noRN* no, noRN* pPai, noRN* pTio, noRN* pAvo);
         void rotacaoDir(noRN* no);
         void rotacaoEsq(noRN* no);
         void rotacaoDuploEsq(noRN* no);
         void rotacaoDuploDir(noRN* no);
-
-    private:
-        noRN* raiz;
 };
-
 
 #endif // ARVORERN_H
