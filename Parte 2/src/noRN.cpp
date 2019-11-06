@@ -1,6 +1,5 @@
 #include <iostream>
 #include "../include/noRN.h"
-#include "../include/arvoreRN.h"
 
 using namespace std;
 
@@ -67,6 +66,7 @@ arvoreRN* noRN::getArvore()
 {
     return this->arv;
 }
+
 void noRN::setArvore(arvoreRN* arv)
 {
     this->arv = arv;

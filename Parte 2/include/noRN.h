@@ -3,8 +3,6 @@
 #include <iostream>
 #include "arvoreRN.h"
 
-using namespace std;
-
 class noRN
 {
     public:
@@ -17,6 +15,8 @@ class noRN
         void setEsq(noRN* esq);
         noRN* getDir();
         void setDir(noRN* dir);
+        arvoreRN* getArvore();
+        void setArvore(arvoreRN* arv);
         noRN* getPai();
         noRN* getTio();
         noRN* getAvo();
@@ -30,5 +30,6 @@ class noRN
         noRN* esq;
         noRN* dir;
 };
+
 
 #endif // NORN_H

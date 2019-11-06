@@ -62,12 +62,10 @@ void arvoreRN::rotacaoDir(noRN* no)
     noRN* avo = no->getAvo();
     noRN* pai = no->getPai();
 
-    noRN* p = avo->getDir();
-
     avo->setEsq(pai->getDir());
     pai->setDir(avo);
 
-    if(avo != this->getRaiz())
+    if(avo != this->raiz)
     {
         noRN* sup = avo->getPai();
         if(avo == sup->getEsq())
@@ -76,20 +74,19 @@ void arvoreRN::rotacaoDir(noRN* no)
             sup->setDir(pai);
     }
 
-    pai->setCor(1);
-    avo->setCor(0);
+    pai->setCor(0);
+    avo->setCor(1);
 }
 
 void arvoreRN::rotacaoEsq(noRN* no)
 {
     noRN* avo = no->getAvo();
     noRN* pai = no->getPai();
-    noRN* p = avo->getEsq();
 
     avo->setDir(pai->getEsq());
     pai->setEsq(avo);
 
-    if(avo != this->getRaiz())
+    if(avo != this->raiz)
     {
         noRN* sup = avo->getPai();
         if(avo == sup->getEsq())
@@ -98,8 +95,8 @@ void arvoreRN::rotacaoEsq(noRN* no)
             sup->setDir(pai);
     }
 
-    pai->setCor(1);
-    avo->setCor(0);
+    pai->setCor(0);
+    avo->setCor(1);
 }
 
 void arvoreRN::rotacaoDuploEsq(noRN* no)
@@ -182,4 +179,12 @@ void arvoreRN::inserirNo(noRN* novoNo)
                 rotacaoDuploDir(novoNo);
         } // caso tio for preto, aplicar rotacoes
     } // se o pai for vermelho, como o filho
+}
+
+void arvoreRN::inserirValor(int valor)
+{
+    noRN* novoNo = new noRN();
+    novoNo->setValor(valor);
+
+    inserirNo(novoNo);
 }

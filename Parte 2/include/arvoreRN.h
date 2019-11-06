@@ -3,8 +3,6 @@
 #include <iostream>
 #include "noRN.h"
 
-using namespace std;
-
 class arvoreRN
 {
     public:
@@ -14,6 +12,7 @@ class arvoreRN
         noRN* getRaiz();
         void setRaiz(noRN* raiz);
         void inserirNo(noRN* no);
+        void inserirValor(int valor);
         noRN* hNegra(arvoreRN* arv);
         void auxHNegra(noRN* raiz, int hNegraE, int hNegraRD);
         void rotacaoDir(noRN* no);
@@ -24,5 +23,6 @@ class arvoreRN
     private:
         noRN* raiz;
 };
+
 
 #endif // ARVORERN_H

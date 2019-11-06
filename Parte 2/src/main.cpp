@@ -3,6 +3,8 @@
 #include "../include/noRN.h"
 
 int main() {
-    
+    arvoreRN* arv = new arvoreRN();
+
+    arv->inserirValor(5);
     return 0;
 }
