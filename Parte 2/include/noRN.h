@@ -14,9 +14,6 @@ class noRN
         void setEsq(noRN* esq);
         noRN* getDir();
         void setDir(noRN* dir);
-        noRN* getPai();
-        noRN* getTio();
-        noRN* getAvo();
         int getCor();
         void setCor(int cor);
         noRN* libera(noRN* no);

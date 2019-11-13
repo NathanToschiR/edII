@@ -58,6 +58,46 @@ void arvoreRN::auxHNegra(noRN* p, int hNegraE, int hNegraD)
         auxHNegra(p->getDir(), hNegraE, hNegraD);    
 }
 
+void arvoreRN::getFamilia(noRN* no, noRN* pPai, noRN* pTio, noRN* pAvo)
+{
+    noRN* p = this->raiz;
+    
+    if(p == NULL)
+    {
+        cout << "ERRO: ARVORE VAZIA" << endl;
+        exit(1);
+    }
+
+    if(no != NULL)
+    {
+        while(p != no)
+        {
+            pAvo = pPai;
+            pPai = p;
+
+            if(no->getValor() < p->getValor())
+                p = p->getEsq();
+            else
+                p = p->getDir();
+        }
+
+        if(pAvo == NULL)
+            pTio = NULL;
+        else
+        {
+            if(pPai == pAvo->getDir())
+                pTio = pAvo->getEsq();
+            else
+                pTio = pAvo->getDir();
+        }
+    }
+    else
+    {
+        cout << "ERRO: NO NULO" << endl;
+        exit(1);
+    }
+}
+
 void arvoreRN::rotacaoDir(noRN* no)
 {
     noRN* pai = NULL;
@@ -142,11 +182,10 @@ void arvoreRN::inserirNo(noRN* novoNo)
 {
     noRN* p = raiz;
     noRN* pAnt = NULL;
-
     if(p == NULL)
     {
         novoNo->setCor(0);
-        raiz = novoNo;
+        this->raiz = novoNo;
 
         return;
     } // caso a arvore esteja vazia
@@ -164,7 +203,7 @@ void arvoreRN::inserirNo(noRN* novoNo)
             p = p->getDir();
         }
     } // pAnt eh o no folha, futuro pai do novoNo
-    
+
     if(novoNo->getValor() < pAnt->getValor())
         pAnt->setEsq(novoNo);
     else
@@ -175,7 +214,7 @@ void arvoreRN::inserirNo(noRN* novoNo)
     noRN* tio = NULL;
     noRN* avo = NULL;
 
-    getFamilia(novoNo, pai, tio, avo);
+    getFamilia(novoNo, pai, tio, avo); // PROBLEMA TA AQUI, NAO ATUALIZA AS VARIAVEIS PAI, TIO E AVO
 
     if(pai->getCor() == 1)
     {
@@ -207,54 +246,18 @@ void arvoreRN::inserirValor(int valor)
     inserirNo(novoNo);
 }
 
-void arvoreRN::getFamilia(noRN* no, noRN* pPai, noRN* pTio, noRN* pAvo)
-{
-    noRN* p = this->raiz;
-
-    if(p == NULL)
-    {
-        cout << "ERRO: ARVORE VAZIA" << endl;
-        exit(1);
-    }
-
-    if(no != NULL)
-    {
-        while(p != no)
-        {
-            pAvo = pPai;
-            pPai = p;
-
-            if(p->getValor() < no->getValor())
-                p = p->getEsq();
-            else
-                p = p->getDir();
-        }
-
-        if(pAvo == NULL)
-            pTio = NULL;
-        else
-        {
-            if(pPai == pAvo->getDir())
-                pTio = pAvo->getEsq();
-            else
-                pTio = pAvo->getDir();
-        }
-    }
-    else
-    {
-        cout << "ERRO: NO NULO" << endl;
-        exit(1);
-    }
-}
-
 void arvoreRN::auxImprimirArv(noRN* no)
 {
     if(no != NULL)
     {
         auxImprimirArv(no->getEsq());
-        cout << no->getValor() << "  ";
+        cout << no->getValor();
+        if(no->getCor() == 0)
+            cout << "(p)  ";
+        else
+            cout << "(v)  ";
+
         auxImprimirArv(no->getDir());
-        cout << no->getValor() << "  ";
     }
 }
 

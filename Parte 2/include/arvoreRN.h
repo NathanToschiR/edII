@@ -1,7 +1,7 @@
 #ifndef ARVORERN_H
 #define ARVORERN_H
 #include <iostream>
-#include "../include/noRN.h"
+#include "noRN.h"
 
 class arvoreRN
 {
