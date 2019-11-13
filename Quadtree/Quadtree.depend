@@ -1,0 +1,24 @@
+# depslib dependency file v1.0
+1573625592 source:c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho2\edii\quadtree\src\noquad.cpp
+	"NoQuad.h"
+
+1573625181 c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho2\edii\quadtree\include\noquad.h
+	<stdlib.h>
+	<string>
+	<string.h>
+
+1573626241 source:c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho2\edii\quadtree\main.cpp
+	<iostream>
+	"NoQuad.h"
+	"ArvoreQuad.h"
+	<stdlib.h>
+	<string>
+	<string.h>
+
+1573626071 c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho2\edii\quadtree\include\arvorequad.h
+	"NoQuad.h"
+
+1573626347 source:c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho2\edii\quadtree\src\arvorequad.cpp
+	"ArvoreQuad.h"
+	<iostream>
+
