@@ -7,14 +7,14 @@ using namespace std;
 int main() {
     arvoreRN* arv = new arvoreRN();
 
-    arv->inserirValor(5);
-    arv->inserirValor(10);
-    arv->inserirValor(1);
-    arv->inserirValor(0);
-    arv->inserirValor(8);
-    arv->inserirValor(2);
-    arv->inserirValor(4);
-    arv->inserirValor(3);
+    arv->inserirValor(50);
+    arv->inserirValor(20);
+    arv->inserirValor(80);
+    arv->inserirValor(70);
+    arv->inserirValor(75);
+    arv->inserirValor(82);
+    arv->inserirValor(77);
+    arv->inserirValor(78);
     cout << arv->getRaiz()->getValor() << endl;
     arv->imprimirArv();
     return 0;

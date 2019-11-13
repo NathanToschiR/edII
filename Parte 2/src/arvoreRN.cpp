@@ -111,16 +111,21 @@ void arvoreRN::rotacaoDir(noRN* no)
 
     if(avo != this->raiz)
     {
-        noRN* a;
-        noRN* b;
-        noRN* sup; // no pai do no avo
+        noRN* a = NULL;
+        noRN* b = NULL;
+        noRN* sup = NULL; // no pai do no avo
         getFamilia(avo, &sup, &a, &b);
+
         if(avo == sup->getEsq())
             sup->setEsq(pai);
         else
             sup->setDir(pai);
     }
-
+    else
+    {
+        this->setRaiz(pai);
+    }
+    
     pai->setCor(0);
     avo->setCor(1);
 }
@@ -138,14 +143,18 @@ void arvoreRN::rotacaoEsq(noRN* no)
 
     if(avo != this->raiz)
     {
-        noRN* a;
-        noRN* b;
-        noRN* sup;
+        noRN* a = NULL;
+        noRN* b = NULL;
+        noRN* sup = NULL;
         getFamilia(avo, &sup, &a, &b);
         if(avo == sup->getEsq())
             sup->setEsq(pai);
         else
             sup->setDir(pai);
+    }
+    else
+    {
+        this->setRaiz(pai);
     }
 
     pai->setCor(0);
@@ -220,11 +229,6 @@ void arvoreRN::inserirNo(noRN* novoNo)
 
     getFamilia(novoNo, &pai, &tio, &avo);
 
-    if(novoNo->getValor() == 3)
-    {
-        cout << " PAI: " << pai->getValor() << " AVO: " << avo->getValor() << endl;
-    }
-
     if(pai->getCor() == 1)
     {
         if(tio != NULL && tio->getCor() == 1)
@@ -232,6 +236,48 @@ void arvoreRN::inserirNo(noRN* novoNo)
             avo->setCor(1);
             tio->setCor(0);
             pai->setCor(0);
+
+            if(avo == this->getRaiz())
+            {
+                avo->setCor(0);
+                return;
+            }
+
+            noRN* aPai = NULL;
+            noRN* aTio = NULL;
+            noRN* aAvo = NULL;
+
+            getFamilia(avo, &aPai, &aTio, &aAvo);
+
+
+            while(aPai->getCor() == 1)
+            {
+                if(aTio != NULL && aTio->getCor() == 1)
+                {
+                    aAvo->setCor(1);
+                    aTio->setCor(0);
+                    aPai->setCor(0);
+
+                    noRN* bisa = NULL;  
+
+                    getFamilia(aAvo, &aPai, &aTio, &bisa);
+
+                    aAvo = bisa;
+                }
+                else
+                {
+                    if(aAvo->getDir() == aPai && aPai->getDir() == avo)
+                        rotacaoEsq(avo);
+                    if(aAvo->getEsq() == aPai && aPai->getEsq() == avo)
+                        rotacaoDir(avo);
+                    if(aAvo->getDir() == aPai && aPai->getEsq() == avo)
+                        rotacaoDuploEsq(avo);
+                    if(aAvo->getEsq() == aPai && aPai->getDir() == avo)
+                        rotacaoDuploDir(avo);
+                    break;
+                }
+            }
+
         } // caso tio tambem for vermelho, recolorimos os tres nos
         else
         {

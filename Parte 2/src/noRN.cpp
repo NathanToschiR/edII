@@ -39,15 +39,6 @@ noRN* noRN::getEsq()
 
 void noRN::setEsq(noRN* esq)
 {
-    if(this->esq != NULL)
-    {
-        if(libera(this->esq) != NULL)
-        {
-            cout << "ERRO NO SETESQ" << endl;
-            exit(1);
-        }
-    }
-
     this->esq = esq;    
 }
 
@@ -58,15 +49,6 @@ noRN* noRN::getDir()
 
 void noRN::setDir(noRN* dir)
 {
-    if(this->dir != NULL)
-    {
-        if(libera(this->dir) != NULL)
-        {
-            cout << "ERRO NO SETDIR" << endl;
-            exit(1);
-        }
-    }
-
     this->dir = dir;  
 }
 
