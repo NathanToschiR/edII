@@ -58,22 +58,16 @@ void arvoreRN::auxHNegra(noRN* p, int hNegraE, int hNegraD)
         auxHNegra(p->getDir(), hNegraE, hNegraD);    
 }
 
-void arvoreRN::getFamilia(noRN* no, noRN* pPai, noRN* pTio, noRN* pAvo)
+void arvoreRN::getFamilia(noRN* no, noRN** pPai, noRN** pTio, noRN** pAvo)
 {
     noRN* p = this->raiz;
-    
-    if(p == NULL)
-    {
-        cout << "ERRO: ARVORE VAZIA" << endl;
-        exit(1);
-    }
 
     if(no != NULL)
     {
         while(p != no)
         {
-            pAvo = pPai;
-            pPai = p;
+            *pAvo = *pPai;
+            *pPai = p;
 
             if(no->getValor() < p->getValor())
                 p = p->getEsq();
@@ -81,14 +75,20 @@ void arvoreRN::getFamilia(noRN* no, noRN* pPai, noRN* pTio, noRN* pAvo)
                 p = p->getDir();
         }
 
-        if(pAvo == NULL)
-            pTio = NULL;
+        if(*pAvo == NULL)
+            *pTio = NULL;
         else
         {
-            if(pPai == pAvo->getDir())
-                pTio = pAvo->getEsq();
+            if(*pPai == (*pAvo)->getDir())
+            {
+                if((*pAvo)->getEsq() != NULL)
+                    *pTio = (*pAvo)->getEsq();
+            }
             else
-                pTio = pAvo->getDir();
+            {
+                if((*pAvo)->getDir() != NULL)
+                    *pTio = (*pAvo)->getDir();
+            }
         }
     }
     else
@@ -104,15 +104,17 @@ void arvoreRN::rotacaoDir(noRN* no)
     noRN* tio = NULL;
     noRN* avo = NULL;
 
-    getFamilia(no, pai, tio, avo);
+    getFamilia(no, &pai, &tio, &avo);
 
     avo->setEsq(pai->getDir());
     pai->setDir(avo);
 
     if(avo != this->raiz)
     {
+        noRN* a;
+        noRN* b;
         noRN* sup; // no pai do no avo
-        getFamilia(avo, sup, NULL, NULL);
+        getFamilia(avo, &sup, &a, &b);
         if(avo == sup->getEsq())
             sup->setEsq(pai);
         else
@@ -129,15 +131,17 @@ void arvoreRN::rotacaoEsq(noRN* no)
     noRN* tio = NULL;
     noRN* avo = NULL;
 
-    getFamilia(no, pai, tio, avo);
+    getFamilia(no, &pai, &tio, &avo);
 
     avo->setDir(pai->getEsq());
     pai->setEsq(avo);
 
     if(avo != this->raiz)
     {
+        noRN* a;
+        noRN* b;
         noRN* sup;
-        getFamilia(avo, sup, NULL, NULL);
+        getFamilia(avo, &sup, &a, &b);
         if(avo == sup->getEsq())
             sup->setEsq(pai);
         else
@@ -154,7 +158,7 @@ void arvoreRN::rotacaoDuploEsq(noRN* no)
     noRN* tio = NULL;
     noRN* avo = NULL;
 
-    getFamilia(no, pai, tio, avo);
+    getFamilia(no, &pai, &tio, &avo);
 
     pai->setEsq(no->getDir());
     avo->setDir(no);
@@ -169,7 +173,7 @@ void arvoreRN::rotacaoDuploDir(noRN* no)
     noRN* tio = NULL;
     noRN* avo = NULL;
 
-    getFamilia(no, pai, tio, avo);
+    getFamilia(no, &pai, &tio, &avo);
 
     pai->setDir(no->getEsq());
     avo->setEsq(no);
@@ -214,11 +218,16 @@ void arvoreRN::inserirNo(noRN* novoNo)
     noRN* tio = NULL;
     noRN* avo = NULL;
 
-    getFamilia(novoNo, pai, tio, avo); // PROBLEMA TA AQUI, NAO ATUALIZA AS VARIAVEIS PAI, TIO E AVO
+    getFamilia(novoNo, &pai, &tio, &avo);
+
+    if(novoNo->getValor() == 3)
+    {
+        cout << " PAI: " << pai->getValor() << " AVO: " << avo->getValor() << endl;
+    }
 
     if(pai->getCor() == 1)
     {
-        if(tio->getCor() == 1)
+        if(tio != NULL && tio->getCor() == 1)
         {
             avo->setCor(1);
             tio->setCor(0);
@@ -236,6 +245,8 @@ void arvoreRN::inserirNo(noRN* novoNo)
                 rotacaoDuploDir(novoNo);
         } // caso tio for preto, aplicar rotacoes
     } // se o pai for vermelho, como o filho
+
+    raiz->setCor(0);
 }
 
 void arvoreRN::inserirValor(int valor)

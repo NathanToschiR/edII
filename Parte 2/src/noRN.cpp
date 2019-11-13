@@ -72,11 +72,6 @@ void noRN::setDir(noRN* dir)
 
 int noRN::getCor()
 {
-    if(this == NULL)
-    {
-        return 0;
-    } // caso o No for NULL ele é por padrao, preto
-
     return cor;
 }
 

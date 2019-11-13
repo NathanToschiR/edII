@@ -20,7 +20,7 @@ class arvoreRN
 
     private:
         noRN* raiz;
-        void getFamilia(noRN* no, noRN* pPai, noRN* pTio, noRN* pAvo);
+        void getFamilia(noRN* no, noRN** pPai, noRN** pTio, noRN** pAvo);
         void rotacaoDir(noRN* no);
         void rotacaoEsq(noRN* no);
         void rotacaoDuploEsq(noRN* no);
