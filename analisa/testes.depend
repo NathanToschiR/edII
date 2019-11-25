@@ -32,3 +32,21 @@
 	<ctime>
 	<chrono>
 
+1574655976 source:c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho2\edii\analisa\src\arvorern.cpp
+	<iostream>
+	"../include/arvoreRN.h"
+
+1574655888 c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho2\edii\analisa\include\arvorern.h
+	<iostream>
+	"noRN.h"
+
+1574655929 c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho2\edii\analisa\include\norn.h
+	<iostream>
+
+1574655991 source:c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho2\edii\analisa\src\no.cpp
+	<iostream>
+	"../include/No.h"
+
+1574655909 c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho2\edii\analisa\include\no.h
+	<iostream>
+

@@ -5,6 +5,10 @@
 #include <time.h>
 #include <ctime>
 #include <chrono>
+#include "arvoreRN.h"
+#include "noRN.h"
+#include "No.h"
+#include "ArvoreB.h"
 
 using namespace std;
 
@@ -132,130 +136,76 @@ int testeLeitura(fstream* leitura) {
     return ID;
 }
 
-void testeLeituraStruct(fstream* leitura, userRatingId* vetorStruct, int i)
-{
-    string str;
-    getline(*leitura, str, ',');
-    getline(*leitura, str, ',');
-    vetorStruct[i].user = str;
-    if (checagem(str))
-    {
-        getline(*leitura, str, ',');
-        vetorStruct[i].user = vetorStruct[i].user + str;
-    }
-    getline(*leitura, str, ',');
-    vetorStruct[i].rating = stof(str);
-
-    getline(*leitura, str, ',');
-    if(str[0] == '"')
-    {
-        if (checagem(str))
-        {
-            getline(*leitura, str, '"');
-            getline(*leitura, str, ',');
-            if (checagem(str))
-            {
-                while (checagem(str))
-                {
-                    getline(*leitura, str, '"');
-                    getline(*leitura, str, ',');
-                }
-            }
-        }
-    }
-    getline(*leitura, str, ',');
-    vetorStruct[i].id = stoi(str);
-    getline(*leitura, str);
-}
-
-void medias11(int grupo, float *vetDados, int *vetConj){
+void medias11(int grupo, float *vetDadosInsercao, float *vetDadosBusca, int *vetConj, int x){
 
     cout << "Entrou no media" << endl;
     int r;
     int c = 0;
-    cout << "Grupo: " << grupo << endl;
-    int* teste = new int[grupo];
-    cout << "Criou o vet teste" << endl;
+    cout << "Grupo: " << grupo << "X = " << x << endl;   //Cria a arvore escolhida
+    if(x == 1){
+        arvoreRN* arv = new arvoreRN();
+    }else if(x == 2){
+        ArvoreB* arv = new ArvoreB();
+    }else if(x == 3){
+        ArvoreB* arv = new ArvoreB();
+    }else{
+        cout << "ERRO: X E INVALIDO" << endl;
+        exit(0);
+    }
+
+    int *teste = new int[grupo];             //cria o vetor que sera utilizado no teste
+    cout << "Criou o vet teste e a vore" << endl;
 
     for(int i = 0; i < 5; i++){              //ele deve fazer isso 5 vezes, como pedido
         cout << "Entrou no For" << i+1 << "do media" << endl;
         c = 0;
-        while(c++ < grupo) {                 //preenche o vetor com valores aleatorios referente a entrada
-            r = randomLarge(506542);
-            teste[c] = vetConj[r];
-        }
-        cout << endl;
-        auto t1 = std::chrono::high_resolution_clock::now();    //comeca a contar
-        quickSort(teste, c, vetDados);
-        auto t2 = std::chrono::high_resolution_clock::now();    //termina de contar
-        auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
-        vetDados[2] = vetDados[2] + duration;
-        cout << "\n";
-        for(int j = 0; j < grupo; j++){
-            cout << teste[j] << " ";
-        }
 
+        auto i1 = std::chrono::high_resolution_clock::now();    //comeca a contar
+        while(c++ < grupo) {                 //faz a insercao na arvore
+            r = randomLarge(506542);
+            teste[c] = r;
+            arv->inserirValor(r);
+        }
+        auto i2 = std::chrono::high_resolution_clock::now();    //termina de contar
+        auto durationInsercao = std::chrono::duration_cast<std::chrono::microseconds>( i2 - i1 ).count();
+        vetDadosInsercao[2] + durationInsercao;
+
+        cout << endl;
+
+        auto b1 = std::chrono::high_resolution_clock::now();    //comeca a contar
+        for(c = 0; c < grupo; c++){
+
+        }
+        auto b2 = std::chrono::high_resolution_clock::now();    //termina de contar
+        auto durationBusca = std::chrono::duration_cast<std::chrono::microseconds>( b2 - b1 ).count();
+        vetDadosBusca[2] = vetDadosBusca[2] + durationBusca;
+        cout << "\n";
     }
 
     cout << "Saiu do for analisa" << endl;
-    vetDados[0] = vetDados[0]/5.0;  //divide todos por 5 para fazer a media
-    vetDados[1] = vetDados[1]/5.0;
-    vetDados[2] = vetDados[2]/5.0;
+
+    vetDadosInsercao[0] = vetDadosInsercao[0]/5.0;  //divide todos por 5 para fazer a media
+    vetDadosInsercao[1] = vetDadosInsercao[1]/5.0;
+    vetDadosInsercao[2] = vetDadosInsercao[2]/5.0;
+
+    vetDadosBusca[0] = vetDadosBusca[0]/5.0;  //divide todos por 5 para fazer a media
+    vetDadosBusca[1] = vetDadosBusca[1]/5.0;
+    vetDadosBusca[2] = vetDadosBusca[2]/5.0;
+
     cout << "vai sair do analisa" << endl;
 
-    delete [] teste;
+    delete [] arv;
 
     return;
 
 
 }
 
-void medias12(int grupo, float *vetDados, userRatingId *vetConj){
-
-    cout << "Entrou no media" << endl;
-    int r;
-    int c = 0;
-    cout << "Grupo: " << grupo << endl;
-    int* teste = new int[grupo];
-    cout << "Criou o vet teste" << endl;
-
-    for(int i = 0; i < 5; i++){              //ele deve fazer isso 5 vezes, como pedido
-        cout << "Entrou no For" << i+1 << "do media" << endl;
-        c = 0;
-        while(c++ < grupo) {                 //preenche um vetor com indices aleatorios do vetor com os arquivos
-            r = randomLarge(506542);
-            teste[c] = vetConj[r].id;
-        }
-        cout << endl;
-        auto t1 = std::chrono::high_resolution_clock::now();    //comeca a contar o tempo
-        quickSort(teste, c, vetDados);
-        auto t2 = std::chrono::high_resolution_clock::now();    //termina de contar
-        auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
-        vetDados[2] = vetDados[2] + duration;
-        cout << "\n";
-        for(int j = 0; j < grupo; j++){
-            cout << teste[j] << " ";
-        }
-
-    }
-
-    cout << "Saiu do for analisa" << endl;
-    vetDados[0] = vetDados[0]/5.0;  //divide todos por 5 para fazer a media
-    vetDados[1] = vetDados[1]/5.0;
-    vetDados[2] = vetDados[2]/5.0;
-    cout << "vai sair do analisa" << endl;
-
-    delete [] teste;
-
-    return;
-
-
-}
-
-void analisaCenario11(int *vetregistro, int tamanho){
+void analisaParte21(int *vetregistro, int tamanho, int x){
 
     fstream entrada("entrada.txt");
-    fstream saida("saida.txt");
+    fstream saidaInsercao("saidaInsercao.txt");
+    fstream saidaBusca("saidaBusca.txt");
 
     string enes, conj;
     int k = 0;
@@ -276,67 +226,29 @@ void analisaCenario11(int *vetregistro, int tamanho){
         cout << "Teste1.\n";
 
         int x;
-        float vetData[3];
+        float vetDadosInsercao[3];
+        float vetDadosBusca[3];
         int i, j;
 
         for(i = 0; i < k; i++){          //para cada conjunto, a analise sera feita
             cout << "For numero " << i << endl;
             for(j = 0; j < 3; j++){
-                vetData[j] = 0;         //zera o vetor de dados
+                vetDadosInsercao[j] = 0;         //zera o vetor de dados
+                vetDadosBusca[j] = 0;
             }
-            medias11(N[i], vetData, vetregistro);   //lança na funcao que retornarao as medias
+            medias11(N[i], vetDadosInsercao, vetDadosBusca, vetregistro, x);   //lança na funcao que retornarao as medias
             cout << "saiu do media";
-            saida << "Cenario11\nMedias do conjunto de " << N[i] << " dados - Trocas: " << vetData[0] << ", Comparacoes: " << vetData[1] << " e Tempo: " << (double)vetData[2]/1000 << "\n";  //imprime no arquivo
+            saidaInsercao << "Parte11\nMedias do conjunto de " << N[i] << " dados - Numero de comparacoes de chaves: " << vetDadosInsercao[0] << ", Numero de copias de registro: " <<
+            vetDadosInsercao[1] << " e Tempo: " << (double)vetDadosInsercao[2]/1000 << "\n";  //imprime no arquivo de saida da insercao
+            saidaBusca << "Parte11\nMedias do conjunto de " << N[i] << " dados - Numero de comparacoes de chaves: " << vetDadosBusca[0] << ", Numero de copias de registro: " <<
+            vetDadosBusca[1] << " e Tempo: " << (double)vetDadosInsercao[2]/1000 << "\n";  //imprime no arquivo de saida da insercao
         }
 
         return;
 
 }
 
-void analisaCenario12(userRatingId *vetregistro, int tamanho){
-
-    fstream entrada("entrada.txt");
-    fstream saida("saida.txt");
-
-    string enes, conj;
-    int k = 0;
-
-    getline(entrada, conj);                     //descobre quantos conjuntos serão gerados
-    int grupo = stoi(conj);
-    cout << "\nConjunto: " << grupo << endl;
-    int N[grupo];
-
-    getline(entrada, enes);             //cria um vetor com a quantidade que cada conjunto deverá ter
-    while(grupo > 0){
-        N[k] = stoi(enes);
-        //cout << "N: " << N[i] << endl;
-        grupo--;
-        k++;
-        getline(entrada, enes);
-    }
-
-        cout << "Teste1.\n";
-
-        int x;
-        float vetData[3];
-        int i, j;
-
-        for(i = 0; i < k; i++){          //para cada conjunto, a analise sera feita
-            cout << "For numero " << i << endl;
-            for(j = 0; j < 3; j++){
-                vetData[j] = 0;         //zera o vetor de dados
-            }
-            medias12(N[i], vetData, vetregistro);   //lança na funcao que retornarao as medias
-            cout << "saiu do media";
-            saida << "Cenario12\nMedias do conjunto de " << N[i] << " dados - Trocas: " << vetData[0] << ", Comparacoes: " << vetData[1] << " e Tempo: " << (double)vetData[2]/1000 << "\n";  //imprime no arquivo
-        }
-
-        return;
-
-}
-
-
-void cenario11()
+void parte21(int x)
 {
     fstream leitura("bgg-13m-reviews.csv");
     int* vetArc = new int[506542];
@@ -368,54 +280,10 @@ void cenario11()
         vetArc[j] = testeLeitura(&leitura);
 
 
-        analisaCenario11(vetArc, j);
+        analisaParte21(vetArc, j, x);
 
 
         delete [] vetArc;
-
-    } else {
-        cout << "ERRO: NAO FOI POSSIVEL ABRIR O ARQUIVO .CSV";
-    }
-
-    leitura.close();
-}
-
-void cenario12()
-{
-    fstream leitura("bgg-13m-reviews.csv");
-
-    userRatingId* vetorStruct = new userRatingId[506542];
-
-    if(leitura.is_open()) // leitura do arquivo "bgg-13m-reviews.csv"
-    {
-        int j = 0;
-        int aleatorio;
-        string str;
-        getline(leitura, str); // getline para passar pela primeira linha de referência
-
-        for (j; j < 506541; j++)
-        {
-            aleatorio = random(0, 25);
-            for (int k = 0; k < aleatorio; k++)
-            {
-                getline(leitura, str);  // joga as linhas fora (antes da linha sortida de cada bloco)
-            }
-            testeLeituraStruct(&leitura, vetorStruct, j);
-            for (int k = aleatorio + 1; k < 26; k++)
-            {
-                getline(leitura, str);  // joga as linhas fora (depois da linha sortida de cada bloco)
-             }
-        }
-        aleatorio = random(0, 7);
-        for (int k = 0; k < aleatorio; k++)
-        {
-            getline(leitura, str);  // joga as linhas fora (antes da linha sortida de cada bloco)
-        }
-        testeLeituraStruct(&leitura, vetorStruct, j);
-
-        analisaCenario12(vetorStruct, 506542);
-
-        delete [] vetorStruct;
 
     } else {
         cout << "ERRO: NAO FOI POSSIVEL ABRIR O ARQUIVO .CSV";
@@ -428,15 +296,17 @@ int main()
 {
     int x;
     srand(time(NULL));
-    cout << "Escolha o cenario para ser testado.\n Digite '1' para o cenario 11, ou '2' para o cenario 12\n";
+    cout << "Escolha qual arvore sera testada.\n Digite '1' para a ArvoreRN, '2' para a ArvoreB com d = 2 ou '3' para a ArvoreB com d = 20\n";
     cin >> x;
 
     if(x == 1){
-        cenario11();
+        parte21(1);
     }else if(x == 2){
-        cenario12();
-    }else {
-        cout << "cenario invalido" << endl;
+        parte21(2);
+    }else if(x == 3){
+        parte21(3);
+    }else{
+        cout << "arvore invalida invalido" << endl;
     }
 
     cout <<"\n\nACABOU!!!" << endl;
