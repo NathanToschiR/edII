@@ -11,10 +11,9 @@ class arvoreRN
         ~arvoreRN();
         noRN* getRaiz();
         void setRaiz(noRN* raiz);
-        void inserirNo(noRN* no);
-        void inserirValor(int valor);
-        noRN* hNegra(arvoreRN* arv);
-        void auxHNegra(noRN* raiz, int hNegraE, int hNegraRD);
+        void inserirNo(noRN* no, float* vetDadosInsercao);
+        void inserirValor(int valor, float* vetDadosInsercao);
+        noRN* busca(int valor, float* vetDadosBusca);
         void imprimirArv();
         void auxImprimirArv(noRN* no);
 
