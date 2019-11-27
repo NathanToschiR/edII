@@ -303,34 +303,28 @@ void arvoreRN::imprimirArv()
 noRN* busca(int valor, float* vetDadosBusca)
 {
     noRN* p = raiz;
-    noRN* pAnt = NULL;
     if(p == NULL)
     {
         cout << "ERRO: ARVORE VAZIA" << endl;
         exit(1);
     } // caso a arvore esteja vazia
 
-    while(p != NULL)
+    while(p->getValor != valor)
     {
         if(valor < p->getValor())
-        {
-            pAnt = p;
             p = p->getEsq();
-        }
         else
-        {
-            pAnt = p;
             p = p->getDir();
-        }
+
         (vetDadosBusca[0])++; // atualizacao do numero de comparacoes
-    }
-    if(pAnt->getValor() == valor)
-        return pAnt;
-    else
-    {
-        cout << "VALOR NAO ENCONTRADO NA ARVORE" << endl;
+
+        if(p == NULL)
+        {
+            cout << "VALOR NAO ENCONTRADO NA ARVORE" << endl;
         
-        return NULL;
+            return NULL;
+        }
     }
-    
+
+    return p;
 }
