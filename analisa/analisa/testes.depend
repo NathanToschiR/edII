@@ -1,0 +1,52 @@
+# depslib dependency file v1.0
+1567566659 source:c:\users\nathan\desktop\codeblocks\testes\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<cstdlib>
+	<ctime>
+
+1567577553 source:c:\users\nathan\desktop\codeblocks\testes2\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<cstdlib>
+	<ctime>
+	<chrono>
+
+1568765388 source:c:\users\nathan\desktop\testes2\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<cstdlib>
+	<time.h>
+	<ctime>
+	<chrono>
+
+1569179875 source:c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho2\edii\analisa\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<cstdlib>
+	<time.h>
+	<ctime>
+	<chrono>
+
+1574655976 source:c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho2\edii\analisa\src\arvorern.cpp
+	<iostream>
+	"../include/arvoreRN.h"
+
+1574655888 c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho2\edii\analisa\include\arvorern.h
+	<iostream>
+	"noRN.h"
+
+1574655929 c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho2\edii\analisa\include\norn.h
+	<iostream>
+
+1574655991 source:c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho2\edii\analisa\src\no.cpp
+	<iostream>
+	"../include/No.h"
+
+1574655909 c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho2\edii\analisa\include\no.h
+	<iostream>
+
