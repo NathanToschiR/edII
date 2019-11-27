@@ -29,35 +29,6 @@ void arvoreRN::setRaiz(noRN* raiz)
     this->raiz = raiz;
 }
 
-noRN* arvoreRN::hNegra(arvoreRN* arv)
-{
-    noRN* p = arv->getRaiz();
-    auxHNegra(p, 0, 0);
-
-    return p;
-} // se p for NULL significa que altura negra é igual dos ambos os lados
-  // mas se nao for, retorna o No problematico
-
-void arvoreRN::auxHNegra(noRN* p, int hNegraE, int hNegraD)
-{
-    if(p == NULL)
-    {
-        if(hNegraE == hNegraD)
-            p = NULL;
-
-        return;
-    }
-    if(p->getEsq()->getCor() == 0)
-        auxHNegra(p->getEsq(), hNegraE + 1, hNegraD);
-    else
-        auxHNegra(p->getEsq(), hNegraE, hNegraD);
-
-    if(p->getDir()->getCor() == 0)
-        auxHNegra(p->getDir(), hNegraE, hNegraD + 1);
-    else
-        auxHNegra(p->getDir(), hNegraE, hNegraD);
-}
-
 void arvoreRN::getFamilia(noRN* no, noRN** pPai, noRN** pTio, noRN** pAvo)
 {
     noRN* p = this->raiz;
@@ -191,7 +162,7 @@ void arvoreRN::rotacaoDuploDir(noRN* no)
     rotacaoDir(pai);
 }
 
-void arvoreRN::inserirNo(noRN* novoNo)
+void inserirNo(noRN* no, float* vetDadosInsercao)
 {
     noRN* p = raiz;
     noRN* pAnt = NULL;
@@ -215,12 +186,14 @@ void arvoreRN::inserirNo(noRN* novoNo)
             pAnt = p;
             p = p->getDir();
         }
+        (vetDadosInsercao[0])++; // atualizacao do numero de comparacoes
     } // pAnt eh o no folha, futuro pai do novoNo
 
     if(novoNo->getValor() < pAnt->getValor())
         pAnt->setEsq(novoNo);
     else
         pAnt->setDir(novoNo);
+    (vetDadosInsercao[0])++;
 
     // metodos para manter propriedades de arvore rubro negra
     noRN* pai = NULL;
@@ -274,6 +247,7 @@ void arvoreRN::inserirNo(noRN* novoNo)
                         rotacaoDuploEsq(avo);
                     if(aAvo->getEsq() == aPai && aPai->getDir() == avo)
                         rotacaoDuploDir(avo);
+                    (vetDadosInsercao[1])++; // atualiza como o numero de rotacoes feitas
                     break;
                 }
             }
@@ -289,18 +263,19 @@ void arvoreRN::inserirNo(noRN* novoNo)
                 rotacaoDuploEsq(novoNo);
             if(avo->getEsq() == pai && pai->getDir() == novoNo)
                 rotacaoDuploDir(novoNo);
+            (vetDadosInsercao[1])++; // atualiza como o numero de rotacoes feitas
         } // caso tio for preto, aplicar rotacoes
     } // se o pai for vermelho, como o filho
 
     raiz->setCor(0);
 }
 
-void arvoreRN::inserirValor(int valor)
+void inserirValor(int valor, float* vetDadosInsercao)
 {
     noRN* novoNo = new noRN();
     novoNo->setValor(valor);
 
-    inserirNo(novoNo);
+    inserirNo(novoNo, vetDadosInsercao);
 }
 
 void arvoreRN::auxImprimirArv(noRN* no)
@@ -323,4 +298,39 @@ void arvoreRN::imprimirArv()
     noRN* p = this->raiz;
 
     auxImprimirArv(p);
+}
+
+noRN* busca(int valor, float* vetDadosBusca)
+{
+    noRN* p = raiz;
+    noRN* pAnt = NULL;
+    if(p == NULL)
+    {
+        cout << "ERRO: ARVORE VAZIA" << endl;
+        exit(1);
+    } // caso a arvore esteja vazia
+
+    while(p != NULL)
+    {
+        if(valor < p->getValor())
+        {
+            pAnt = p;
+            p = p->getEsq();
+        }
+        else
+        {
+            pAnt = p;
+            p = p->getDir();
+        }
+        (vetDadosBusca[0])++; // atualizacao do numero de comparacoes
+    }
+    if(pAnt->getValor() == valor)
+        return pAnt;
+    else
+    {
+        cout << "VALOR NAO ENCONTRADO NA ARVORE" << endl;
+        
+        return NULL;
+    }
+    
 }
