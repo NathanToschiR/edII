@@ -227,8 +227,8 @@ void medias2(int grupo, double *vetDados, string *vetConj){
 
 void analisaCenario2(string* vetConj){
 
-    fstream entrada("entradaExperimental.txt");
-    fstream saida("saidaExperimental.txt", ios::app);
+    fstream entrada("entrada.txt");
+    fstream saida("saida.txt", ios::app);
 
     string enes, conj;
     int k = 0;
