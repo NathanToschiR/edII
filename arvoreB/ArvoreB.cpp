@@ -1,6 +1,7 @@
 #include <iostream>
 #include <algorithm>
 #include "ArvoreB.h"
+#include "No.h"
 using namespace std;
 
 #define d 2
@@ -58,7 +59,7 @@ No* getMaiorMaisProximo(int valor, int posicao, No* p, int* i) {
     return ptt;
 }
 
-int ArvoreB::achaMediano(No* p, int val, int* posicaoMed) {
+int ArvoreB::achaMediano(No* p, int val, int* posicaoMed, unsigned int* comp) {
     int aux;
     if (p->getValor(d - 1) > val) {
         *posicaoMed = d - 1;
@@ -76,6 +77,7 @@ int ArvoreB::achaMediano(No* p, int val, int* posicaoMed) {
         *posicaoMed = d - 1;
         return val;
     }
+    (*comp) = (*comp) + 2;
 }
 
 void ArvoreB::setRelacao(No* pai, int posicao, No* filho) {
@@ -83,7 +85,7 @@ void ArvoreB::setRelacao(No* pai, int posicao, No* filho) {
     filho->setPai(pai);
 }
 
-void ArvoreB::separaNo(No* p, No* novoFilhoEsq, No* novoFilhoDir, No* novoNoEsq, No* novoNoDir, int val, int k) {
+void ArvoreB::separaNo(No* p, No* novoFilhoEsq, No* novoFilhoDir, No* novoNoEsq, No* novoNoDir, int val, int k, unsigned int* copias, unsigned int* comp) {
     int h = 0;
     int l = 0, c = 0;
     for (l; l < d; l++) {
@@ -91,8 +93,10 @@ void ArvoreB::separaNo(No* p, No* novoFilhoEsq, No* novoFilhoDir, No* novoNoEsq,
             novoNoEsq->setValor(l, val);
             setRelacao(novoNoEsq, l, novoFilhoEsq);
             setRelacao(novoNoEsq, l + 1, novoFilhoDir);
-            if (k != d - 1)
+            if (k != d - 1) {
                 novoNoEsq->setValor(l + 1, p->getValor(l));
+                (*copias)++;
+            }
         }
         else {
             novoNoEsq->setValor(l, p->getValor(h));
@@ -100,6 +104,7 @@ void ArvoreB::separaNo(No* p, No* novoFilhoEsq, No* novoFilhoDir, No* novoNoEsq,
             h++;
         }
     }
+    (*copias) = (*copias) + d;
     if (k != d - 1 && k != d)
         setRelacao(novoNoEsq, d, p->getNo(h));
     h = d;
@@ -107,6 +112,7 @@ void ArvoreB::separaNo(No* p, No* novoFilhoEsq, No* novoFilhoDir, No* novoNoEsq,
         setRelacao(novoNoEsq, d, novoFilhoEsq);
         setRelacao(novoNoDir, 0, novoFilhoDir);
         novoNoDir->setValor(1, p->getValor(d));
+        (*copias)++;
         l = 1;
     }
     else {
@@ -121,16 +127,19 @@ void ArvoreB::separaNo(No* p, No* novoFilhoEsq, No* novoFilhoDir, No* novoNoEsq,
     for (l; l - c < d; l++) {
         if (l + d == k) {
             novoNoDir->setValor(l - c, val);
+            (*copias)++;
             setRelacao(novoNoDir, l - c, novoFilhoEsq);
             setRelacao(novoNoDir, l - c + 1, novoFilhoDir);
             l++;
             if (k != 2 * d) {
                 h++;
                 novoNoDir->setValor(l - c, p->getValor(k));
+                (*copias)++;
             }
         }
         else {
             novoNoDir->setValor(l - c, p->getValor(h));
+            (*copias)++;
             setRelacao(novoNoDir, l - c, p->getNo(h));
             h++;
         }
@@ -139,9 +148,9 @@ void ArvoreB::separaNo(No* p, No* novoFilhoEsq, No* novoFilhoDir, No* novoNoEsq,
         setRelacao(novoNoDir, d, p->getNo(2 * d));
 }
 
-void ArvoreB::splitPropagado(No* p, No* novoFilhoEsq, No* novoFilhoDir, int valor, int k) {
+void ArvoreB::splitPropagado(No* p, No* novoFilhoEsq, No* novoFilhoDir, int valor, int k, unsigned int* copias, unsigned int* comp) {
     int posicao;
-    int mediano = achaMediano(p, valor, &posicao);
+    int mediano = achaMediano(p, valor, &posicao, comp);
     No* novoNoEsq = new No();
     No* novoNoDir = new No();
     novoNoDir->setNumChaves(d);
@@ -152,7 +161,8 @@ void ArvoreB::splitPropagado(No* p, No* novoFilhoEsq, No* novoFilhoDir, int valo
         No* novaRaiz = new No();
         this->raiz = novaRaiz;
         novaRaiz->setValor(0, mediano);
-        separaNo(p, novoFilhoEsq, novoFilhoDir, novoNoEsq, novoNoDir, valor, k);
+        (*copias)++;
+        separaNo(p, novoFilhoEsq, novoFilhoDir, novoNoEsq, novoNoDir, valor, k, copias, comp);
         setRelacao(novaRaiz, 0, novoNoEsq);
         setRelacao(novaRaiz, 1, novoNoDir);
         novaRaiz->setNumChaves(1);
@@ -163,19 +173,21 @@ void ArvoreB::splitPropagado(No* p, No* novoFilhoEsq, No* novoFilhoDir, int valo
             if (mediano < p->getPai()->getValor(j))
                 break;
         }
+        (*comp) = (*comp) + j + 1;
         if (p->getPai()->getNumChaves() == 2 * d) {
             No* novoNoEsq = new No();
             No* novoNoDir = new No();
-            separaNo(p, novoFilhoEsq, novoFilhoDir, novoNoEsq, novoNoDir, valor, k);
-            splitPropagado(p->getPai(), novoNoEsq, novoNoDir, mediano, j);
+            separaNo(p, novoFilhoEsq, novoFilhoDir, novoNoEsq, novoNoDir, valor, k, copias, comp);
+            splitPropagado(p->getPai(), novoNoEsq, novoNoDir, mediano, j, copias, comp);
         }
         else {
-            separaNo(p, novoFilhoEsq, novoFilhoDir, novoNoEsq, novoNoDir, valor, k);
+            separaNo(p, novoFilhoEsq, novoFilhoDir, novoNoEsq, novoNoDir, valor, k, copias, comp);
             for (int l = p->getPai()->getNumChaves(); l > j; l--) {
                 p->getPai()->setValor(l, p->getPai()->getValor(l - 1));
                 p->setNo(p->getPai()->getNo(l), l + 1);
             }
             p->getPai()->setValor(j, mediano);
+            (*copias) = (*copias) + p->getPai()->getNumChaves() - j + 1;
             setRelacao(p->getPai(), j, novoNoEsq);
             setRelacao(p->getPai(), j + 1, novoNoDir);
             p->getPai()->setNumChaves(p->getPai()->getNumChaves() + 1);
@@ -183,7 +195,7 @@ void ArvoreB::splitPropagado(No* p, No* novoFilhoEsq, No* novoFilhoDir, int valo
     }
 }
 
-void ArvoreB::primeiroSplit(No* p, int valor) {
+void ArvoreB::primeiroSplit(No* p, int valor, unsigned int* copias, unsigned int* comp) {
     No* novoNoEsq = new No();
     No* novoNoDir = new No();
     novoNoDir->setNumChaves(d);
@@ -192,20 +204,23 @@ void ArvoreB::primeiroSplit(No* p, int valor) {
     for (int k = 0; k < 2 * d; k++) {
         vet[k] = p->getValor(k);
     }
+    (*copias) = (*copias) + (2*d) + 1;
     vet[2 * d] = valor;
     sort(vet, vet + (2*d) + 1);
     for(int k = 0; k < d; k++)
         novoNoEsq->setValor(k, vet[k]);
     for(int k = d + 1; k < (2*d) + 1; k++)
         novoNoDir->setValor(k - d - 1, vet[k]);
+    (*copias) = (*copias) + 2;
     if (p != this->raiz) {
         int k = 0;
         for (k; k < p->getPai()->getNumChaves(); k++) {
             if (vet[d] < p->getPai()->getValor(k))
                 break;
         }
+        (*comp) = (*comp) + k;
         if (p->getPai()->getNumChaves() == 2 * d) {
-            splitPropagado(p->getPai(), novoNoEsq, novoNoDir, vet[d], k);
+            splitPropagado(p->getPai(), novoNoEsq, novoNoDir, vet[d], k, copias, comp);
         }
         else {
             for (int i = p->getPai()->getNumChaves() - 1; i >= k; i--) {
@@ -213,6 +228,7 @@ void ArvoreB::primeiroSplit(No* p, int valor) {
                 p->getPai()->setNo(p->getPai()->getNo(i + 1), i + 2);
             }
             p->getPai()->setValor(k, vet[d]);
+            (*copias) = (*copias) + p->getNumChaves() + 1 - k;
             p->getPai()->setNumChaves(p->getPai()->getNumChaves() + 1);
             setRelacao(p->getPai(), k, novoNoEsq);
             setRelacao(p->getPai(), k + 1, novoNoDir);
@@ -226,6 +242,7 @@ void ArvoreB::primeiroSplit(No* p, int valor) {
         setRelacao(novaRaiz, 1, novoNoDir);
         novaRaiz->setNumChaves(1);
         novaRaiz->setBool(false);
+        (*copias) = (*copias) + 1;
     }
     p->~No();
 }
@@ -246,7 +263,7 @@ void ArvoreB::insercao(int valor, unsigned int* copias, unsigned int* comp)
                 (*copias) = (*copias) + p->getNumChaves() - posicao + 1;
             }
             else {
-                primeiroSplit(p, valor);
+                primeiroSplit(p, valor, copias, comp);
             }
         }
         else{
@@ -451,11 +468,11 @@ void ArvoreB::PrimeiraRemocao(int valor, No* p, int posicao) {
     }
 }
 
-void ArvoreB::remove(int valor) {
+void ArvoreB::remove(int valor, unsigned int* comp) {
     int posicao;
     bool result;
     No* p = new No();
-    p = BuscaValor(valor, &posicao, this->raiz, &result);
+    p = BuscaValor(valor, &posicao, this->raiz, &result, comp);
     if (result == true) {
         if (p->getBool() == false) {
             int novoValor;
