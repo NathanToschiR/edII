@@ -147,6 +147,8 @@ void PreProcessamentoDescricoes(string* vetConj){
                 }
             }
             vetConj[j] = str;
+            if (j == 1365 || j == 2704 || j == 3019 || j == 13567)
+                vetConj[j] = "Nova mensagem para aplicarmos os algoritmos aqui. O conteudo da mensagem pouco importa";
             getline(leitura, str);
         }
     } else {
@@ -156,48 +158,51 @@ void PreProcessamentoDescricoes(string* vetConj){
     leitura.close();
 }
 
-void AlgoritmoDeHuffman(string* vetAux, int grupo, unsigned int *vetDados) {
+void AlgoritmoDeHuffman(string* vetAux, int grupo, double *vetDados) {
     HuffmanTrie* trie = new HuffmanTrie();
     string stringCodificada ("");
-    int taxaDeComp = 0;
-    int armazen = 0;
+    double taxaDeComp = 0;
+    double armazen = 0;
     for (int i = 0; i < grupo; i++) {
+        cout << i << " ";
         trie->ConstroiHuffmanTrie(vetAux[i], vetAux[i].length());
         for (int j = 0; j < vetAux[i].length(); j++) {
             stringCodificada = stringCodificada + trie->AchaCodigo(vetAux[i][j]);
         }
-        taxaDeComp = taxaDeComp + (stringCodificada.length() / (64 * vetAux[i].length()));
+        taxaDeComp = taxaDeComp + (vetAux[i].length() * 64 / stringCodificada.length());
         armazen = armazen + (stringCodificada.length() / 8);
     }
     vetDados[0] = vetDados[0] + (taxaDeComp / grupo);
     vetDados[1] = vetDados[1] + (armazen / grupo);
 }
 
-void AlgoritmoLZW(string* vetAux, int grupo, unsigned int *vetDados) {
+void AlgoritmoLZW(string* vetAux, int grupo, double *vetDados) {
     vector<int> codigo;
-    int taxaDeComp = 0;
-    int armazen = 0;
+    double taxaDeComp = 0;
+    double armazen = 0;
     for (int i = 0; i < grupo; i++) {
         codigo = codificacaoLZW(vetAux[i]);
         taxaDeComp = taxaDeComp + (codigo.size() / vetAux[i].length());
         armazen = armazen + (codigo.size() * 8);
     }
-    vetDados[3] = vetDados[3] + (taxaDeComp / grupo);
-    vetDados[4] = vetDados[4] + (armazen / grupo);
+    vetDados[3] = vetDados[3] + (double)(taxaDeComp / grupo);
+    vetDados[4] = vetDados[4] + (double)(armazen / grupo);
 }
 
-void medias2(int grupo, unsigned int *vetDados, string *vetConj){
+void medias2(int grupo, double *vetDados, string *vetConj){
     int r;
     int c = 0;
     string* vetAux = new string[grupo];
 
-    for(int i = 0; i < 5; i++){            //ele deve fazer isso 5 vezes, como pedido
+    for(int i = 0; i < 1; i++){            //ele deve fazer isso 5 vezes, como pedido
         c = 0;
-        while(c < grupo) {                 //preenche o vetor com valores aleatorios referente a entrada
+        while(c < grupo) {              /*   //preenche o vetor com valores aleatorios referente a entrada
             r = randomLarge(17061 - c);                  // Para nao haver repeticoes no vetor que iremos ordenar (vetAux), quando geramos um numero
             vetAux[c] = vetConj[r];                        // aleatorio, passamos o elemento correspondente a essa posicao para vetAux e trocamos este elemento,
-            trocaString(&vetConj[r], &vetConj[17061 - c]);    // no vetConj, com o ultimo elemento do vetor e geramos um numero aleatorio entre 0 e 1013082 - c,
-            c++;                                           // para q nao coletemos o mesmo valor uma outra vez
+            trocaString(&vetConj[r], &vetConj[17061 - c]);    // no vetConj, com o ultimo elemento do vetor e geramos um numero aleatorio entre 0 e 117062 - c,
+            c++;                                           // para q nao coletemos o mesmo valor uma outra vez*/
+            vetAux[c] = vetConj[c];
+            c++;
         }
         auto t1 = std::chrono::high_resolution_clock::now();    //comeca a contar o tempo
 
@@ -247,7 +252,7 @@ void analisaCenario2(string* vetConj){
     }
 
 
-    unsigned int vetDados[6];    // Vetor que armazena as metricas (numero de comparacoes e trocas, tempo)
+    double vetDados[6];    // Vetor que armazena as metricas (numero de comparacoes e trocas, tempo)
     int i, j;
 
     saida << "Parte 2 - 2\n";
