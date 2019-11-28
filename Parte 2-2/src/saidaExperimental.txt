@@ -1,0 +1,21 @@
+Parte 2 - 2
+Algoritmo de Huffman: 
+Medias do conjunto de 1000 dados - Taxa de Compressao: 50.56, Armazenamento em Disco: 196.204 e Tempo: 579.809
+Algoritmo LZW: 
+Medias do conjunto de 1000 dados - Taxa de Compressao: 0.544361, Armazenamento em Disco: 5338.8 e Tempo: 33176.1
+
+Algoritmo de Huffman: 
+Medias do conjunto de 5000 dados - Taxa de Compressao: 55.168, Armazenamento em Disco: 198.223 e Tempo: 2603.88
+Algoritmo LZW: 
+Medias do conjunto de 5000 dados - Taxa de Compressao: 0.554957, Armazenamento em Disco: 5060.3 e Tempo: 157342
+
+Algoritmo de Huffman: 
+Medias do conjunto de 10000 dados - Taxa de Compressao: 54.8608, Armazenamento em Disco: 183.959 e Tempo: 4989.27
+Algoritmo LZW: 
+Medias do conjunto de 10000 dados - Taxa de Compressao: 0.559395, Armazenamento em Disco: 4915.8 e Tempo: 286234
+
+Algoritmo de Huffman: 
+Medias do conjunto de 17062 dados - Taxa de Compressao: 54.96, Armazenamento em Disco: 189.111 e Tempo: 8527.46
+Algoritmo LZW: 
+Medias do conjunto de 17062 dados - Taxa de Compressao: 0.558959, Armazenamento em Disco: 4938.5 e Tempo: 496272
+
