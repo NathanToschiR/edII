@@ -164,17 +164,22 @@ void medias11(int grupo, float *vetDadosInsercao, float *vetDadosBusca, int *vet
         while(c++ < grupo) {                 //faz a insercao na arvore
             r = randomLarge(506542);
             teste[c] = r;
-            arv->inserirValor(r);
+            arv->inserirValor(r, vetDadosInsercao);
         }
         auto i2 = std::chrono::high_resolution_clock::now();    //termina de contar
         auto durationInsercao = std::chrono::duration_cast<std::chrono::microseconds>( i2 - i1 ).count();
         vetDadosInsercao[2] + durationInsercao;
 
         cout << endl;
+        if(x == 1){
+            noRN* p = new noRN();
+        }else{
+            No* p = new No();
+        }
 
         auto b1 = std::chrono::high_resolution_clock::now();    //comeca a contar
         for(c = 0; c < grupo; c++){
-
+            p = arv->busca(teste[c], vetDadosBusca);
         }
         auto b2 = std::chrono::high_resolution_clock::now();    //termina de contar
         auto durationBusca = std::chrono::duration_cast<std::chrono::microseconds>( b2 - b1 ).count();
