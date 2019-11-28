@@ -171,10 +171,15 @@ void medias11(int grupo, float *vetDadosInsercao, float *vetDadosBusca, int *vet
         vetDadosInsercao[2] + durationInsercao;
 
         cout << endl;
+        if(x == 1){
+            noRN* p = new noRN();
+        }else{
+            No* p = new No();
+        }
 
         auto b1 = std::chrono::high_resolution_clock::now();    //comeca a contar
         for(c = 0; c < grupo; c++){
-
+            arv->busca(teste[c], *vetDadosBusca);
         }
         auto b2 = std::chrono::high_resolution_clock::now();    //termina de contar
         auto durationBusca = std::chrono::duration_cast<std::chrono::microseconds>( b2 - b1 ).count();
