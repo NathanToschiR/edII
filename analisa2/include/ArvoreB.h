@@ -9,8 +9,10 @@ class ArvoreB {
     public:
         ArvoreB();
         ~ArvoreB();
-        void insercao(int valor, unsigned int* copias, unsigned int* comp);
-        No* BuscaValor(int valor, int* posicao, No* p, bool* result, unsigned int* comp);
+        void insercao(int valor, float* copias, float* comp);
+        No* BuscaValor(int valor, int* posicao, No* p, bool* result);
+        No* buscaAux(int valor, float* comp, No* p);
+        void busca(int valor, float* comp);
         No* libera(No* no);
         void splitPropagado(No* p, No* novoFilhoEsq, No* novoFilhoDir, int valor, int k, unsigned int* copias, unsigned int* comp);
         void Imprime();

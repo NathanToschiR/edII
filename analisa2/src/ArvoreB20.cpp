@@ -1,26 +1,25 @@
 #include <iostream>
 #include <algorithm>
-#include "ArvoreB.h"
+#include "ArvoreB20.h"
 #include "No.h"
 using namespace std;
 
-#define d 2
+#define d 20
 
-ArvoreB::ArvoreB()
+ArvoreB20::ArvoreB20()
 {
     this->raiz = NULL;
 }
 
-ArvoreB::~ArvoreB()
+ArvoreB20::~ArvoreB20()
 {
     libera(this->raiz);
 }
 
-No* ArvoreB::BuscaValor(int valor, int* posicao, No* p, bool* result, unsigned int* comp)
+No* ArvoreB20::BuscaValor(int valor, int* posicao, No* p, bool* result)
 {
     for(int i = 0 ; i < p->getNumChaves() ; i++)
     {
-        (*comp) = (*comp) + 2;
         if(valor == p->getValor(i))
         {
             *result = true;
@@ -37,7 +36,7 @@ No* ArvoreB::BuscaValor(int valor, int* posicao, No* p, bool* result, unsigned i
                 return p;
             }
             else
-                return BuscaValor(valor, posicao, p->getNo(i), result, comp);
+                return BuscaValor(valor, posicao, p->getNo(i), result);
         }
     }
     if(p->getNo(p->getNumChaves()) == NULL)
@@ -47,10 +46,42 @@ No* ArvoreB::BuscaValor(int valor, int* posicao, No* p, bool* result, unsigned i
         return p;
     }
     else
-        return BuscaValor(valor, posicao, p->getNo(p->getNumChaves()), result, comp);
+        return BuscaValor(valor, posicao, p->getNo(p->getNumChaves()), result);
 }
 
-No* getMaiorMaisProximo(int valor, int posicao, No* p, int* i) {
+No* ArvoreB20::buscaAux(int valor, unsigned int* comp, No* p)
+{
+    for(int i = 0 ; i < p->getNumChaves() ; i++)
+    {
+        (*comp) = (*comp) + 2;
+        if(valor == p->getValor(i))
+        {
+            return p;
+        }
+
+        if(valor < p->getValor(i))
+        {
+            if(p->getNo(i) == NULL)
+            {
+                return p;
+            }
+            else
+                return buscaAux(valor, comp, p->getNo(i));
+        }
+    }
+    if(p->getNo(p->getNumChaves()) == NULL)
+    {
+        return p;
+    }
+    else
+        return buscaAux(valor, comp, p->getNo(p->getNumChaves()));
+}
+
+void ArvoreB20::busca(int valor, float* comp) {
+    No* p = buscaAux(valor, comp, this->raiz);
+}
+
+No* ArvoreB20::getMaiorMaisProximo(int valor, int posicao, No* p, int* i) {
     No* ptt = p->getNo(posicao + 1);
     while (ptt->getNo(0) != NULL) {
         ptt = ptt->getNo(0);
@@ -59,7 +90,7 @@ No* getMaiorMaisProximo(int valor, int posicao, No* p, int* i) {
     return ptt;
 }
 
-int ArvoreB::achaMediano(No* p, int val, int* posicaoMed, unsigned int* comp) {
+int ArvoreB20::achaMediano(No* p, int val, int* posicaoMed, unsigned int* comp) {
     int aux;
     if (p->getValor(d - 1) > val) {
         *posicaoMed = d - 1;
@@ -80,12 +111,12 @@ int ArvoreB::achaMediano(No* p, int val, int* posicaoMed, unsigned int* comp) {
     (*comp) = (*comp) + 2;
 }
 
-void ArvoreB::setRelacao(No* pai, int posicao, No* filho) {
+void ArvoreB20::setRelacao(No* pai, int posicao, No* filho) {
     pai->setNo(filho, posicao);
     filho->setPai(pai);
 }
 
-void ArvoreB::separaNo(No* p, No* novoFilhoEsq, No* novoFilhoDir, No* novoNoEsq, No* novoNoDir, int val, int k, unsigned int* copias, unsigned int* comp) {
+void ArvoreB20::separaNo(No* p, No* novoFilhoEsq, No* novoFilhoDir, No* novoNoEsq, No* novoNoDir, int val, int k, unsigned int* copias, unsigned int* comp) {
     int h = 0;
     int l = 0, c = 0;
     for (l; l < d; l++) {
@@ -148,7 +179,7 @@ void ArvoreB::separaNo(No* p, No* novoFilhoEsq, No* novoFilhoDir, No* novoNoEsq,
         setRelacao(novoNoDir, d, p->getNo(2 * d));
 }
 
-void ArvoreB::splitPropagado(No* p, No* novoFilhoEsq, No* novoFilhoDir, int valor, int k, unsigned int* copias, unsigned int* comp) {
+void ArvoreB20::splitPropagado(No* p, No* novoFilhoEsq, No* novoFilhoDir, int valor, int k, unsigned int* copias, unsigned int* comp) {
     int posicao;
     int mediano = achaMediano(p, valor, &posicao, comp);
     No* novoNoEsq = new No();
@@ -195,7 +226,7 @@ void ArvoreB::splitPropagado(No* p, No* novoFilhoEsq, No* novoFilhoDir, int valo
     }
 }
 
-void ArvoreB::primeiroSplit(No* p, int valor, unsigned int* copias, unsigned int* comp) {
+void ArvoreB20::primeiroSplit(No* p, int valor, unsigned int* copias, unsigned int* comp) {
     No* novoNoEsq = new No();
     No* novoNoDir = new No();
     novoNoDir->setNumChaves(d);
@@ -247,7 +278,7 @@ void ArvoreB::primeiroSplit(No* p, int valor, unsigned int* copias, unsigned int
     p->~No();
 }
 
-void ArvoreB::insercao(int valor, unsigned int* copias, unsigned int* comp)
+void ArvoreB20::insercao(int valor, unsigned int* copias, unsigned int* comp)
 {
     if (this->raiz != NULL) {
         bool result;
@@ -278,7 +309,7 @@ void ArvoreB::insercao(int valor, unsigned int* copias, unsigned int* comp)
     }
 }
 
-No* ArvoreB::libera(No* no)
+No* ArvoreB20::libera(No* no)
 {
     if (no != NULL)
     {
@@ -299,9 +330,9 @@ int ArvoreB::ProcuraNoPai(No* p) {
     return p->getPai()->getNumChaves();
 }
 
-void verificacaoBraba(No* p); // Aqui da um problema de uma funcao chama a outra e a outra chama a um
+void ArvoreB20::verificacaoBraba(No* p); // Aqui da um problema de uma funcao chama a outra e a outra chama a um
 
-void ArvoreB::ConcatenaNosFolhas(No* p, No* r) {
+void ArvoreB20::ConcatenaNosFolhas(No* p, No* r) {
     int posicao = ProcuraNoPai(p);
     for (int k = r->getNumChaves() - 1; k >= 0; k--)
         r->setValor(k + p->getNumChaves() + 1, r->getValor(k));
@@ -328,7 +359,7 @@ void ArvoreB::ConcatenaNosFolhas(No* p, No* r) {
 
 }
 
-void ArvoreB::ConcatenaNosInternos(No* p, No* r) {
+void ArvoreB20::ConcatenaNosInternos(No* p, No* r) {
     int posicao = ProcuraNoPai(p);
     for (int k = r->getNumChaves() - 1; k >= 0; k--){
         r->setValor(k + p->getNumChaves() + 1, r->getValor(k));
@@ -362,7 +393,7 @@ void ArvoreB::ConcatenaNosInternos(No* p, No* r) {
 
 }
 
-void ArvoreB::RedistribuiNoFolha(No* p, No* r) {
+void ArvoreB20::RedistribuiNoFolha(No* p, No* r) {
     int posicao = ProcuraNoPai(p);
     int num = p->getNumChaves() + r->getNumChaves() + 1;
     int vet[num];
@@ -382,7 +413,7 @@ void ArvoreB::RedistribuiNoFolha(No* p, No* r) {
     r->setNumChaves(num - (num/2) - 1); // divisao inteira
 }
 
-void ArvoreB::RedistribuiNoInterno(No* p, No* r) {
+void ArvoreB20::RedistribuiNoInterno(No* p, No* r) {
     int posicao = ProcuraNoPai(p);
     int num = p->getNumChaves() + r->getNumChaves() + 1;
     int vet[num];
@@ -415,7 +446,7 @@ void ArvoreB::RedistribuiNoInterno(No* p, No* r) {
     r->setNumChaves(num - (num/2) - 1); // divisao inteira
 }
 
-void ArvoreB::verificacaoBraba(No* p) {
+void ArvoreB20::verificacaoBraba(No* p) {
     if (p != this->raiz) {
         int posicaoNoPai = ProcuraNoPai(p);
         if (posicaoNoPai != p->getPai()->getNumChaves()) {
@@ -459,7 +490,7 @@ void ArvoreB::verificacaoBraba(No* p) {
     }
 }
 
-void ArvoreB::PrimeiraRemocao(int valor, No* p, int posicao) {
+void ArvoreB20::PrimeiraRemocao(int valor, No* p, int posicao) {
     for (int k = posicao; k < p->getNumChaves() - 1; k++)
         p->setValor(k, p->getValor(k + 1));
     p->setNumChaves(p->getNumChaves() - 1);
@@ -468,7 +499,7 @@ void ArvoreB::PrimeiraRemocao(int valor, No* p, int posicao) {
     }
 }
 
-void ArvoreB::remove(int valor, unsigned int* comp) {
+void ArvoreB20::remove(int valor, unsigned int* comp) {
     int posicao;
     bool result;
     No* p = new No();
@@ -487,7 +518,7 @@ void ArvoreB::remove(int valor, unsigned int* comp) {
     }
 }
 
-void ImprimeAux(No* p, int cont) {
+void ArvoreB20::ImprimeAux(No* p, int cont) {
     if (p->getNo(0) != NULL) {
         for (int k = 0; k < p->getNumChaves(); k++) {
             ImprimeAux(p->getNo(k), cont + 1);
@@ -508,6 +539,6 @@ void ImprimeAux(No* p, int cont) {
     }
 }
 
-void ArvoreB::Imprime() {
+void ArvoreB20::Imprime() {
     ImprimeAux(this->raiz, 1);
 }

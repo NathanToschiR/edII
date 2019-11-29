@@ -16,11 +16,10 @@ ArvoreB::~ArvoreB()
     libera(this->raiz);
 }
 
-No* ArvoreB::BuscaValor(int valor, int* posicao, No* p, bool* result, unsigned int* comp)
+No* ArvoreB::BuscaValor(int valor, int* posicao, No* p, bool* result)
 {
     for(int i = 0 ; i < p->getNumChaves() ; i++)
     {
-        (*comp) = (*comp) + 2;
         if(valor == p->getValor(i))
         {
             *result = true;
@@ -37,7 +36,7 @@ No* ArvoreB::BuscaValor(int valor, int* posicao, No* p, bool* result, unsigned i
                 return p;
             }
             else
-                return BuscaValor(valor, posicao, p->getNo(i), result, comp);
+                return BuscaValor(valor, posicao, p->getNo(i), result);
         }
     }
     if(p->getNo(p->getNumChaves()) == NULL)
@@ -47,7 +46,39 @@ No* ArvoreB::BuscaValor(int valor, int* posicao, No* p, bool* result, unsigned i
         return p;
     }
     else
-        return BuscaValor(valor, posicao, p->getNo(p->getNumChaves()), result, comp);
+        return BuscaValor(valor, posicao, p->getNo(p->getNumChaves()), result);
+}
+
+No* ArvoreB::buscaAux(int valor, float* comp, No* p)
+{
+    for(int i = 0 ; i < p->getNumChaves() ; i++)
+    {
+        (*comp) = (*comp) + 2;
+        if(valor == p->getValor(i))
+        {
+            return p;
+        }
+
+        if(valor < p->getValor(i))
+        {
+            if(p->getNo(i) == NULL)
+            {
+                return p;
+            }
+            else
+                return buscaAux(valor, comp, p->getNo(i));
+        }
+    }
+    if(p->getNo(p->getNumChaves()) == NULL)
+    {
+        return p;
+    }
+    else
+        return buscaAux(valor, comp, p->getNo(p->getNumChaves()));
+}
+
+void ArvoreB::busca(int valor, float* comp) {
+    No* p = buscaAux(valor, comp, this->raiz);
 }
 
 No* getMaiorMaisProximo(int valor, int posicao, No* p, int* i) {
@@ -247,7 +278,7 @@ void ArvoreB::primeiroSplit(No* p, int valor, unsigned int* copias, unsigned int
     p->~No();
 }
 
-void ArvoreB::insercao(int valor, unsigned int* copias, unsigned int* comp)
+void ArvoreB::insercao(int valor, float* copias, float* comp)
 {
     if (this->raiz != NULL) {
         bool result;
