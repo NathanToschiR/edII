@@ -1,0 +1,5 @@
+-- ARVORE B (d = 2) --
+Parte11
+Medias do conjunto de 1000 dados - Numero de comparacoes de chaves: 9237.6, Numero de copias de registro: 56.4 e Tempo: 10.5966
+-- ARVORE B (d = 2) --
+-- ARVORE B (d = 2) --
