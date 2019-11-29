@@ -50,25 +50,42 @@
 1574655909 c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho2\edii\analisa\include\no.h
 	<iostream>
 
-1574989333 source:c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho 3\edii\analisa2\src\arvorern.cpp
+1574992127 source:c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho 3\edii\analisa2\src\arvorern.cpp
 	<iostream>
 	"../include/arvoreRN.h"
 
-1574989333 c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho 3\edii\analisa2\include\arvorern.h
+1574992127 c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho 3\edii\analisa2\include\arvorern.h
 	<iostream>
 	"noRN.h"
 
-1574989333 c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho 3\edii\analisa2\include\norn.h
+1574992127 c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho 3\edii\analisa2\include\norn.h
 	<iostream>
 
-1574989333 source:c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho 3\edii\analisa2\src\norn.cpp
+1574992127 source:c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho 3\edii\analisa2\src\norn.cpp
 	<iostream>
 	"../include/noRN.h"
 
-1574989852 source:c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho 3\edii\analisa2\src\no.cpp
+1574992127 source:c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho 3\edii\analisa2\src\no.cpp
 	<iostream>
 	"No.h"
 
-1574989860 c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho 3\edii\analisa2\include\no.h
+1574992127 c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho 3\edii\analisa2\include\no.h
 	<iostream>
+
+1574992127 source:c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho 3\edii\analisa2\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<cstdlib>
+	<time.h>
+	<ctime>
+	<chrono>
+	"arvoreRN.h"
+	"noRN.h"
+	"No.h"
+	"ArvoreB.h"
+
+1574992127 c:\users\nathan\desktop\facul\estrutura de dados ii\trabalho 3\edii\analisa2\include\arvoreb.h
+	<iostream>
+	"No.h"
 
