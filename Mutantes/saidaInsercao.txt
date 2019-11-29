@@ -1,0 +1,14 @@
+Parte11
+Medias do conjunto de 10 dados - Numero de comparacoes de chaves: 91.2, Numero de copias de registro: 8.8 e Tempo: 0
+Parte11
+Medias do conjunto de 10 dados - Numero de comparacoes de chaves: 50.8, Numero de copias de registro: 3 e Tempo: 0
+Parte11
+Medias do conjunto de 10 dados - Numero de comparacoes de chaves: 58, Numero de copias de registro: 1.8 e Tempo: 31.1834
+Parte11
+Medias do conjunto de 1000 dados - Numero de comparacoes de chaves: 627999, Numero de copias de registro: 998.8 e Tempo: 36.1778
+Parte11
+Medias do conjunto de 5000 dados - Numero de comparacoes de chaves: 1.564e+007, Numero de copias de registro: 4998.8 e Tempo: 719.355
+Parte11
+Medias do conjunto de 10000 dados - Numero de comparacoes de chaves: 6.253e+007, Numero de copias de registro: 9998.8 e Tempo: 3163.91
+Parte11
+Medias do conjunto de 50000 dados - Numero de comparacoes de chaves: 1.56265e+009
