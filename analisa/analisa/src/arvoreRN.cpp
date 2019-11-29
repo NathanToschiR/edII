@@ -162,7 +162,7 @@ void arvoreRN::rotacaoDuploDir(noRN* no)
     rotacaoDir(pai);
 }
 
-void inserirNo(noRN* no, float* vetDadosInsercao)
+void arvoreRN::inserirNo(noRN* novoNo, float* vetDadosInsercao)
 {
     noRN* p = raiz;
     noRN* pAnt = NULL;
@@ -270,7 +270,7 @@ void inserirNo(noRN* no, float* vetDadosInsercao)
     raiz->setCor(0);
 }
 
-void inserirValor(int valor, float* vetDadosInsercao)
+void arvoreRN::inserirValor(int valor, float* vetDadosInsercao)
 {
     noRN* novoNo = new noRN();
     novoNo->setValor(valor);
@@ -300,7 +300,7 @@ void arvoreRN::imprimirArv()
     auxImprimirArv(p);
 }
 
-noRN* busca(int valor, float* vetDadosBusca)
+noRN* arvoreRN::busca(int valor, float* vetDadosBusca)
 {
     noRN* p = raiz;
     noRN* pAnt = NULL;
